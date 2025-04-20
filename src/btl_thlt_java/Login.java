@@ -40,6 +40,8 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_mk = new javax.swing.JPasswordField();
         Login_btn = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        switchSignUp = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOGIN");
@@ -122,6 +124,12 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Mật khẩu");
 
+        txt_mk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_mkActionPerformed(evt);
+            }
+        });
+
         Login_btn.setBackground(new java.awt.Color(51, 102, 255));
         Login_btn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Login_btn.setForeground(new java.awt.Color(255, 255, 255));
@@ -132,6 +140,16 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setText("Chưa có tài khoản?");
+
+        switchSignUp.setForeground(new java.awt.Color(51, 102, 255));
+        switchSignUp.setText("Đăng kí");
+        switchSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                switchSignUpMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout LeftLayout = new javax.swing.GroupLayout(Left);
         Left.setLayout(LeftLayout);
         LeftLayout.setHorizontalGroup(
@@ -139,16 +157,21 @@ public class Login extends javax.swing.JFrame {
             .addGroup(LeftLayout.createSequentialGroup()
                 .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(LeftLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2)
-                            .addComponent(txt_tk)
-                            .addComponent(jLabel3)
-                            .addComponent(txt_mk, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                            .addComponent(Login_btn)))
-                    .addGroup(LeftLayout.createSequentialGroup()
                         .addGap(91, 91, 91)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(LeftLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(LeftLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(switchSignUp))
+                            .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2)
+                                .addComponent(txt_tk)
+                                .addComponent(jLabel3)
+                                .addComponent(txt_mk, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                                .addComponent(Login_btn)))))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         LeftLayout.setVerticalGroup(
@@ -166,7 +189,11 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(txt_mk, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(Login_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(switchSignUp))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         jPanel1.add(Left);
@@ -195,7 +222,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_tkActionPerformed
 
     private void Login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_btnActionPerformed
-String username = txt_tk.getText();
+    String username = txt_tk.getText();
     String password = new String(txt_mk.getPassword());
     
     if (username.isEmpty() || password.isEmpty()) {
@@ -211,6 +238,18 @@ String username = txt_tk.getText();
         JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không đúng", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
     }        // TODO add your handling code here:
     }//GEN-LAST:event_Login_btnActionPerformed
+
+    private void switchSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchSignUpMouseClicked
+SignUp SignUpFrame = new SignUp();
+        SignUpFrame.setVisible(true);
+        SignUpFrame.pack();
+        SignUpFrame.setLocationRelativeTo(null); 
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_switchSignUpMouseClicked
+
+    private void txt_mkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_mkActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_mkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,8 +311,10 @@ String username = txt_tk.getText();
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel switchSignUp;
     private javax.swing.JPasswordField txt_mk;
     private javax.swing.JTextField txt_tk;
     // End of variables declaration//GEN-END:variables
