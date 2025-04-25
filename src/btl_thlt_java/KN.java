@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public class KN {
     public static Connection KNDL() throws SQLException{
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/qlbenhnhan", "root", "");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/qlthuvien", "root", "");
         return con;
     }
     
