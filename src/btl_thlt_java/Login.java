@@ -231,7 +231,7 @@ public class Login extends javax.swing.JFrame {
     
     if (checkLogin(username, password)) {
         JOptionPane.showMessageDialog(this, "Đăng nhập thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        new QuanLyBenhNhan().setVisible(true);
+        new QuanLyThuVien().setVisible(true);
         this.dispose();
     } else {
         JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không đúng", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
