@@ -2,6 +2,8 @@
 package btl_thlt_java;
 
 import btl_thlt_java.Login;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -66,17 +68,31 @@ public class SignUp extends javax.swing.JFrame {
         signup_btn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         signup_btn.setForeground(new java.awt.Color(255, 255, 255));
         signup_btn.setText("Đăng kí");
+        signup_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                signup_btnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                signup_btnMouseExited(evt);
+            }
+        });
         signup_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signup_btnActionPerformed(evt);
             }
         });
 
-        switchLogin.setForeground(new java.awt.Color(51, 102, 255));
+        switchLogin.setForeground(new java.awt.Color(0, 0, 153));
         switchLogin.setText("Đăng nhập");
         switchLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 switchLoginMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                switchLoginMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                switchLoginMouseExited(evt);
             }
         });
 
@@ -256,6 +272,24 @@ Login LoginFrame = new Login();
     private void txt_tkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tkActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tkActionPerformed
+
+    private void switchLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchLoginMouseEntered
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        switchLogin.setForeground(Color.BLACK);            // TODO add your handling code here:
+    }//GEN-LAST:event_switchLoginMouseEntered
+
+    private void switchLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchLoginMouseExited
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        switchLogin.setForeground(Color.BLUE);
+    }//GEN-LAST:event_switchLoginMouseExited
+
+    private void signup_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_btnMouseEntered
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_signup_btnMouseEntered
+
+    private void signup_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_btnMouseExited
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_signup_btnMouseExited
 private boolean registerUser(String username, String password) {
     Connection conn = null;
     PreparedStatement checkStmt = null;
