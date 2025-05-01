@@ -34,7 +34,7 @@ public class HomePage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        displayUsername = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -51,10 +51,10 @@ public class HomePage extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
+        manageBook = new javax.swing.JLabel();
+        manageLend = new javax.swing.JLabel();
+        manageStudents = new javax.swing.JLabel();
+        manageUsers = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         searchBook = new javax.swing.JLabel();
         searchUser = new javax.swing.JLabel();
@@ -104,11 +104,11 @@ public class HomePage extends javax.swing.JFrame {
         jLabel11.setText("Phần mềm quản lý thư viện");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, -1, 60));
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
-        jLabel12.setText("Username");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 0, -1, 60));
+        displayUsername.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayUsername.setForeground(new java.awt.Color(255, 255, 255));
+        displayUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
+        displayUsername.setText("Username");
+        jPanel2.add(displayUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 0, -1, 60));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -198,11 +198,11 @@ public class HomePage extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +240,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -280,11 +280,11 @@ public class HomePage extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,53 +318,53 @@ public class HomePage extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(251, 249, 228));
         jPanel9.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/book84.png"))); // NOI18N
-        jLabel8.setText("Quản lý sách");
-        jLabel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel8.setMaximumSize(new java.awt.Dimension(200, 125));
-        jLabel8.setMinimumSize(new java.awt.Dimension(200, 125));
-        jLabel8.setOpaque(true);
-        jLabel8.setPreferredSize(new java.awt.Dimension(200, 125));
+        manageBook.setBackground(new java.awt.Color(255, 255, 255));
+        manageBook.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        manageBook.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        manageBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/book84.png"))); // NOI18N
+        manageBook.setText("Quản lý sách");
+        manageBook.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        manageBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        manageBook.setMaximumSize(new java.awt.Dimension(200, 125));
+        manageBook.setMinimumSize(new java.awt.Dimension(200, 125));
+        manageBook.setOpaque(true);
+        manageBook.setPreferredSize(new java.awt.Dimension(200, 125));
 
-        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/return84.png"))); // NOI18N
-        jLabel14.setText("Quản lý mượn trả");
-        jLabel14.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel14.setMaximumSize(new java.awt.Dimension(200, 140));
-        jLabel14.setMinimumSize(new java.awt.Dimension(200, 140));
-        jLabel14.setOpaque(true);
-        jLabel14.setPreferredSize(new java.awt.Dimension(200, 140));
+        manageLend.setBackground(new java.awt.Color(255, 255, 255));
+        manageLend.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        manageLend.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        manageLend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/return84.png"))); // NOI18N
+        manageLend.setText("Quản lý mượn trả");
+        manageLend.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        manageLend.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        manageLend.setMaximumSize(new java.awt.Dimension(200, 140));
+        manageLend.setMinimumSize(new java.awt.Dimension(200, 140));
+        manageLend.setOpaque(true);
+        manageLend.setPreferredSize(new java.awt.Dimension(200, 140));
 
-        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/editUser.png"))); // NOI18N
-        jLabel15.setText("Quản lý sinh viên");
-        jLabel15.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel15.setMaximumSize(new java.awt.Dimension(200, 125));
-        jLabel15.setMinimumSize(new java.awt.Dimension(200, 125));
-        jLabel15.setOpaque(true);
-        jLabel15.setPreferredSize(new java.awt.Dimension(200, 125));
+        manageStudents.setBackground(new java.awt.Color(255, 255, 255));
+        manageStudents.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        manageStudents.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        manageStudents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/editUser.png"))); // NOI18N
+        manageStudents.setText("Quản lý sinh viên");
+        manageStudents.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        manageStudents.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        manageStudents.setMaximumSize(new java.awt.Dimension(200, 125));
+        manageStudents.setMinimumSize(new java.awt.Dimension(200, 125));
+        manageStudents.setOpaque(true);
+        manageStudents.setPreferredSize(new java.awt.Dimension(200, 125));
 
-        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/admin.png"))); // NOI18N
-        jLabel16.setText("Quản lý người dùng");
-        jLabel16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel16.setMaximumSize(new java.awt.Dimension(200, 125));
-        jLabel16.setMinimumSize(new java.awt.Dimension(200, 125));
-        jLabel16.setOpaque(true);
-        jLabel16.setPreferredSize(new java.awt.Dimension(200, 125));
+        manageUsers.setBackground(new java.awt.Color(255, 255, 255));
+        manageUsers.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        manageUsers.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        manageUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/admin.png"))); // NOI18N
+        manageUsers.setText("Quản lý người dùng");
+        manageUsers.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        manageUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        manageUsers.setMaximumSize(new java.awt.Dimension(200, 125));
+        manageUsers.setMinimumSize(new java.awt.Dimension(200, 125));
+        manageUsers.setOpaque(true);
+        manageUsers.setPreferredSize(new java.awt.Dimension(200, 125));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -373,12 +373,12 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap(95, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(manageBook, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manageStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(80, 80, 80)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(manageLend, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manageUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(95, 95, 95))
         );
         jPanel9Layout.setVerticalGroup(
@@ -386,12 +386,12 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(142, 142, 142)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(manageBook, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manageLend, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(80, 80, 80)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(manageUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manageStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(142, Short.MAX_VALUE))
         );
 
@@ -573,20 +573,16 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel displayUsername;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
@@ -601,6 +597,10 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel manageBook;
+    private javax.swing.JLabel manageLend;
+    private javax.swing.JLabel manageStudents;
+    private javax.swing.JLabel manageUsers;
     private javax.swing.JLabel searchBook;
     private javax.swing.JLabel searchUser;
     // End of variables declaration//GEN-END:variables
