@@ -46,7 +46,7 @@ public class Login extends javax.swing.JFrame {
         switchSignUp = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("LOGIN");
+        setTitle("Login");
         setIconImage(new ImageIcon(getClass().getResource("/Icon/Title.png")).getImage());
         setResizable(false);
 

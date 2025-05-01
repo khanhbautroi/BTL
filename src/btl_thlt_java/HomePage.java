@@ -5,6 +5,7 @@
 package btl_thlt_java;
 
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -63,6 +64,8 @@ public class HomePage extends javax.swing.JFrame {
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Library management system ");
+        setIconImage(new ImageIcon(getClass().getResource("/Icon/Title.png")).getImage());
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -208,7 +211,7 @@ public class HomePage extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jLabel7))
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -329,6 +332,14 @@ public class HomePage extends javax.swing.JFrame {
         manageBook.setMinimumSize(new java.awt.Dimension(200, 125));
         manageBook.setOpaque(true);
         manageBook.setPreferredSize(new java.awt.Dimension(200, 125));
+        manageBook.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                manageBookMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                manageBookMouseReleased(evt);
+            }
+        });
 
         manageLend.setBackground(new java.awt.Color(255, 255, 255));
         manageLend.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -341,6 +352,14 @@ public class HomePage extends javax.swing.JFrame {
         manageLend.setMinimumSize(new java.awt.Dimension(200, 140));
         manageLend.setOpaque(true);
         manageLend.setPreferredSize(new java.awt.Dimension(200, 140));
+        manageLend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                manageLendMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                manageLendMouseReleased(evt);
+            }
+        });
 
         manageStudents.setBackground(new java.awt.Color(255, 255, 255));
         manageStudents.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -353,6 +372,14 @@ public class HomePage extends javax.swing.JFrame {
         manageStudents.setMinimumSize(new java.awt.Dimension(200, 125));
         manageStudents.setOpaque(true);
         manageStudents.setPreferredSize(new java.awt.Dimension(200, 125));
+        manageStudents.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                manageStudentsMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                manageStudentsMouseReleased(evt);
+            }
+        });
 
         manageUsers.setBackground(new java.awt.Color(255, 255, 255));
         manageUsers.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -365,6 +392,14 @@ public class HomePage extends javax.swing.JFrame {
         manageUsers.setMinimumSize(new java.awt.Dimension(200, 125));
         manageUsers.setOpaque(true);
         manageUsers.setPreferredSize(new java.awt.Dimension(200, 125));
+        manageUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                manageUsersMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                manageUsersMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -414,6 +449,12 @@ public class HomePage extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchBookMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                searchBookMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                searchBookMouseReleased(evt);
+            }
         });
 
         searchUser.setBackground(new java.awt.Color(255, 255, 255));
@@ -427,6 +468,14 @@ public class HomePage extends javax.swing.JFrame {
         searchUser.setMinimumSize(new java.awt.Dimension(200, 125));
         searchUser.setOpaque(true);
         searchUser.setPreferredSize(new java.awt.Dimension(200, 125));
+        searchUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                searchUserMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                searchUserMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -536,6 +585,54 @@ public class HomePage extends javax.swing.JFrame {
     private void searchBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBookMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_searchBookMouseClicked
+
+    private void manageBookMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageBookMousePressed
+        manageBook.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_manageBookMousePressed
+
+    private void manageStudentsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageStudentsMousePressed
+        manageStudents.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_manageStudentsMousePressed
+
+    private void manageLendMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageLendMousePressed
+        manageLend.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_manageLendMousePressed
+
+    private void manageUsersMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageUsersMousePressed
+        manageUsers.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_manageUsersMousePressed
+
+    private void manageBookMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageBookMouseReleased
+        manageBook.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_manageBookMouseReleased
+
+    private void manageStudentsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageStudentsMouseReleased
+        manageStudents.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_manageStudentsMouseReleased
+
+    private void manageLendMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageLendMouseReleased
+        manageLend.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_manageLendMouseReleased
+
+    private void manageUsersMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageUsersMouseReleased
+        manageUsers.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_manageUsersMouseReleased
+
+    private void searchUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchUserMousePressed
+        searchUser.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_searchUserMousePressed
+
+    private void searchBookMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBookMousePressed
+        searchBook.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_searchBookMousePressed
+
+    private void searchUserMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchUserMouseReleased
+        searchUser.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_searchUserMouseReleased
+
+    private void searchBookMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBookMouseReleased
+        searchBook.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_searchBookMouseReleased
 
     /**
      * @param args the command line arguments
