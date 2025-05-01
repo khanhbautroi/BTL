@@ -39,12 +39,15 @@ public class HomePage extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -121,12 +124,12 @@ public class HomePage extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(91, 136, 178));
         jPanel1.setForeground(new java.awt.Color(51, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(180, 700));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel4.setBackground(new java.awt.Color(91, 136, 178));
         jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -144,26 +147,32 @@ public class HomePage extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Tra cứu");
 
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/magnifying-glass.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel3)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel9))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 180, 60));
 
-        jPanel5.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel5.setBackground(new java.awt.Color(91, 136, 178));
         jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel5.setPreferredSize(new java.awt.Dimension(180, 60));
         jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -182,26 +191,32 @@ public class HomePage extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Quản lý");
 
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/pencil.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(23, 23, 23)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel4)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel7))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 180, -1));
 
-        jPanel6.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel6.setBackground(new java.awt.Color(91, 136, 178));
         jPanel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -217,7 +232,7 @@ public class HomePage extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/home_24px.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/home.png"))); // NOI18N
         jLabel5.setText("Trang chủ");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -227,19 +242,19 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel5)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(17, 17, 17)
                 .addComponent(jLabel5)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 60));
 
-        jPanel7.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel7.setBackground(new java.awt.Color(91, 136, 178));
         jPanel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel7.setPreferredSize(new java.awt.Dimension(180, 60));
         jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -258,26 +273,32 @@ public class HomePage extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Thông tin");
 
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/profile-user.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(20, 20, 20))
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel10))
+                .addGap(17, 17, 17))
         );
 
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 180, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 180, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 180, 640));
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -294,12 +315,13 @@ public class HomePage extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab1", jPanel8);
 
-        jPanel9.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel9.setBackground(new java.awt.Color(251, 249, 228));
         jPanel9.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/book.png"))); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/book84.png"))); // NOI18N
         jLabel8.setText("Quản lý sách");
         jLabel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -310,7 +332,8 @@ public class HomePage extends javax.swing.JFrame {
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/return.png"))); // NOI18N
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/return84.png"))); // NOI18N
         jLabel14.setText("Quản lý mượn trả");
         jLabel14.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -321,7 +344,8 @@ public class HomePage extends javax.swing.JFrame {
 
         jLabel15.setBackground(new java.awt.Color(255, 255, 255));
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/user.png"))); // NOI18N
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/editUser.png"))); // NOI18N
         jLabel15.setText("Quản lý sinh viên");
         jLabel15.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -332,7 +356,8 @@ public class HomePage extends javax.swing.JFrame {
 
         jLabel16.setBackground(new java.awt.Color(255, 255, 255));
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/admin.png"))); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/admin.png"))); // NOI18N
         jLabel16.setText("Quản lý người dùng");
         jLabel16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -372,11 +397,12 @@ public class HomePage extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab2", jPanel9);
 
-        jPanel10.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel10.setBackground(new java.awt.Color(251, 249, 228));
 
         searchBook.setBackground(new java.awt.Color(255, 255, 255));
         searchBook.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        searchBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/searchbook.png"))); // NOI18N
+        searchBook.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        searchBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/booksearch84.png"))); // NOI18N
         searchBook.setText("Tìm kiếm sách");
         searchBook.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         searchBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -392,7 +418,8 @@ public class HomePage extends javax.swing.JFrame {
 
         searchUser.setBackground(new java.awt.Color(255, 255, 255));
         searchUser.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        searchUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/searchuser.png"))); // NOI18N
+        searchUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        searchUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/searchUser.png"))); // NOI18N
         searchUser.setText("Tìm kiếm sinh viên");
         searchUser.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         searchUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -491,19 +518,19 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel7MousePressed
 
     private void jPanel6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseReleased
-        jPanel6.setBackground(new Color(51, 51, 51));
+        jPanel6.setBackground(new Color(91,136,178));
     }//GEN-LAST:event_jPanel6MouseReleased
 
     private void jPanel5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseReleased
-        jPanel5.setBackground(new Color(51, 51, 51));
+        jPanel5.setBackground(new Color(91,136,178));
     }//GEN-LAST:event_jPanel5MouseReleased
 
     private void jPanel4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseReleased
-        jPanel4.setBackground(new Color(51, 51, 51));
+        jPanel4.setBackground(new Color(91,136,178));
     }//GEN-LAST:event_jPanel4MouseReleased
 
     private void jPanel7MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseReleased
-        jPanel7.setBackground(new Color(51, 51, 51));
+        jPanel7.setBackground(new Color(91,136,178));
     }//GEN-LAST:event_jPanel7MouseReleased
 
     private void searchBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBookMouseClicked
@@ -547,6 +574,7 @@ public class HomePage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
@@ -557,7 +585,9 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
