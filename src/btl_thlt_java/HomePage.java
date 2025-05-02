@@ -36,7 +36,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         displayUsername = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        close = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         search = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -113,25 +113,25 @@ public class HomePage extends javax.swing.JFrame {
         displayUsername.setText("Username");
         jPanel2.add(displayUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 0, -1, 60));
 
-        jLabel2.setBackground(new java.awt.Color(0, 51, 102));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("X");
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel2.setOpaque(true);
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        close.setBackground(new java.awt.Color(0, 51, 102));
+        close.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        close.setForeground(new java.awt.Color(255, 255, 255));
+        close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close.setText("X");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        close.setOpaque(true);
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+                closeMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel2MouseEntered(evt);
+                closeMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel2MouseExited(evt);
+                closeMouseExited(evt);
             }
         });
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 0, 60, 60));
+        jPanel2.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 0, 60, 60));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
 
@@ -385,6 +385,9 @@ public class HomePage extends javax.swing.JFrame {
         manageLend.setOpaque(true);
         manageLend.setPreferredSize(new java.awt.Dimension(200, 140));
         manageLend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                manageLendMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 manageLendMousePressed(evt);
             }
@@ -548,9 +551,9 @@ public class HomePage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
         System.exit(0);
-    }//GEN-LAST:event_jLabel2MouseClicked
+    }//GEN-LAST:event_closeMouseClicked
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
             mouseX = evt.getX();
@@ -659,13 +662,13 @@ public class HomePage extends javax.swing.JFrame {
         searchBook.setBackground(new Color(255,255,255));
     }//GEN-LAST:event_searchBookMouseReleased
 
-    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
-        jLabel2.setBackground(new Color(255,0,0));
-    }//GEN-LAST:event_jLabel2MouseEntered
+    private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
+        close.setBackground(new Color(255,0,0));
+    }//GEN-LAST:event_closeMouseEntered
 
-    private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
-        jLabel2.setBackground(new Color(0,51,102));
-    }//GEN-LAST:event_jLabel2MouseExited
+    private void closeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseExited
+        close.setBackground(new Color(0,51,102));
+    }//GEN-LAST:event_closeMouseExited
 
     private void manageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseEntered
         manage.setBackground(new Color(51,51,51));
@@ -698,6 +701,11 @@ public class HomePage extends javax.swing.JFrame {
     private void infoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoMouseExited
         info.setBackground(new Color(91,136,178));
     }//GEN-LAST:event_infoMouseExited
+
+    private void manageLendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageLendMouseClicked
+        new Demo().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_manageLendMouseClicked
 
     /**
      * @param args the command line arguments
@@ -735,13 +743,13 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel close;
     private javax.swing.JLabel displayUsername;
     private javax.swing.JPanel home;
     private javax.swing.JPanel info;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
