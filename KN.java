@@ -36,4 +36,6 @@ public class KN {
             System.out.println("Kết thúc quy trình kiểm tra kết nối.");
         }
     }
+
+    // sjancjscajdiasjdiasjdijiasjidj
 }
