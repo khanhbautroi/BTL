@@ -568,7 +568,11 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_qlsActionPerformed
 
     private void menu_qlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_qlmuontraActionPerformed
+<<<<<<< HEAD
         new QuanLyMuonTraSach().setVisible(true);
+=======
+        new QuanLyMuonTraSachForm().setVisible(true);
+>>>>>>> 98a313b (toi day)
         this.dispose();
     }//GEN-LAST:event_menu_qlmuontraActionPerformed
 

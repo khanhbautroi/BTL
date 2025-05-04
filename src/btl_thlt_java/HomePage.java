@@ -6,6 +6,10 @@ package btl_thlt_java;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
+<<<<<<< HEAD
+=======
+import javax.swing.JOptionPane;
+>>>>>>> 98a313b (toi day)
 
 /**
  *
@@ -49,6 +53,10 @@ public class HomePage extends javax.swing.JFrame {
         info = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+<<<<<<< HEAD
+=======
+        jButton1 = new javax.swing.JButton();
+>>>>>>> 98a313b (toi day)
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -333,6 +341,12 @@ public class HomePage extends javax.swing.JFrame {
 
         jPanel1.add(info, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 180, -1));
 
+<<<<<<< HEAD
+=======
+        jButton1.setText("Đăng xuất");
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 600, -1, -1));
+
+>>>>>>> 98a313b (toi day)
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 180, 640));
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
@@ -365,6 +379,12 @@ public class HomePage extends javax.swing.JFrame {
         manageBook.setOpaque(true);
         manageBook.setPreferredSize(new java.awt.Dimension(200, 125));
         manageBook.addMouseListener(new java.awt.event.MouseAdapter() {
+<<<<<<< HEAD
+=======
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                manageBookMouseClicked(evt);
+            }
+>>>>>>> 98a313b (toi day)
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 manageBookMousePressed(evt);
             }
@@ -400,7 +420,11 @@ public class HomePage extends javax.swing.JFrame {
         manageStudents.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         manageStudents.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         manageStudents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/editUser.png"))); // NOI18N
+<<<<<<< HEAD
         manageStudents.setText("Quản lý sinh viên");
+=======
+        manageStudents.setText("Đăng ký mượn sách");
+>>>>>>> 98a313b (toi day)
         manageStudents.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         manageStudents.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         manageStudents.setMaximumSize(new java.awt.Dimension(200, 125));
@@ -408,6 +432,12 @@ public class HomePage extends javax.swing.JFrame {
         manageStudents.setOpaque(true);
         manageStudents.setPreferredSize(new java.awt.Dimension(200, 125));
         manageStudents.addMouseListener(new java.awt.event.MouseAdapter() {
+<<<<<<< HEAD
+=======
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                manageStudentsMouseClicked(evt);
+            }
+>>>>>>> 98a313b (toi day)
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 manageStudentsMousePressed(evt);
             }
@@ -420,7 +450,11 @@ public class HomePage extends javax.swing.JFrame {
         manageUsers.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         manageUsers.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         manageUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/admin.png"))); // NOI18N
+<<<<<<< HEAD
         manageUsers.setText("Quản lý người dùng");
+=======
+        manageUsers.setText("Quản lý lịch sử mượn");
+>>>>>>> 98a313b (toi day)
         manageUsers.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         manageUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         manageUsers.setMaximumSize(new java.awt.Dimension(200, 125));
@@ -428,6 +462,12 @@ public class HomePage extends javax.swing.JFrame {
         manageUsers.setOpaque(true);
         manageUsers.setPreferredSize(new java.awt.Dimension(200, 125));
         manageUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+<<<<<<< HEAD
+=======
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                manageUsersMouseClicked(evt);
+            }
+>>>>>>> 98a313b (toi day)
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 manageUsersMousePressed(evt);
             }
@@ -552,7 +592,18 @@ public class HomePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+<<<<<<< HEAD
         System.exit(0);
+=======
+        int confirm = JOptionPane.showConfirmDialog(this, 
+                "Bạn có chắc chắn muốn thoát ứng dụng?", 
+                "Xác nhận Thoát", 
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            System.exit(0); 
+        }
+>>>>>>> 98a313b (toi day)
     }//GEN-LAST:event_closeMouseClicked
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
@@ -707,6 +758,24 @@ public class HomePage extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_manageLendMouseClicked
 
+<<<<<<< HEAD
+=======
+    private void manageBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageBookMouseClicked
+        new QuanLySach().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_manageBookMouseClicked
+
+    private void manageStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageStudentsMouseClicked
+        new DangKyMuonSachForm().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_manageStudentsMouseClicked
+
+    private void manageUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageUsersMouseClicked
+        new QuanLyMuonTraSachForm().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_manageUsersMouseClicked
+
+>>>>>>> 98a313b (toi day)
     /**
      * @param args the command line arguments
      */
@@ -747,6 +816,10 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLabel displayUsername;
     private javax.swing.JPanel home;
     private javax.swing.JPanel info;
+<<<<<<< HEAD
+=======
+    private javax.swing.JButton jButton1;
+>>>>>>> 98a313b (toi day)
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -41,6 +41,7 @@ public class Demo extends javax.swing.JFrame {
         close = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_mts = new javax.swing.JTable();
+<<<<<<< HEAD
         jLabel1 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -59,6 +60,9 @@ public class Demo extends javax.swing.JFrame {
         btnXoa = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
+=======
+        demo_btn = new javax.swing.JButton();
+>>>>>>> 98a313b (toi day)
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -175,6 +179,7 @@ public class Demo extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 1140, 320));
 
+<<<<<<< HEAD
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Tình trạng");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
@@ -298,6 +303,22 @@ public class Demo extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 230, 120, 40));
+=======
+        demo_btn.setBackground(new java.awt.Color(51, 102, 255));
+        demo_btn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        demo_btn.setForeground(new java.awt.Color(255, 255, 255));
+        demo_btn.setText("demo");
+        demo_btn.setPreferredSize(new java.awt.Dimension(100, 27));
+        demo_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                demo_btnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                demo_btnMouseExited(evt);
+            }
+        });
+        getContentPane().add(demo_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 130, 120, 40));
+>>>>>>> 98a313b (toi day)
 
         setSize(new java.awt.Dimension(1199, 703));
         setLocationRelativeTo(null);
@@ -361,6 +382,7 @@ public class Demo extends javax.swing.JFrame {
         tb_mts.setShowVerticalLines(true);
     }//GEN-LAST:event_formWindowActivated
 
+<<<<<<< HEAD
     private void btnThemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThemMouseEntered
@@ -408,6 +430,16 @@ public class Demo extends javax.swing.JFrame {
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSuaActionPerformed
+=======
+    private void demo_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_demo_btnMouseEntered
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_demo_btnMouseEntered
+
+    private void demo_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_demo_btnMouseExited
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));// TODO add your handling code here:
+    }//GEN-LAST:event_demo_btnMouseExited
+>>>>>>> 98a313b (toi day)
 
     /**
      * @param args the command line arguments
@@ -452,6 +484,7 @@ public class Demo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     private javax.swing.JButton btnReset;
     private javax.swing.JLabel btnReturn;
     private javax.swing.JButton btnSua;
@@ -471,13 +504,23 @@ public class Demo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+=======
+    private javax.swing.JLabel btnReturn;
+    private javax.swing.JLabel close;
+    private javax.swing.JButton demo_btn;
+    private javax.swing.JLabel displayUsername;
+    private javax.swing.JLabel jLabel11;
+>>>>>>> 98a313b (toi day)
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+<<<<<<< HEAD
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+=======
+>>>>>>> 98a313b (toi day)
     private javax.swing.JTable tb_mts;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,17 +11,36 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+<<<<<<< HEAD
+=======
+import org.mindrot.bcrypt.BCrypt;
+
+>>>>>>> 98a313b (toi day)
 
 
 public class Login extends javax.swing.JFrame {
 
+<<<<<<< HEAD
     private static final String DB_URL = "jdbc:mysql://localhost:3306/users";
     private static final String USER = "root";
     private static final String PASSWORD = "";
+=======
+//    private static final String DB_URL = "jdbc:mysql://localhost:3307/qlthuvien";
+//    private static final String USER = "root";
+//    private static final String PASSWORD = "";
+    
+>>>>>>> 98a313b (toi day)
     
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
+<<<<<<< HEAD
+=======
+        
+        if (lblForgotPassword != null) {
+             lblForgotPassword.setForeground(Color.BLUE); // Đặt màu xanh dương
+         }
+>>>>>>> 98a313b (toi day)
     }
 
  
@@ -44,6 +63,10 @@ public class Login extends javax.swing.JFrame {
         Login_btn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         switchSignUp = new javax.swing.JLabel();
+<<<<<<< HEAD
+=======
+        lblForgotPassword = new javax.swing.JLabel();
+>>>>>>> 98a313b (toi day)
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -166,11 +189,23 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< HEAD
+=======
+        lblForgotPassword.setForeground(new java.awt.Color(0, 0, 153));
+        lblForgotPassword.setText("Quên mật khẩu?");
+        lblForgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblForgotPasswordMouseClicked(evt);
+            }
+        });
+
+>>>>>>> 98a313b (toi day)
         javax.swing.GroupLayout LeftLayout = new javax.swing.GroupLayout(Left);
         Left.setLayout(LeftLayout);
         LeftLayout.setHorizontalGroup(
             LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LeftLayout.createSequentialGroup()
+<<<<<<< HEAD
                 .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(LeftLayout.createSequentialGroup()
                         .addGap(91, 91, 91)
@@ -187,6 +222,28 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(txt_mk, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
                             .addComponent(Login_btn)
                             .addComponent(txt_tk))))
+=======
+                .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblForgotPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(LeftLayout.createSequentialGroup()
+                            .addGap(91, 91, 91)
+                            .addComponent(jLabel1))
+                        .addGroup(LeftLayout.createSequentialGroup()
+                            .addGap(29, 29, 29)
+                            .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(LeftLayout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(switchSignUp))
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3)
+                                .addComponent(txt_mk, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                                .addGroup(LeftLayout.createSequentialGroup()
+                                    .addComponent(Login_btn)
+                                    .addGap(48, 48, 48))
+                                .addComponent(txt_tk)))))
+>>>>>>> 98a313b (toi day)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         LeftLayout.setVerticalGroup(
@@ -202,7 +259,13 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_mk, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< HEAD
                 .addGap(30, 30, 30)
+=======
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblForgotPassword)
+                .addGap(2, 2, 2)
+>>>>>>> 98a313b (toi day)
                 .addComponent(Login_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -237,6 +300,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_tkActionPerformed
 
     private void Login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_btnActionPerformed
+<<<<<<< HEAD
     String username = txt_tk.getText();
     String password = new String(txt_mk.getPassword());
     
@@ -261,6 +325,45 @@ SignUp SignUpFrame = new SignUp();
         SignUpFrame.pack();
         SignUpFrame.setLocationRelativeTo(null); 
         this.dispose();        // TODO add your handling code here:
+=======
+        String username = txt_tk.getText();
+        String password = new String(txt_mk.getPassword());
+
+        // Kiểm tra rỗng
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ tài khoản và mật khẩu", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+            return; // Dừng xử lý
+        }
+
+        // Gọi phương thức kiểm tra đăng nhập
+        if (checkLogin(username, password)) {
+            // Đăng nhập thành công
+            //JOptionPane.showMessageDialog(this, "Đăng nhập thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+            // Mở form Trang chủ (HomePage)
+            HomePage homePage = new HomePage(); // Chỉ tạo MỘT instance
+            homePage.setVisible(true); // Hiển thị form Trang chủ
+
+            // Đóng form Đăng nhập hiện tại
+            this.dispose();
+
+        } else {
+            // Đăng nhập thất bại (phương thức checkLogin đã xử lý thông báo lỗi CSDL nếu có)
+            // Nếu checkLogin trả về false mà không phải do lỗi CSDL, thì là sai TK/MK
+            // Thông báo lỗi sai tài khoản/mật khẩu
+            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không đúng", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_Login_btnActionPerformed
+
+    private void switchSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchSignUpMouseClicked
+        // Xử lý khi click vào Label "Đăng ký" (ví dụ)
+        SignUp SignUpFrame = new SignUp(); // Tạo instance form Đăng ký
+        SignUpFrame.setVisible(true); // Hiển thị form Đăng ký
+        SignUpFrame.pack(); // Điều chỉnh kích thước form
+        SignUpFrame.setLocationRelativeTo(null); // Đặt form Đăng ký ở giữa màn hình
+
+        this.dispose(); // Đóng form Đăng nhập hiện tại
+>>>>>>> 98a313b (toi day)
     }//GEN-LAST:event_switchSignUpMouseClicked
 
     private void txt_mkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_mkActionPerformed
@@ -274,7 +377,13 @@ SignUp SignUpFrame = new SignUp();
 
     private void switchSignUpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchSignUpMouseEntered
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+<<<<<<< HEAD
         switchSignUp.setForeground(Color.BLACK);
+=======
+        if (switchSignUp != null) { // Kiểm tra biến đã được khởi tạo chưa
+             switchSignUp.setForeground(Color.BLACK);
+        }
+>>>>>>> 98a313b (toi day)
         // TODO add your handling code here:
     }//GEN-LAST:event_switchSignUpMouseEntered
 
@@ -284,14 +393,35 @@ SignUp SignUpFrame = new SignUp();
 
     private void switchSignUpMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchSignUpMouseExited
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+<<<<<<< HEAD
         switchSignUp.setForeground(Color.BLUE);
 // TODO add your handling code here:
     }//GEN-LAST:event_switchSignUpMouseExited
 
+=======
+        if (switchSignUp != null) { // Kiểm tra biến đã được khởi tạo chưa
+            switchSignUp.setForeground(Color.BLUE); // Giả sử màu mặc định là BLUE
+        }
+    }//GEN-LAST:event_switchSignUpMouseExited
+
+    private void lblForgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotPasswordMouseClicked
+        ForgotPasswordForm forgotPasswordForm = new ForgotPasswordForm();
+        // Hiển thị form ForgotPasswordForm
+        forgotPasswordForm.setVisible(true);
+
+        // Đặt form ForgotPasswordForm ở giữa màn hình
+        forgotPasswordForm.setLocationRelativeTo(null);
+
+        // Đóng form Đăng nhập hiện tại
+        this.dispose();
+    }//GEN-LAST:event_lblForgotPasswordMouseClicked
+
+>>>>>>> 98a313b (toi day)
     /**
      * @param args the command line arguments
      */
         private boolean checkLogin(String username, String password) {
+<<<<<<< HEAD
         Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -336,6 +466,48 @@ SignUp SignUpFrame = new SignUp();
     java.awt.EventQueue.invokeLater(() -> {
         new Login().setVisible(true);
     });
+=======
+        // Câu lệnh SQL để lấy MẬT KHẨU ĐÃ BĂM từ CSDL dựa vào username
+        String sql = "SELECT password FROM accounts WHERE username = ?";
+
+        try (Connection con = KN.KNDL(); // Lấy kết nối từ class KN
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setString(1, username);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                // Kiểm tra xem có dòng kết quả nào không (tức là username có tồn tại không)
+                if (rs.next()) {
+                    // Lấy mật khẩu đã băm từ cột 'password' trong CSDL
+                    String hashedPasswordFromDB = rs.getString("password");
+
+                    // --- BƯỚC XÁC MINH MẬT KHẨU ---
+                    // So sánh mật khẩu plaintext người dùng nhập với mật khẩu đã băm từ DB
+                    // BCrypt.checkpw() trả về true nếu khớp, false nếu không khớp
+                    return BCrypt.checkpw(password, hashedPasswordFromDB);
+                    // --- HẾT BƯỚC XÁC MINH ---
+
+                } else {
+                    // Không tìm thấy username trong CSDL
+                    return false;
+                }
+            }
+
+        } catch (SQLException e) {
+            // Bắt và xử lý các lỗi CSDL
+            JOptionPane.showMessageDialog(null, // Sử dụng null nếu gọi từ phương thức không phải GUI
+                                         "Lỗi CSDL khi kiểm tra đăng nhập: " + e.getMessage(),
+                                         "Lỗi Database",
+                                         JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return false; // Đăng nhập thất bại do lỗi CSDL
+        }
+    }
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(() -> {
+            new Login().setVisible(true);
+        });
+>>>>>>> 98a313b (toi day)
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -351,6 +523,10 @@ SignUp SignUpFrame = new SignUp();
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+<<<<<<< HEAD
+=======
+    private javax.swing.JLabel lblForgotPassword;
+>>>>>>> 98a313b (toi day)
     private javax.swing.JLabel switchSignUp;
     private javax.swing.JPasswordField txt_mk;
     private javax.swing.JTextField txt_tk;
