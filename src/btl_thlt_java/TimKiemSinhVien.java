@@ -464,11 +464,7 @@ public class TimKiemSinhVien extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_qlsActionPerformed
 
     private void menu_qlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_qlmuontraActionPerformed
-<<<<<<< HEAD
-        new QuanLyMuonTraSach().setVisible(true);
-=======
         new QuanLyMuonTraSachForm().setVisible(true);
->>>>>>> 98a313b (toi day)
         this.dispose();
     }//GEN-LAST:event_menu_qlmuontraActionPerformed
 
@@ -508,11 +504,7 @@ public class TimKiemSinhVien extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_qls1ActionPerformed
 
     private void menu_qlmuontra1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_qlmuontra1ActionPerformed
-<<<<<<< HEAD
-        new QuanLyMuonTraSach().setVisible(true);
-=======
         new QuanLyMuonTraSachForm().setVisible(true);
->>>>>>> 98a313b (toi day)
         this.dispose();
     }//GEN-LAST:event_menu_qlmuontra1ActionPerformed
 

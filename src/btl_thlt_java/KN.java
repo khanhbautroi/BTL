@@ -4,10 +4,6 @@
  */
 package btl_thlt_java;
 
-<<<<<<< HEAD
-import java.sql.*;
-=======
->>>>>>> 98a313b (toi day)
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,20 +13,6 @@ import java.sql.SQLException;
  * @author Khanh
  */
 public class KN {
-<<<<<<< HEAD
-    public static Connection KNDL() throws SQLException{
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/qlthuvien", "root", "");
-        return con;
-    }
-    
-    public static void main(String[] args) throws SQLException {
-        Connection kn = KN.KNDL();
-        if(kn!=null){
-            System.out.println("ket thoi thanh cong"+kn);
-        }
-        else{
-            System.out.println("ket noi that bai");
-=======
     // Khai báo các hằng số cho thông tin kết nối (vẫn hardcoded như yêu cầu)
     // Sử dụng 'static final' giúp code rõ ràng hơn là các hằng số
 
@@ -54,7 +36,6 @@ public class KN {
 
         } finally {
             System.out.println("Kết thúc quy trình kiểm tra kết nối.");
->>>>>>> 98a313b (toi day)
         }
     }
 }

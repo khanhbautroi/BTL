@@ -4,15 +4,6 @@
  */
 package btl_thlt_java;
 
-<<<<<<< HEAD
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
-=======
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
@@ -24,7 +15,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
->>>>>>> 98a313b (toi day)
 
 /**
  *
@@ -39,19 +29,6 @@ public class QuanLySach extends javax.swing.JFrame {
         initComponents();
     }
     
-<<<<<<< HEAD
-    public void ht() throws SQLException{
-        try {
-            Connection kn = KN.KNDL();
-            Statement stm = kn.createStatement();
-            String sql = "select * from ql_sach";
-            ResultSet rs = stm.executeQuery(sql);
-            DefaultTableModel dtm = (DefaultTableModel) tb_qlsach.getModel();
-            dtm.setRowCount(0);
-            
-            while(rs.next()){
-                Object object[]={
-=======
     public void loadTableData() { // Bỏ throws SQLException, xử lý lỗi bên trong
         // Câu lệnh SQL lấy tất cả dữ liệu sách
         String sql = "SELECT maS, tenS, tg, namXB, gia, sl, maNXB, ngonngu, tinhtrang FROM ql_sach"; // Chọn cột tường minh
@@ -69,151 +46,16 @@ public class QuanLySach extends javax.swing.JFrame {
             // Duyệt qua các dòng kết quả từ CSDL và thêm vào model
             while (rs.next()) {
                 Object object[] = {
->>>>>>> 98a313b (toi day)
                     rs.getString("maS"),
                     rs.getString("tenS"),
                     rs.getString("tg"),
                     rs.getString("namXB"),
-<<<<<<< HEAD
-                    rs.getInt("gia"),   
-                    rs.getString("sl"),
-                    rs.getString("maNXB"),
-                    rs.getString("ngonngu"),
-                    rs.getString("tinhtrang")
-                    
-            };
-                dtm.addRow(object);
-                tb_qlsach.setModel(dtm);
-            }
-        }catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void them() throws SQLException{
-        String ma = txt_maS.getText();
-        String ten = txt_tenS.getText();
-        String tg = txt_tg.getText();
-        String namXB = txt_namXB.getText();
-        String gia = txt_gia.getText();
-        String sl = txt_sl.getText();
-        String maNXB = txt_maNXB.getText();
-        String ngonngu = txt_nn.getText();
-        String tinhtrang = txt_tt.getText();
-        try{
-            Connection kn = KN.KNDL();
-            String sqlthem = "insert into ql_sach values('"+ma+"', '"+ten+"', '"+tg+"', '"+namXB+"', '"+gia+"', '"+sl+"', '"+maNXB+"', '"+ngonngu+"', '"+tinhtrang+"')";
-            Statement stm = kn.createStatement();
-            stm.executeUpdate(sqlthem);
-            String sql = "select * from ql_sach";
-            ResultSet rs = stm.executeQuery(sql);
-            DefaultTableModel dtm = (DefaultTableModel) tb_qlsach.getModel();
-            dtm.setRowCount(0);
-            
-            while(rs.next()){
-                Object object[]={
-                    rs.getString("maS"),
-                    rs.getString("tenS"),
-                    rs.getString("tg"),
-                    rs.getString("namXB"),
-                    rs.getInt("gia"),   
-                    rs.getString("sl"),
-=======
                     rs.getInt("gia"),      // Lấy giá trị kiểu INT từ cột 'gia'
                     rs.getInt("sl"),       // Lấy giá trị kiểu INT từ cột 'sl' (giả định là INT)
->>>>>>> 98a313b (toi day)
                     rs.getString("maNXB"),
                     rs.getString("ngonngu"),
                     rs.getString("tinhtrang")
                 };
-<<<<<<< HEAD
-                dtm.addRow(object);
-                tb_qlsach.setModel(dtm);
-            }
-            
-        }catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void sua() throws SQLException{
-        String ma = txt_maS.getText();
-        String ten = txt_tenS.getText();
-        String tg = txt_tg.getText();
-        String namXB = txt_namXB.getText();
-        String gia = txt_gia.getText();
-        String sl = txt_sl.getText();
-        String maNXB = txt_maNXB.getText();
-        String ngonngu = txt_nn.getText();
-        String tinhtrang = txt_tt.getText();
-            try{
-                Connection kn = KN.KNDL();
-                String sqlsua = "update ql_sach set tenS ='"+ten+"',tg ='"+tg+"',NamXB ='"+namXB+"', gia ='"+gia+"', sl ='"+sl+"', maNXB ='"+maNXB+"', ngonngu ='"+ngonngu+"', tinhtrang ='"+tinhtrang+"'where maS='"+ma+"'";
-                Statement stm = kn.createStatement();
-                stm.executeUpdate(sqlsua);
-                String sql = "select * from ql_sach";
-                ResultSet rs = stm.executeQuery(sql);
-                DefaultTableModel dtm = (DefaultTableModel) tb_qlsach.getModel();
-                dtm.setRowCount(0);
-                while(rs.next()){
-                    Object object[]={
-                        rs.getString("maS"),
-                        rs.getString("tenS"),
-                        rs.getString("tg"),
-                        rs.getString("namXB"),
-                        rs.getInt("gia"),   
-                        rs.getString("sl"),
-                        rs.getString("maNXB"),
-                        rs.getString("ngonngu"),
-                        rs.getString("tinhtrang")
-                    };
-                dtm.addRow(object);
-                tb_qlsach.setModel(dtm);
-                }
-            
-            }catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void xoa(){
-            int row = tb_qlsach.getSelectedRow();
-            String macanxoa = txt_maS.getText();
-            try{
-                Connection kn = KN.KNDL();
-                String sql = "delete from ql_sach where maS ='"+macanxoa+"' ";
-                Statement stm = kn.createStatement();
-                int rowsUpdate = stm.executeUpdate(sql);
-                DefaultTableModel dtm = (DefaultTableModel) tb_qlsach.getModel();
-                dtm.removeRow(row);
-            } catch (SQLException ex) {
-                Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    
-    public void tbmouseClick() throws SQLException{
-        int row = tb_qlsach.getSelectedRow(); 
-        
-            String ma = tb_qlsach.getValueAt(row, 0).toString();
-            String ten = tb_qlsach.getValueAt(row, 1).toString();
-            String tg = tb_qlsach.getValueAt(row, 2).toString();
-            String namXB = tb_qlsach.getValueAt(row, 3).toString();
-            String gia= tb_qlsach.getValueAt(row, 4).toString();
-            String sl = tb_qlsach.getValueAt(row, 5).toString();
-            String maNXB= tb_qlsach.getValueAt(row, 6).toString();
-            String ngonngu = tb_qlsach.getValueAt(row, 7).toString();
-            String tinhtrang= tb_qlsach.getValueAt(row, 8).toString();
-            
-            txt_maS.setText(ma);
-            txt_tenS.setText(ten);
-            txt_tg.setText(tg);
-            txt_namXB.setText(namXB);
-            txt_gia.setText(gia);
-            txt_sl.setText(sl);
-            txt_maNXB.setText(maNXB);
-            txt_nn.setText(ngonngu);
-            txt_tt.setText(tinhtrang);
-=======
                 dtm.addRow(object); // Thêm dòng mới vào model
             }
 
@@ -464,7 +306,6 @@ public class QuanLySach extends javax.swing.JFrame {
         txt_tt.setText("");
         // Tùy chọn: Bỏ chọn dòng trong bảng
         tb_qlsach.clearSelection();
->>>>>>> 98a313b (toi day)
     }
     
     
@@ -884,15 +725,7 @@ public class QuanLySach extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_tenSActionPerformed
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
-<<<<<<< HEAD
-        try {
-            them();
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-=======
         them();
->>>>>>> 98a313b (toi day)
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void txt_maSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maSActionPerformed
@@ -905,21 +738,12 @@ public class QuanLySach extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_qlsvActionPerformed
 
     private void menu_qlsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_qlsActionPerformed
-<<<<<<< HEAD
-        new QuanLySach().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_menu_qlsActionPerformed
-
-    private void menu_qlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_qlmuontraActionPerformed
-        new QuanLyMuonTraSach().setVisible(true);
-=======
         loadTableData();
         JOptionPane.showMessageDialog(this, "Bạn đang ở form Quản lý Sách.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_menu_qlsActionPerformed
 
     private void menu_qlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_qlmuontraActionPerformed
         new QuanLyMuonTraSachForm().setVisible(true);
->>>>>>> 98a313b (toi day)
         this.dispose();
     }//GEN-LAST:event_menu_qlmuontraActionPerformed
 
@@ -939,16 +763,11 @@ public class QuanLySach extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_tksvActionPerformed
 
     private void menu_dangnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_dangnhapActionPerformed
-<<<<<<< HEAD
-        new Login().setVisible(true);
-        this.dispose();
-=======
         int confirm = JOptionPane.showConfirmDialog(this, "Bạn có muốn quay về trang Đăng nhập?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             new Login().setVisible(true);
             this.dispose();
         }
->>>>>>> 98a313b (toi day)
     }//GEN-LAST:event_menu_dangnhapActionPerformed
 
     private void menu_dangkyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_dangkyActionPerformed
@@ -957,14 +776,10 @@ public class QuanLySach extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_dangkyActionPerformed
 
     private void btn_thoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thoatActionPerformed
-<<<<<<< HEAD
-        System.exit(0);
-=======
         int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thoát ứng dụng?", "Xác nhận Thoát", JOptionPane.YES_NO_OPTION);
          if (confirm == JOptionPane.YES_OPTION) {
              System.exit(0); 
          }
->>>>>>> 98a313b (toi day)
     }//GEN-LAST:event_btn_thoatActionPerformed
 
     private void txt_slActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_slActionPerformed
@@ -972,41 +787,6 @@ public class QuanLySach extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_slActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-<<<<<<< HEAD
-        try {
-            ht();
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_formWindowActivated
-
-    private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
-        try {
-            sua();
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btn_suaActionPerformed
-
-    private void btn_lmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lmActionPerformed
-            txt_maS.setText("");
-            txt_tenS.setText("");
-            txt_tg.setText("");
-            txt_namXB.setText("");
-            txt_gia.setText("");
-            txt_sl.setText("");
-            txt_maNXB.setText("");
-            txt_nn.setText("");
-            txt_tt.setText("");
-    }//GEN-LAST:event_btn_lmActionPerformed
-
-    private void tb_qlsachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_qlsachMouseClicked
-        try {
-            tbmouseClick();
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-=======
         // Khi form mở, tải dữ liệu vào bảng
         loadTableData(); // Gọi phương thức tải dữ liệu đã cải tiến
 
@@ -1034,7 +814,6 @@ public class QuanLySach extends javax.swing.JFrame {
 
     private void tb_qlsachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_qlsachMouseClicked
         populateFieldsFromTable();
->>>>>>> 98a313b (toi day)
     }//GEN-LAST:event_tb_qlsachMouseClicked
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
@@ -1047,57 +826,13 @@ public class QuanLySach extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_tknvActionPerformed
 
     private void btn_cuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cuoiActionPerformed
-<<<<<<< HEAD
-        tb_qlsach.setRowSelectionInterval(tb_qlsach.getRowCount()-1, tb_qlsach.getRowCount()-1);
-        try {
-            tbmouseClick();
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-=======
         if (tb_qlsach.getRowCount() > 0) {
             tb_qlsach.setRowSelectionInterval(tb_qlsach.getRowCount() - 1, tb_qlsach.getRowCount() - 1); // Chọn dòng cuối
             populateFieldsFromTable(); // Hiển thị dữ liệu dòng đó
->>>>>>> 98a313b (toi day)
         }
     }//GEN-LAST:event_btn_cuoiActionPerformed
 
     private void btn_dauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dauActionPerformed
-<<<<<<< HEAD
-        tb_qlsach.setRowSelectionInterval(0,0);
-        try {
-            tbmouseClick();
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btn_dauActionPerformed
-
-    private void btn_truocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_truocActionPerformed
-        int n = tb_qlsach.getSelectedRow();
-        if(n>0){
-            tb_qlsach.setRowSelectionInterval(n-1, n-1);
-        }else{
-            tb_qlsach.setRowSelectionInterval(tb_qlsach.getRowCount()-1,tb_qlsach.getRowCount()-1);
-        }
-        try {
-            tbmouseClick();
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btn_truocActionPerformed
-
-    private void btn_sauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sauActionPerformed
-        int n = tb_qlsach.getSelectedRow();
-        if(n==tb_qlsach.getRowCount()-1){
-            tb_qlsach.setRowSelectionInterval(0, 0);
-        }else{
-            tb_qlsach.setRowSelectionInterval(n+1, n+1);
-        }
-        try {
-            tbmouseClick();
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-        }
-=======
         if (tb_qlsach.getRowCount() > 0) { // Kiểm tra bảng có dữ liệu không
             tb_qlsach.setRowSelectionInterval(0, 0); // Chọn dòng đầu tiên
              populateFieldsFromTable(); // Hiển thị dữ liệu dòng đó lên JTextFields
@@ -1126,7 +861,6 @@ public class QuanLySach extends javax.swing.JFrame {
               }
               populateFieldsFromTable(); // Hiển thị dữ liệu dòng mới được chọn
           }
->>>>>>> 98a313b (toi day)
     }//GEN-LAST:event_btn_sauActionPerformed
 
     /**
