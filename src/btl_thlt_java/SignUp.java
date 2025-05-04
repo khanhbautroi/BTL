@@ -12,36 +12,24 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Image;
-<<<<<<< HEAD
-=======
 import org.mindrot.bcrypt.BCrypt;
 
->>>>>>> 98a313b (toi day)
 
 
 
 public class SignUp extends javax.swing.JFrame {
     
-<<<<<<< HEAD
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/users";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
-=======
 //    private static final String DB_URL = "jdbc:mysql://localhost:3307/qlthuvien";
 //    private static final String USER = "root";
 //    private static final String PASSWORD = "";
->>>>>>> 98a313b (toi day)
 
  
     public SignUp() {
         initComponents();
         this.setLocationRelativeTo(null);
-<<<<<<< HEAD
-=======
         if (switchLogin != null) {
              switchLogin.setForeground(Color.BLUE);
         }
->>>>>>> 98a313b (toi day)
     }
 
   
@@ -256,33 +244,6 @@ public class SignUp extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signup_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signup_btnActionPerformed
-<<<<<<< HEAD
-               // TODO add your handling code here:
-                String username = txt_tk.getText();
-    String password = new String(txt_mk.getPassword());
-    
-    if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ tài khoản và mật khẩu", "Lỗi đăng kí", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    
-    if (registerUser(username, password)) {
-        JOptionPane.showMessageDialog(this, "Đăng kí thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-        // Optional: Clear fields after registration
-        txt_tk.setText("");
-        txt_mk.setText("");
-    } else {
-        JOptionPane.showMessageDialog(this, "Đăng kí thất bại. Tài khoản có thể đã tồn tại.", "Lỗi đăng kí", JOptionPane.ERROR_MESSAGE);
-    }
-    }//GEN-LAST:event_signup_btnActionPerformed
-
-    private void switchLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchLoginMouseClicked
-Login LoginFrame = new Login();
-        LoginFrame.setVisible(true);
-        LoginFrame.pack();
-        LoginFrame.setLocationRelativeTo(null); 
-        this.dispose();        // TODO add your handling code here:
-=======
         String username = txt_tk.getText(); // Lấy dữ liệu từ trường tên đăng nhập (tên biến của bạn)
         String password = new String(txt_mk.getPassword()); // Lấy dữ liệu từ trường mật khẩu (tên biến của bạn)
 
@@ -345,7 +306,6 @@ Login LoginFrame = new Login();
         LoginFrame.setLocationRelativeTo(null); // Đặt form Đăng nhập ở giữa màn hình
 
         this.dispose(); // Đóng form Đăng ký hiện tại
->>>>>>> 98a313b (toi day)
     }//GEN-LAST:event_switchLoginMouseClicked
 
     private void txt_mkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_mkActionPerformed
@@ -358,24 +318,16 @@ Login LoginFrame = new Login();
 
     private void switchLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchLoginMouseEntered
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-<<<<<<< HEAD
-        switchLogin.setForeground(Color.BLACK);            // TODO add your handling code here:
-=======
         if (switchLogin != null) {
              switchLogin.setForeground(Color.BLACK); // Đổi màu khi di chuột vào
          }
->>>>>>> 98a313b (toi day)
     }//GEN-LAST:event_switchLoginMouseEntered
 
     private void switchLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_switchLoginMouseExited
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-<<<<<<< HEAD
-        switchLogin.setForeground(Color.BLUE);
-=======
         if (switchLogin != null) {
              switchLogin.setForeground(Color.BLUE); // Trả lại màu mặc định (ví dụ: xanh dương)
          }
->>>>>>> 98a313b (toi day)
     }//GEN-LAST:event_switchLoginMouseExited
 
     private void signup_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_btnMouseEntered
@@ -386,59 +338,6 @@ Login LoginFrame = new Login();
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_signup_btnMouseExited
 private boolean registerUser(String username, String password) {
-<<<<<<< HEAD
-    Connection conn = null;
-    PreparedStatement checkStmt = null;
-    PreparedStatement insertStmt = null;
-    ResultSet rs = null;
-    
-    try {
-        // Connect to the database
-        conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-        
-        // First check if username already exists
-        String checkSql = "SELECT * FROM accounts WHERE username = ?";
-        checkStmt = conn.prepareStatement(checkSql);
-        checkStmt.setString(1, username);
-        rs = checkStmt.executeQuery();
-        
-        if (rs.next()) {
-            // Username already exists
-            return false;
-        }
-        
-        // Username doesn't exist, insert new account
-        String insertSql = "INSERT INTO accounts (username, password) VALUES (?, ?)";
-        insertStmt = conn.prepareStatement(insertSql);
-        insertStmt.setString(1, username);
-        insertStmt.setString(2, password);
-        
-        int rowsAffected = insertStmt.executeUpdate();
-        return rowsAffected > 0;
-        
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Lỗi kết nối đến cơ sở dữ liệu: " + e.getMessage(), 
-                "Lỗi Database", JOptionPane.ERROR_MESSAGE);
-        return false;
-    } finally {
-        // Close resources
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-            if (checkStmt != null) {
-                checkStmt.close();
-            }
-            if (insertStmt != null) {
-                insertStmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException e) {
-            // Handle close errors if needed
-        }
-=======
         // --- BƯỚC BĂM MẬT KHẨU ---
     // Tạo salt mới mỗi lần đăng ký
     String salt = BCrypt.gensalt();
@@ -476,7 +375,6 @@ private boolean registerUser(String username, String password) {
             e.printStackTrace();
         }
         return false; // Đăng ký thất bại
->>>>>>> 98a313b (toi day)
     }
 }
     /**

@@ -41,28 +41,7 @@ public class Demo extends javax.swing.JFrame {
         close = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_mts = new javax.swing.JTable();
-<<<<<<< HEAD
-        jLabel1 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        btnThem = new javax.swing.JButton();
-        btnXoa = new javax.swing.JButton();
-        btnReset = new javax.swing.JButton();
-        btnSua = new javax.swing.JButton();
-=======
         demo_btn = new javax.swing.JButton();
->>>>>>> 98a313b (toi day)
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -179,131 +158,6 @@ public class Demo extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 1140, 320));
 
-<<<<<<< HEAD
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Tình trạng");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 240, 180, 30));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setText("Ngày mượn");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 140, -1, -1));
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, 180, 30));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 120, 30));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 120, 30));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setText("Mã sách");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setText("Tình trạng");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setText("Tình trạng");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 120, 30));
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setText("Hạn trả");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setText("Tiền cọc");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setText("Mã sinh viên");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 190, 180, 30));
-
-        btnThem.setBackground(new java.awt.Color(51, 102, 255));
-        btnThem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnThem.setForeground(new java.awt.Color(255, 255, 255));
-        btnThem.setText("Thêm");
-        btnThem.setPreferredSize(new java.awt.Dimension(100, 27));
-        btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnThemMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnThemMouseExited(evt);
-            }
-        });
-        btnThem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 140, 120, 40));
-
-        btnXoa.setBackground(new java.awt.Color(51, 102, 255));
-        btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnXoa.setForeground(new java.awt.Color(255, 255, 255));
-        btnXoa.setText("Xóa");
-        btnXoa.setPreferredSize(new java.awt.Dimension(100, 27));
-        btnXoa.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnXoaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnXoaMouseExited(evt);
-            }
-        });
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 140, 120, 40));
-
-        btnReset.setBackground(new java.awt.Color(51, 102, 255));
-        btnReset.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnReset.setForeground(new java.awt.Color(255, 255, 255));
-        btnReset.setText("Làm mới");
-        btnReset.setPreferredSize(new java.awt.Dimension(100, 27));
-        btnReset.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnResetMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnResetMouseExited(evt);
-            }
-        });
-        btnReset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResetActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 230, 120, 40));
-
-        btnSua.setBackground(new java.awt.Color(51, 102, 255));
-        btnSua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnSua.setForeground(new java.awt.Color(255, 255, 255));
-        btnSua.setText("Sửa");
-        btnSua.setPreferredSize(new java.awt.Dimension(100, 27));
-        btnSua.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnSuaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnSuaMouseExited(evt);
-            }
-        });
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 230, 120, 40));
-=======
         demo_btn.setBackground(new java.awt.Color(51, 102, 255));
         demo_btn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         demo_btn.setForeground(new java.awt.Color(255, 255, 255));
@@ -318,7 +172,6 @@ public class Demo extends javax.swing.JFrame {
             }
         });
         getContentPane().add(demo_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 130, 120, 40));
->>>>>>> 98a313b (toi day)
 
         setSize(new java.awt.Dimension(1199, 703));
         setLocationRelativeTo(null);
@@ -382,55 +235,6 @@ public class Demo extends javax.swing.JFrame {
         tb_mts.setShowVerticalLines(true);
     }//GEN-LAST:event_formWindowActivated
 
-<<<<<<< HEAD
-    private void btnThemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnThemMouseEntered
-
-    private void btnThemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnThemMouseExited
-
-    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnThemActionPerformed
-
-    private void btnXoaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnXoaMouseEntered
-
-    private void btnXoaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnXoaMouseExited
-
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnXoaActionPerformed
-
-    private void btnResetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnResetMouseEntered
-
-    private void btnResetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnResetMouseExited
-
-    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnResetActionPerformed
-
-    private void btnSuaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSuaMouseEntered
-
-    private void btnSuaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSuaMouseExited
-
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSuaActionPerformed
-=======
     private void demo_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_demo_btnMouseEntered
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         // TODO add your handling code here:
@@ -439,7 +243,6 @@ public class Demo extends javax.swing.JFrame {
     private void demo_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_demo_btnMouseExited
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));// TODO add your handling code here:
     }//GEN-LAST:event_demo_btnMouseExited
->>>>>>> 98a313b (toi day)
 
     /**
      * @param args the command line arguments
@@ -484,43 +287,15 @@ public class Demo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
-    private javax.swing.JButton btnReset;
-    private javax.swing.JLabel btnReturn;
-    private javax.swing.JButton btnSua;
-    private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnXoa;
-    private javax.swing.JLabel close;
-    private javax.swing.JLabel displayUsername;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-=======
     private javax.swing.JLabel btnReturn;
     private javax.swing.JLabel close;
     private javax.swing.JButton demo_btn;
     private javax.swing.JLabel displayUsername;
     private javax.swing.JLabel jLabel11;
->>>>>>> 98a313b (toi day)
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-<<<<<<< HEAD
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-=======
->>>>>>> 98a313b (toi day)
     private javax.swing.JTable tb_mts;
     // End of variables declaration//GEN-END:variables
 }
