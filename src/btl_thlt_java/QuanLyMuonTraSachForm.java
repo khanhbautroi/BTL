@@ -55,7 +55,7 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
          txtTenSinhVien.setEditable(false); // Tên SV (chỉ xem)
          txtMaSach.setEditable(false); // Mã Sách (chỉ xem)
          txtTenSach.setEditable(false); // Tên Sách (chỉ xem)
-         txtTacGia.setEditable(false); // Tác giả (chỉ xem)
+//         txtTacGia.setEditable(false); // Tác giả (chỉ xem)
          txtTinhTrangSach.setEditable(false); // TT Sách (chỉ xem)
          txtNgayMuon.setEditable(false); // Ngày mượn (chỉ xem)
          txtNgayTraDuKien.setEditable(false); // Ngày trả DK (chỉ xem)
@@ -151,7 +151,7 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
          txtTenSinhVien.setText("");
          txtMaSach.setText("");
          txtTenSach.setText("");
-         txtTacGia.setText("");
+//         txtTacGia.setText("");
          txtTinhTrangSach.setText("");
          txtNgayMuon.setText("");
          txtNgayTraDuKien.setText("");
@@ -176,7 +176,7 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
             txtTenSinhVien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 1) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 1).toString() : ""); // <<< Dùng tên biến JTable của bạn
             txtMaSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 2) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 2).toString() : ""); // <<< Dùng tên biến JTable của bạn
             txtTenSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 3) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 3).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtTacGia.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 4) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 4).toString() : ""); // <<< Dùng tên biến JTable của bạn
+//            txtTacGia.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 4) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 4).toString() : ""); // <<< Dùng tên biến JTable của bạn
             txtTinhTrangSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 5) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 5).toString() : ""); // <<< Dùng tên biến JTable của bạn
             txtNgayMuon.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 6) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 6).toString() : ""); // <<< Dùng tên biến JTable của bạn
             txtNgayTraDuKien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 7) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 7).toString() : ""); // <<< Dùng tên biến JTable của bạn
@@ -244,8 +244,6 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
         txtMaSach = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtTenSach = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtTacGia = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtTinhTrangSach = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -292,17 +290,17 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
         tb_qlMuonTraSach.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tb_qlMuonTraSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã sinh viên", "Tên sinh viên", "Mã sách", "Tên sách", "Tác giả", "Tình trạng sách", "Ngày mượn", "Ngày trả dự kiến", "Ngày trả thực tế", "Phí mượn", "Tình trạng"
+                "Mã sinh viên", "Tên sinh viên", "Mã sách", "Tên sách", "Tình trạng sách", "Ngày mượn", "Ngày trả dự kiến", "Ngày trả thực tế", "Phí mượn", "Tình trạng"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -381,8 +379,6 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
 
         jLabel6.setText("Tên sách");
 
-        jLabel8.setText("Tác giả");
-
         jLabel9.setText("Tình trạng sách");
 
         jLabel10.setText("Ngày trả thực tế");
@@ -437,19 +433,11 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGap(68, 68, 68)
                                                 .addComponent(txtTenSach, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(43, 43, 43)
-                                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addComponent(txtTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                        .addGap(0, 29, Short.MAX_VALUE)
-                                                        .addComponent(btnLamMoi)
-                                                        .addGap(86, 86, 86)
-                                                        .addComponent(btnSua)
-                                                        .addGap(60, 60, 60))))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                                                .addComponent(btnLamMoi)
+                                                .addGap(86, 86, 86)
+                                                .addComponent(btnSua)
+                                                .addGap(60, 60, 60))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,7 +448,7 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
                                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtTinhTrangSach, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(cbTinhTrangMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addContainerGap(70, Short.MAX_VALUE))
+                                        .addContainerGap(69, Short.MAX_VALUE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(btn_cuoi, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -493,8 +481,6 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
                     .addComponent(txtMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(txtTenSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(txtTinhTrangSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -1014,7 +1000,6 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -1038,7 +1023,6 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtNgayTraDuKien;
     private javax.swing.JTextField txtNgayTraThucTe;
     private javax.swing.JTextField txtPhiMuon;
-    private javax.swing.JTextField txtTacGia;
     private javax.swing.JTextField txtTenSach;
     private javax.swing.JTextField txtTenSinhVien;
     private javax.swing.JTextField txtTinhTrangSach;

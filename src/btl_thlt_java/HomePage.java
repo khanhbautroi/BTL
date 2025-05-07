@@ -336,7 +336,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel1.add(info, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 180, -1));
 
         jButton1.setText("Đăng xuất");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 600, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 593, 90, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 180, 640));
 

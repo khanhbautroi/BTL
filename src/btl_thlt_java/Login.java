@@ -122,8 +122,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Tài khoản");
 
-        txt_tk.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txt_tk.setForeground(new java.awt.Color(102, 102, 102));
+        txt_tk.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txt_tk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_tkActionPerformed(evt);
@@ -134,6 +133,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Mật khẩu");
 
+        txt_mk.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txt_mk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_mkActionPerformed(evt);
@@ -196,17 +196,18 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(LeftLayout.createSequentialGroup()
                             .addGap(29, 29, 29)
                             .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(LeftLayout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(switchSignUp))
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3)
                                 .addComponent(txt_mk, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                                .addComponent(txt_tk)
                                 .addGroup(LeftLayout.createSequentialGroup()
-                                    .addComponent(Login_btn)
-                                    .addGap(48, 48, 48))
-                                .addComponent(txt_tk)))))
+                                    .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(LeftLayout.createSequentialGroup()
+                                            .addComponent(jLabel8)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(switchSignUp))
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel3)
+                                        .addComponent(Login_btn))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         LeftLayout.setVerticalGroup(
