@@ -66,7 +66,7 @@ public class ForgotPasswordForm extends javax.swing.JFrame {
                 .addComponent(txtUsernameForget, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                 .addGap(161, 161, 161))
             .addGroup(layout.createSequentialGroup()
-                .addGap(267, 267, 267)
+                .addGap(320, 320, 320)
                 .addComponent(btnFindAccount)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -77,8 +77,8 @@ public class ForgotPasswordForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUsernameDisplay)
                     .addComponent(txtUsernameForget, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(90, 90, 90)
-                .addComponent(btnFindAccount)
+                .addGap(81, 81, 81)
+                .addComponent(btnFindAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(302, Short.MAX_VALUE))
         );
 
