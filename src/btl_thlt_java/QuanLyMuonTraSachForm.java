@@ -92,7 +92,7 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
         // Lấy 11 cột dữ liệu đầy đủ từ 3 bảng (hoặc VIEW nếu bạn đã tạo VIEW)
         String sql = "SELECT " +
                      "mts.maSV, sv.ten AS tenSinhVien, " +
-                     "mts.maS, qls.tenS AS tenSachValue, qls.tg AS tacGia, qls.tinhtrang AS tinhTrangSachSach, " +
+                     "mts.maS, qls.tenS AS tenSachValue, qls.tinhtrang AS tinhTrangSachSach, " +
                      "mts.ngayMuon, mts.ngayTraDuKien, mts.ngayTraThucTe, mts.phiMuon, mts.tinhTrangMuon " + // Đã sửa phiMuon
                      "FROM muon_tra_sach mts " +
                      "JOIN ql_sv sv ON mts.maSV = sv.ma " + // JOIN với bảng sinh viên
@@ -127,7 +127,6 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
                         rs.getString("tenSinhVien"),    // Cột 2: Tên SV (alias)
                         rs.getString("maS"),            // Cột 3: Mã Sách
                         rs.getString("tenSachValue"),   // Cột 4: Tên Sách (alias)
-                        rs.getString("tacGia"),         // Cột 5: Tác giả (alias)
                         rs.getString("tinhTrangSachSach"), // Cột 6: TT Sách (alias)
                         rs.getTimestamp("ngayMuon") != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(rs.getTimestamp("ngayMuon")) : "N/A", // Cột 7: Ngày mượn
                         rs.getDate("ngayTraDuKien") != null ? rs.getDate("ngayTraDuKien").toString() : "N/A", // Cột 8: Ngày trả DK
@@ -151,7 +150,6 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
          txtTenSinhVien.setText("");
          txtMaSach.setText("");
          txtTenSach.setText("");
-//         txtTacGia.setText("");
          txtTinhTrangSach.setText("");
          txtNgayMuon.setText("");
          txtNgayTraDuKien.setText("");
@@ -176,14 +174,13 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
             txtTenSinhVien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 1) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 1).toString() : ""); // <<< Dùng tên biến JTable của bạn
             txtMaSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 2) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 2).toString() : ""); // <<< Dùng tên biến JTable của bạn
             txtTenSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 3) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 3).toString() : ""); // <<< Dùng tên biến JTable của bạn
-//            txtTacGia.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 4) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 4).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtTinhTrangSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 5) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 5).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtNgayMuon.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 6) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 6).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtNgayTraDuKien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 7) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 7).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtNgayTraThucTe.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 8) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 8).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtPhiMuon.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 9) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 9).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtTinhTrangSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 4) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 4).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtNgayMuon.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 5) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 5).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtNgayTraDuKien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 6) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 6).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtNgayTraThucTe.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 7) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 7).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtPhiMuon.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 8) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 8).toString() : ""); // <<< Dùng tên biến JTable của bạn
             // Chọn giá trị cho ComboBox Tình trạng mượn
-            String tinhTrang = tb_qlMuonTraSach.getValueAt(selectedRow, 10) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 10).toString() : "Đang mượn"; // <<< Dùng tên biến JTable của bạn
+            String tinhTrang = tb_qlMuonTraSach.getValueAt(selectedRow, 9) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 9).toString() : "Đang mượn"; // <<< Dùng tên biến JTable của bạn
             cbTinhTrangMuon.setSelectedItem(tinhTrang); // <<< Dùng tên biến cmbTinhTrangMuon của bạn
 
 
@@ -922,7 +919,7 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
               SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Định dạng phải khớp với cách lấy từ DB trong loadTableData
               Date ngayMuon_selected_date = dateTimeFormat.parse(ngayMuon_selected_str);
               pstUpdate.setTimestamp(6, new java.sql.Timestamp(ngayMuon_selected_date.getTime()));
-
+              
               // Hoặc nếu dùng ID:
               // pstUpdate.setInt(4, id_selected); // Chỉ số tham số sẽ khác
 
