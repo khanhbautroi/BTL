@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 
 /**
  *
@@ -29,6 +30,9 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
     /**
      * Creates new form QuanLyMuonTraSach
      */
+    
+    private int selectedRecordId = -1;
+    
     public QuanLyMuonTraSachForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -91,6 +95,7 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
         // --- CÂU LỆNH SQL TỔNG HỢP (có JOIN) ---
         // Lấy 11 cột dữ liệu đầy đủ từ 3 bảng (hoặc VIEW nếu bạn đã tạo VIEW)
         String sql = "SELECT " +
+                     "mts.id, " +
                      "mts.maSV, sv.ten AS tenSinhVien, " +
                      "mts.maS, qls.tenS AS tenSachValue, qls.tinhtrang AS tinhTrangSachSach, " +
                      "mts.ngayMuon, mts.ngayTraDuKien, mts.ngayTraThucTe, mts.phiMuon, mts.tinhTrangMuon " + // Đã sửa phiMuon
@@ -123,12 +128,13 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
                     // Lấy dữ liệu từ ResultSet theo tên cột/alias trong câu SELECT
                     // Đảm bảo thứ tự các giá trị trong mảng này khớp với thứ tự cột trong JTable Model
                     Object object[] = {
+                        rs.getObject("id"),
                         rs.getString("maSV"),           // Cột 1: Mã SV
                         rs.getString("tenSinhVien"),    // Cột 2: Tên SV (alias)
                         rs.getString("maS"),            // Cột 3: Mã Sách
                         rs.getString("tenSachValue"),   // Cột 4: Tên Sách (alias)
                         rs.getString("tinhTrangSachSach"), // Cột 6: TT Sách (alias)
-                        rs.getTimestamp("ngayMuon") != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(rs.getTimestamp("ngayMuon")) : "N/A", // Cột 7: Ngày mượn
+                        rs.getTimestamp("ngayMuon") != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(rs.getTimestamp("ngayMuon")) : "N/A", // Cột 7: Ngày mượn
                         rs.getDate("ngayTraDuKien") != null ? rs.getDate("ngayTraDuKien").toString() : "N/A", // Cột 8: Ngày trả DK
                         rs.getDate("ngayTraThucTe") != null ? rs.getDate("ngayTraThucTe").toString() : "", // Cột 9: Ngày trả TT (Để trống nếu NULL)
                         rs.getString("phiMuon"),        // Cột 10: Phí mượn (Đảm bảo kiểu dữ liệu từ DB)
@@ -166,21 +172,37 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
      private void tbmouseclick() { // <<< Phương thức logic chính (không parameter MouseEvent)
         // Đảm bảo tên biến JTable ở đây là tên biến của bạn (tb_qlMuonTraSach)
         int selectedRow = tb_qlMuonTraSach.getSelectedRow(); // <<< Dùng tên biến JTable của bạn
+        
+        if (selectedRow >= 0) {
+            // Lấy ID từ cột đầu tiên (chỉ số 0) và lưu vào biến thành viên
+            // Đảm bảo ID trong CSDL là NOT NULL và kiểu int/serial
+             Object idObject = tb_qlMuonTraSach.getValueAt(selectedRow, 0);
+             if (idObject != null) {
+                 selectedRecordId = Integer.parseInt(idObject.toString());
+             } else {
+                 selectedRecordId = -1; // Hoặc xử lý lỗi nếu ID bị NULL
+                 JOptionPane.showMessageDialog(this, "Không lấy được ID bản ghi từ bảng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                 clearDetailFields();
+                 setDetailFieldsEditable(false);
+                 btnSua.setEnabled(false);
+                 btnXacNhanTraSach.setEnabled(false);
+                 return;
+             }
 
         if (selectedRow >= 0) {
             // Lấy dữ liệu từ dòng được chọn và điền vào các trường hiển thị chi tiết
             // Đảm bảo chỉ số cột (0, 1, 2...) khớp với thứ tự cột trong JTable Model (11 cột)
-            txtMaSinhVien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 0) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 0).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtTenSinhVien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 1) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 1).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtMaSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 2) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 2).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtTenSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 3) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 3).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtTinhTrangSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 4) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 4).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtNgayMuon.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 5) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 5).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtNgayTraDuKien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 6) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 6).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtNgayTraThucTe.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 7) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 7).toString() : ""); // <<< Dùng tên biến JTable của bạn
-            txtPhiMuon.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 8) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 8).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtMaSinhVien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 1) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 1).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtTenSinhVien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 2) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 2).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtMaSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 3) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 3).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtTenSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 4) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 4).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtTinhTrangSach.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 5) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 5).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtNgayMuon.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 6) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 6).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtNgayTraDuKien.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 7) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 7).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtNgayTraThucTe.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 8) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 8).toString() : ""); // <<< Dùng tên biến JTable của bạn
+            txtPhiMuon.setText(tb_qlMuonTraSach.getValueAt(selectedRow, 9) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 9).toString() : ""); // <<< Dùng tên biến JTable của bạn
             // Chọn giá trị cho ComboBox Tình trạng mượn
-            String tinhTrang = tb_qlMuonTraSach.getValueAt(selectedRow, 9) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 9).toString() : "Đang mượn"; // <<< Dùng tên biến JTable của bạn
+            String tinhTrang = tb_qlMuonTraSach.getValueAt(selectedRow, 10) != null ? tb_qlMuonTraSach.getValueAt(selectedRow, 10).toString() : "Đang mượn"; // <<< Dùng tên biến JTable của bạn
             cbTinhTrangMuon.setSelectedItem(tinhTrang); // <<< Dùng tên biến cmbTinhTrangMuon của bạn
 
 
@@ -203,8 +225,10 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
             btnSua.setEnabled(false); // <<< Dùng tên biến btnSua của bạn
             btnXacNhanTraSach.setEnabled(false); // <<< Dùng tên biến btnXacNhanTraSach của bạn
             // btnXoa.setEnabled(false); // Nút Xóa nếu có (Dùng tên biến của bạn)
+            
+            selectedRecordId = -1;
         }
-    }
+    }}
      
      
 
@@ -287,17 +311,17 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
         tb_qlMuonTraSach.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tb_qlMuonTraSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã sinh viên", "Tên sinh viên", "Mã sách", "Tên sách", "Tình trạng sách", "Ngày mượn", "Ngày trả dự kiến", "Ngày trả thực tế", "Phí mượn", "Tình trạng"
+                "ID", "Mã sinh viên", "Tên sinh viên", "Mã sách", "Tên sách", "Tình trạng sách", "Ngày mượn", "Ngày trả dự kiến", "Ngày trả thực tế", "Phí mượn", "Tình trạng"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -514,35 +538,15 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
         jMenu1.setText("Quản Lý");
 
         menu_qlsv.setText("Quản lý sinh viên");
-        menu_qlsv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_qlsvActionPerformed(evt);
-            }
-        });
         jMenu1.add(menu_qlsv);
 
         menu_qls.setText("Quản lý sách");
-        menu_qls.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_qlsActionPerformed(evt);
-            }
-        });
         jMenu1.add(menu_qls);
 
         menu_qlmuontra.setText("Quản lý mượn trả sách");
-        menu_qlmuontra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_qlmuontraActionPerformed(evt);
-            }
-        });
         jMenu1.add(menu_qlmuontra);
 
         menu_qlnv.setText("Quản lý nhân viên");
-        menu_qlnv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_qlnvActionPerformed(evt);
-            }
-        });
         jMenu1.add(menu_qlnv);
 
         jMenuBar1.add(jMenu1);
@@ -607,22 +611,6 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void menu_qlsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_qlsvActionPerformed
-        
-    }//GEN-LAST:event_menu_qlsvActionPerformed
-
-    private void menu_qlsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_qlsActionPerformed
-        
-    }//GEN-LAST:event_menu_qlsActionPerformed
-
-    private void menu_qlmuontraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_qlmuontraActionPerformed
-        
-    }//GEN-LAST:event_menu_qlmuontraActionPerformed
-
-    private void menu_qlnvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_qlnvActionPerformed
-        
-    }//GEN-LAST:event_menu_qlnvActionPerformed
 
     private void menu_tracuusachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_tracuusachActionPerformed
         
@@ -850,9 +838,9 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
           // Cách tốt nhất là thêm cột ID (PRIMARY KEY) vào câu SELECT của loadTableData
           // và lưu nó vào Object[] ở cột đầu tiên (chỉ số 0), và ẩn cột này trong Designer
           // Giả định bạn cần lấy ID từ CSDL dựa vào maSV, maS, ngayMuon
-          String maSV_selected = tb_qlMuonTraSach.getValueAt(selectedRow, 0).toString();
-          String maS_selected = tb_qlMuonTraSach.getValueAt(selectedRow, 2).toString();
-          String ngayMuon_selected_str = tb_qlMuonTraSach.getValueAt(selectedRow, 6).toString(); // Ngày mượn từ bảng (định dạng yyyy-MM-dd HH:mm:ss)
+//          String maSV_selected = tb_qlMuonTraSach.getValueAt(selectedRow, 0).toString();
+//          String maS_selected = tb_qlMuonTraSach.getValueAt(selectedRow, 2).toString();
+//          String ngayMuon_selected_str = tb_qlMuonTraSach.getValueAt(selectedRow, 6).toString(); // Ngày mượn từ bảng (định dạng yyyy-MM-dd HH:mm:ss)
 
 
           // Lấy thông tin MỚI từ các trường chi tiết trên form
@@ -863,34 +851,32 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
 
           // TODO: Kiểm tra dữ liệu mới nhập (định dạng ngày trả thực tế, định dạng số phí mượn)
            Date newNgayTraThucTeDate = null;
-           if (!newNgayTraThucTeStr.isEmpty()) {
-               try {
-                   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                   dateFormat.setLenient(false); // Kiểm tra định dạng nghiêm ngặt
-                   newNgayTraThucTeDate = dateFormat.parse(newNgayTraThucTeStr);
-               } catch (java.text.ParseException e) {
-                    JOptionPane.showMessageDialog(this, "Ngày trả thực tế không đúng định dạng (YYYY-MM-DD).", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-                    return; // Dừng nếu định dạng sai
-               }
-           }
-           double newPhiMuon;
-           try {
-               newPhiMuon = Double.parseDouble(newPhiMuonStr);
-               if (newPhiMuon < 0) {
-                   JOptionPane.showMessageDialog(this, "Phí mượn không thể âm.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-                   return; // Dừng nếu phí âm
-               }
-           } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Phí mượn không đúng định dạng số.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-                return; // Dừng nếu phí không phải số
-           }
+         if (!newNgayTraThucTeStr.isEmpty()) {
+             try {
+                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                 dateFormat.setLenient(false);
+                 newNgayTraThucTeDate = dateFormat.parse(newNgayTraThucTeStr);
+             } catch (java.text.ParseException e) {
+                  JOptionPane.showMessageDialog(this, "Ngày trả thực tế không đúng định dạng (YYYY-MM-DD).", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+                  return;
+             }
+         }
+         double newPhiMuon;
+         try {
+             newPhiMuon = Double.parseDouble(newPhiMuonStr);
+             if (newPhiMuon < 0) {
+                 JOptionPane.showMessageDialog(this, "Phí mượn không thể âm.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+                 return;
+             }
+         } catch (NumberFormatException e) {
+              JOptionPane.showMessageDialog(this, "Phí mượn không đúng định dạng số.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+              return;
+         }
 
 
-          // --- CÂU LỆNH SQL UPDATE ---
-          // Cập nhật các cột có thể thay đổi: tinhTrangMuon, ngayTraThucTe, phimMuon
-          // Điều kiện WHERE để xác định bản ghi cần cập nhật (sử dụng các cột kết hợp)
-          String sqlUpdate = "UPDATE muon_tra_sach SET tinhTrangMuon = ?, ngayTraThucTe = ?, phiMuon = ? " +
-                             "WHERE maSV = ? AND maS = ? AND ngayMuon = ?"; // Sử dụng các cột kết hợp làm điều kiện WHERE
+        // --- CÂU LỆNH SQL UPDATE - SỬ DỤNG ID TRONG WHERE ---
+        String sqlUpdate = "UPDATE muon_tra_sach SET tinhTrangMuon = ?, ngayTraThucTe = ?, phiMuon = ? " +
+                           "WHERE id = ?"; // <<< Sửa điều kiện WHERE // Sử dụng các cột kết hợp làm điều kiện WHERE
 
           // TODO: NẾU BẢNG muon_tra_sach CÓ CỘT ID VÀ BẠN LẤY ID TRONG SELECT CỦA loadTableData (Ở CỘT 0, ẨN), HÃY DÙNG ID LÀM ĐIỀU KIỆN WHERE để chắc chắn cập nhật đúng bản ghi duy nhất:
           // String sqlUpdate = "UPDATE muon_tra_sach SET tinhTrangMuon = ?, ngayTraThucTe = ?, phimMuon = ? WHERE id = ?";
@@ -898,58 +884,39 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
 
 
           Connection con = null;
-          try {
-              con = KN.KNDL();
-              PreparedStatement pstUpdate = con.prepareStatement(sqlUpdate);
+        try {
+            con = KN.KNDL();
+            PreparedStatement pstUpdate = con.prepareStatement(sqlUpdate);
 
-              pstUpdate.setString(1, newTinhTrangMuon);
-              // Set ngày trả thực tế (NULL nếu ô nhập rỗng, hoặc giá trị Date nếu đã nhập/tự điền)
-              if (newNgayTraThucTeDate == null) {
-                  pstUpdate.setNull(2, java.sql.Types.DATE);
-              } else {
-                  pstUpdate.setDate(2, new java.sql.Date(newNgayTraThucTeDate.getTime()));
-              }
-              pstUpdate.setDouble(3, newPhiMuon); // Set phí mượn mới
+            pstUpdate.setString(1, newTinhTrangMuon);
+            if (newNgayTraThucTeDate == null) {
+                pstUpdate.setNull(2, java.sql.Types.DATE);
+            } else {
+                pstUpdate.setDate(2, new java.sql.Date(newNgayTraThucTeDate.getTime()));
+            }
+            pstUpdate.setDouble(3, newPhiMuon);
 
+            // Set tham số cho điều kiện WHERE (ID bản ghi được chọn)
+            pstUpdate.setInt(4, selectedRecordId); // <<< Set ID vào tham số thứ 4
 
-              // Set điều kiện WHERE (Nếu dùng maSV, maS, ngayMuon)
-              pstUpdate.setString(4, maSV_selected);
-              pstUpdate.setString(5, maS_selected);
-              // Chuyển String ngày mượn từ bảng sang Timestamp để dùng trong WHERE
-              SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Định dạng phải khớp với cách lấy từ DB trong loadTableData
-              Date ngayMuon_selected_date = dateTimeFormat.parse(ngayMuon_selected_str);
-              pstUpdate.setTimestamp(6, new java.sql.Timestamp(ngayMuon_selected_date.getTime()));
-              
-              // Hoặc nếu dùng ID:
-              // pstUpdate.setInt(4, id_selected); // Chỉ số tham số sẽ khác
+            int rowsAffected = pstUpdate.executeUpdate();
 
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Cập nhật bản ghi thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                // Tải lại dữ liệu sau khi cập nhật
+                loadTableData(txtMaSinhVien.getText().trim()); // Tải lại với bộ lọc hiện tại
+                // Các ô chi tiết vẫn giữ nguyên, hoặc làm sạch tùy ý
+            } else {
+                 // Trường hợp này ít xảy ra khi dùng ID, trừ khi bản ghi đã bị xóa
+                 JOptionPane.showMessageDialog(this, "Không có bản ghi nào được cập nhật. Có thể bản ghi đã bị xóa?", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            }
 
-              int rowsAffected = pstUpdate.executeUpdate();
-
-              if (rowsAffected > 0) {
-                  JOptionPane.showMessageDialog(this, "Cập nhật bản ghi thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                  // Tải lại dữ liệu sau khi cập nhật để bảng hiển thị thông tin mới
-                  loadTableData(txtMaSinhVien.getText().trim()); // Tải lại với bộ lọc hiện tại (là Mã SV đang nhập)
-                  // Không làm sạch trường chi tiết hay vô hiệu hóa sau khi cập nhật nếu người dùng muốn sửa tiếp hoặc xem lại
-                  // clearDetailFields();
-                  // setDetailFieldsEditable(false);
-                  // btnSua.setEnabled(false);
-                  // btnXacNhanTraSach.setEnabled(false);
-
-              } else {
-                   JOptionPane.showMessageDialog(this, "Không có bản ghi nào được cập nhật. Có thể không tìm thấy bản ghi phù hợp?", "Thông báo", JOptionPane.WARNING_MESSAGE);
-              }
-
-          } catch (java.text.ParseException e) {
-              Logger.getLogger(QuanLyMuonTraSachForm.class.getName()).log(Level.SEVERE, "Lỗi parse ngày mượn khi cập nhật", e);
-              JOptionPane.showMessageDialog(this, "Lỗi chuyển đổi định dạng ngày mượn từ bảng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-          }
-          catch (SQLException ex) {
-              Logger.getLogger(QuanLyMuonTraSachForm.class.getName()).log(Level.SEVERE, "Lỗi CSDL khi cập nhật bản ghi", ex);
-              JOptionPane.showMessageDialog(this, "Lỗi CSDL khi cập nhật bản ghi: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-          } finally {
-              // Đóng kết nối (nếu cần quản lý thủ công)
-          }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuanLyMuonTraSachForm.class.getName()).log(Level.SEVERE, "Lỗi CSDL khi cập nhật bản ghi", ex);
+            JOptionPane.showMessageDialog(this, "Lỗi CSDL khi cập nhật bản ghi: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            // Đóng kết nối (nếu cần quản lý thủ công)
+        }
      }
      
      private void setupTableAppearance() {
