@@ -917,34 +917,7 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
         } finally {
             // Đóng kết nối (nếu cần quản lý thủ công)
         }
-     }
-     
-     private void setupTableAppearance() {
-         // Đảm bảo tên biến JTable ở đây là tên biến của bạn (tb_qlMuonTraSach)
-         if (tb_qlMuonTraSach == null) return; // Thoát nếu bảng chưa được khởi tạo
-
-         JTableHeader header = tb_qlMuonTraSach.getTableHeader(); // <<< Dùng tên biến JTable của bạn
-         header.setBackground(new Color(70, 130, 180)); // Steel blue
-         header.setForeground(Color.WHITE);
-         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
-         tb_qlMuonTraSach.setSelectionBackground(new Color(135, 206, 250)); // Light sky blue <<< Dùng tên biến JTable của bạn
-         tb_qlMuonTraSach.setSelectionForeground(Color.BLACK);
-         tb_qlMuonTraSach.setShowGrid(true);
-         tb_qlMuonTraSach.setGridColor(new Color(200, 200, 200));
-         tb_qlMuonTraSach.setShowHorizontalLines(true);
-         tb_qlMuonTraSach.setShowVerticalLines(true);
-         tb_qlMuonTraSach.setRowHeight(30); // Chiều cao dòng
-         // Tùy chọn: Thiết lập chiều rộng cột
-         // tb_qlMuonTraSach.getColumnModel().getColumn(0).setPreferredWidth(50); // Mã SV <<< Dùng tên biến JTable của bạn
-         // ...
-     }
-     
-     
-     
-     
-  
-   
-
+     }   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnSua;

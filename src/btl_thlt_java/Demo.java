@@ -39,6 +39,7 @@ public class Demo extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         displayUsername = new javax.swing.JLabel();
         close = new javax.swing.JLabel();
+        displayUsername1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_mts = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -156,6 +157,12 @@ public class Demo extends javax.swing.JFrame {
             }
         });
         jPanel2.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 0, 60, 60));
+
+        displayUsername1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayUsername1.setForeground(new java.awt.Color(255, 255, 255));
+        displayUsername1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        displayUsername1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/arrow.png"))); // NOI18N
+        jPanel2.add(displayUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 0, 60, 60));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
 
@@ -476,6 +483,7 @@ public class Demo extends javax.swing.JFrame {
     private javax.swing.JButton btnXoa;
     private javax.swing.JLabel close;
     private javax.swing.JLabel displayUsername;
+    private javax.swing.JLabel displayUsername1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
