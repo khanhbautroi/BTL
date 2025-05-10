@@ -38,9 +38,7 @@ public class MuonTra extends javax.swing.JFrame {
     public MuonTra() {
         initComponents();
         setLocationRelativeTo(null);
-        
         btnLuuMuon.setEnabled(false);
-        
         setupTableAppearance(tb_sachDangMuon);
         // Ví dụ: Thiết lập dữ liệu ban đầu cho ComboBox Tình trạng mượn
          setupTinhTrangMuonComboBox();
@@ -50,7 +48,6 @@ public class MuonTra extends javax.swing.JFrame {
          btnXacNhanTraSach.setEnabled(false); // Nút Xác nhận trả sách
          // Làm cho các trường hiển thị chi tiết KHÔNG cho phép nhập trực tiếp
           setDetailFieldsEditable(false);
-          
           clearDetailFields();
     }
     private void saveUpdatedBorrowRecord() {
@@ -478,16 +475,29 @@ public class MuonTra extends javax.swing.JFrame {
     // --- Phương thức làm sạch các trường nhập liệu chính (tùy chọn) ---
     // Có thể gọi sau khi lưu thành công hoặc khi muốn reset form
     public void clearInputFields() {
+        txtMaSinhVien.setText("");
+        txtTenSinhVien.setText("");
+        txtMaSach.setText("");
+        txtTenSach.setText("");
+        txtPhiMuon.setText("");
+        txtTinhTrangSach.setText("");
+        // Ngày mượn nên giữ lại hoặc set lại ngày hiện tại
+        txtNgayMuon.setText("");
+        txtNgayTraThucTe.setText("");
+        txtNgayTraDuKien.setText("");
+        txtPhiMuon.setText("");
+        cbTinhTrangMuon.setSelectedItem(null);
+        
         txtNewMaSV.setText("");
         txtNewTenSV.setText("");
         txtNewMaSach.setText("");
         txtNewTenSach.setText("");
         txtNewGiaSach.setText("");
-        txtTinhTrangSach.setText("");
+        txtNewTinhTrangSach.setText("");
         // Ngày mượn nên giữ lại hoặc set lại ngày hiện tại
         // txtNgayMuon.setText("");
-        txtNgayTraDuKien.setText("");
-        txtPhiMuon.setText("");
+        txtNewNgayTraDuKien.setText("");
+        txtNewPhiMuon.setText("");
 
         // Xóa dữ liệu bảng lịch sử mượn
         DefaultTableModel dtm = (DefaultTableModel) tb_sachDangMuon.getModel();
@@ -500,10 +510,31 @@ public class MuonTra extends javax.swing.JFrame {
 
     // --- Phương thức tải lịch sử mượn cho sinh viên vào JTable ---
     // Phương thức này được gọi sau khi tra cứu sinh viên thành công
+    private  void updateQuaHan() {
+    try {
+        Connection con = KN.KNDL();
+        
+        String sqlUpdateQuaHan = "UPDATE muon_tra_sach SET tinhTrangMuon = 'Quá hạn' WHERE tinhTrangMuon = 'Đang mượn' AND ngayTraDuKien < CURDATE()";
+        PreparedStatement statement = con.prepareStatement(sqlUpdateQuaHan);
+        int rowsAffected = statement.executeUpdate();
+        
+        // Optional: Log or display the number of updated rows
+        System.out.println("Đã cập nhật" + rowsAffected + " tình trạng");
+        
+        // Close resources
+        statement.close();
+        con.close();
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        // Handle exception appropriately
+    }
+    
+}
      private void loadBorrowHistoryForStudent(String maSV) {
           DefaultTableModel dtm = (DefaultTableModel) tb_sachDangMuon.getModel();
           dtm.setRowCount(0); // Xóa tất cả các dòng dữ liệu cũ
-
+          
           if (maSV.isEmpty()) {
               return; // Không tải nếu mã SV rỗng
           }
@@ -748,7 +779,7 @@ public class MuonTra extends javax.swing.JFrame {
         QLMuon.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         QLMuon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         QLMuon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/manage.png"))); // NOI18N
-        QLMuon.setText("Quản lý lịch sử mượn");
+        QLMuon.setText("Quản lý lịch sử ");
         QLMuon.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         QLMuon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         QLMuon.setMaximumSize(new java.awt.Dimension(200, 125));
@@ -795,7 +826,7 @@ public class MuonTra extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(132, Short.MAX_VALUE)
+                .addContainerGap(166, Short.MAX_VALUE)
                 .addComponent(DangKyMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(102, 102, 102)
                 .addComponent(QLMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1418,7 +1449,7 @@ public class MuonTra extends javax.swing.JFrame {
         } else {
             jTabbedPane1.setSelectedIndex(0);
         }
-        
+        clearInputFields();
     }//GEN-LAST:event_btnReturnMouseClicked
 
     private void btnReturnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReturnMouseEntered
@@ -1451,6 +1482,7 @@ public class MuonTra extends javax.swing.JFrame {
         String dateTimeString = formatter.format(now);
         txtNewNgayMuon.setText(dateTimeString);
                 // Tải TOÀN BỘ dữ liệu lịch sử mượn khi form mở
+        updateQuaHan();
         loadTableData(null); // Truyền null để tải tất cả
         // Tùy chọn: Thiết lập hiển thị bảng
         setupTableAppearance(tb_qlMuonTraSach); // <<< Gọi phương thức setupTableAppearance
@@ -1459,10 +1491,10 @@ public class MuonTra extends javax.swing.JFrame {
          // Vô hiệu hóa các trường chi tiết và nút chức năng ban đầu (trừ ô Mã SV kiêm tìm kiếm)
          setDetailFieldsEditable(false); // Các ô còn lại
          txtMaSinhVien.setEditable(true); // Riêng ô Mã SV cho phép nhập để tìm kiếm
-
          btnSua.setEnabled(false);
          btnXacNhanTraSach.setEnabled(false);
          // btnXoa.setEnabled(false); // Nút Xóa
+         
     }//GEN-LAST:event_formWindowActivated
 
     private void tb_qlMuonTraSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_qlMuonTraSachMouseClicked
@@ -1733,14 +1765,15 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
               // 1. INSERT bản ghi mượn vào bảng muon_tra_sach
               String sqlInsert = "INSERT INTO muon_tra_sach (maSV, maS, tenSach , ngayMuon, ngayTraDuKien, phiMuon, tinhTrangMuon) VALUES (?, ?, ?, ?, ?, ?,?)";
               PreparedStatement pstInsert = con.prepareStatement(sqlInsert);
-
+              SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+              dateFormat.setLenient(false);
               pstInsert.setString(1, maSV);
               pstInsert.setString(2, maSach);
               pstInsert.setString(3, tenSach);
-              pstInsert.setTimestamp(4, java.sql.Timestamp.valueOf(ngayMuon));
+              Date ngayMuonDate = dateFormat.parse(ngayMuon);
+              pstInsert.setDate(4, new java.sql.Date(ngayMuonDate.getTime()));
               // Chuyển String ngày trả dự kiến sang java.sql.Date
-               SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-               dateFormat.setLenient(false);
+               
                Date ngayTraDuKienDate = dateFormat.parse(ngayTraDuKienStr); // Chuyển String sang Date
                pstInsert.setDate(5, new java.sql.Date(ngayTraDuKienDate.getTime())); // Chuyển java.util.Date sang java.sql.Date
 
