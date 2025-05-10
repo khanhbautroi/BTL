@@ -658,7 +658,7 @@ public class QuanLyMuonTraSachForm extends javax.swing.JFrame {
         // Tải TOÀN BỘ dữ liệu lịch sử mượn khi form mở
         loadTableData(null); // Truyền null để tải tất cả
         // Tùy chọn: Thiết lập hiển thị bảng
-        setupTableAppearance(); // <<< Gọi phương thức setupTableAppearance
+         // <<< Gọi phương thức setupTableAppearance
          // Làm sạch các trường chi tiết ban đầu
          clearDetailFields();
          // Vô hiệu hóa các trường chi tiết và nút chức năng ban đầu (trừ ô Mã SV kiêm tìm kiếm)

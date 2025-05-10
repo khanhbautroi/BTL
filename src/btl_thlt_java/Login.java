@@ -25,10 +25,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
-        if (lblForgotPassword != null) {
-             lblForgotPassword.setForeground(Color.BLUE); // Đặt màu xanh dương
-         }
+       
     }
 
  
@@ -51,7 +48,6 @@ public class Login extends javax.swing.JFrame {
         Login_btn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         switchSignUp = new javax.swing.JLabel();
-        lblForgotPassword = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -144,6 +140,7 @@ public class Login extends javax.swing.JFrame {
         Login_btn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Login_btn.setForeground(new java.awt.Color(255, 255, 255));
         Login_btn.setText("Đăng nhập");
+        Login_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Login_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 Login_btnMouseEntered(evt);
@@ -162,6 +159,7 @@ public class Login extends javax.swing.JFrame {
 
         switchSignUp.setForeground(new java.awt.Color(0, 0, 153));
         switchSignUp.setText("Đăng kí");
+        switchSignUp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         switchSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 switchSignUpMouseClicked(evt);
@@ -174,40 +172,27 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        lblForgotPassword.setForeground(new java.awt.Color(0, 0, 153));
-        lblForgotPassword.setText("Quên mật khẩu?");
-        lblForgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblForgotPasswordMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout LeftLayout = new javax.swing.GroupLayout(Left);
         Left.setLayout(LeftLayout);
         LeftLayout.setHorizontalGroup(
             LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LeftLayout.createSequentialGroup()
-                .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblForgotPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(LeftLayout.createSequentialGroup()
-                            .addGap(91, 91, 91)
-                            .addComponent(jLabel1))
-                        .addGroup(LeftLayout.createSequentialGroup()
-                            .addGap(29, 29, 29)
-                            .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txt_mk, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                                .addComponent(txt_tk)
-                                .addGroup(LeftLayout.createSequentialGroup()
-                                    .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(LeftLayout.createSequentialGroup()
-                                            .addComponent(jLabel8)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(switchSignUp))
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel3)
-                                        .addComponent(Login_btn))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))))
+                .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(LeftLayout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(jLabel1))
+                    .addGroup(LeftLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_mk, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                            .addComponent(txt_tk)
+                            .addGroup(LeftLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(switchSignUp))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(Login_btn))))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         LeftLayout.setVerticalGroup(
@@ -223,9 +208,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_mk, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblForgotPassword)
-                .addGap(2, 2, 2)
+                .addGap(30, 30, 30)
                 .addComponent(Login_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -327,18 +310,6 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_switchSignUpMouseExited
 
-    private void lblForgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotPasswordMouseClicked
-        ForgotPasswordForm forgotPasswordForm = new ForgotPasswordForm();
-        // Hiển thị form ForgotPasswordForm
-        forgotPasswordForm.setVisible(true);
-
-        // Đặt form ForgotPasswordForm ở giữa màn hình
-        forgotPasswordForm.setLocationRelativeTo(null);
-
-        // Đóng form Đăng nhập hiện tại
-        this.dispose();
-    }//GEN-LAST:event_lblForgotPasswordMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -398,7 +369,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblForgotPassword;
     private javax.swing.JLabel switchSignUp;
     private javax.swing.JPasswordField txt_mk;
     private javax.swing.JTextField txt_tk;
