@@ -169,6 +169,7 @@ public class MuonTra extends javax.swing.JFrame {
              txtNgayTraThucTe.setEditable(false);
              txtPhiMuon.setEditable(false);
              cbTinhTrangMuon.setEnabled(false);
+             btnXoa.setEnabled(false);
          }
      }
      
@@ -279,6 +280,7 @@ public class MuonTra extends javax.swing.JFrame {
                  JOptionPane.showMessageDialog(this, "Không lấy được ID bản ghi từ bảng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                  clearDetailFields();
                  setDetailFieldsEditable(false);
+                 btnXoa.setEnabled(false);
                  btnSua.setEnabled(false);
                  btnXacNhanTraSach.setEnabled(false);
                  return;
@@ -304,7 +306,7 @@ public class MuonTra extends javax.swing.JFrame {
             // Bật các trường chi tiết cho phép sửa (chỉ các trường được phép)
             setDetailFieldsEditable(true); // Gọi phương thức setDetailFieldsEditable
             txtMaSinhVien.setEditable(false); // Ô Mã SV chỉ đọc khi đã chọn dòng (<<< Dùng tên biến txtMaSV của bạn)
-
+            btnXoa.setEnabled(true);
             // Bật nút Cập nhật/Xác nhận/Xóa khi một dòng được chọn
             btnSua.setEnabled(true); // <<< Dùng tên biến btnSua của bạn
             btnXacNhanTraSach.setEnabled(true); // <<< Dùng tên biến btnXacNhanTraSach của bạn
@@ -316,7 +318,7 @@ public class MuonTra extends javax.swing.JFrame {
             clearDetailFields(); // Gọi phương thức clearDetailFields
             setDetailFieldsEditable(false); // Tắt chế độ sửa (Gọi phương thức của tôi)
             txtMaSinhVien.setEditable(true); // Cho phép nhập Mã SV để tìm kiếm khi không có dòng nào chọn (<<< Dùng tên biến txtMaSV của bạn)
-
+            btnXoa.setEnabled(false); 
             btnSua.setEnabled(false); // <<< Dùng tên biến btnSua của bạn
             btnXacNhanTraSach.setEnabled(false); // <<< Dùng tên biến btnXacNhanTraSach của bạn
             // btnXoa.setEnabled(false); // Nút Xóa nếu có (Dùng tên biến của bạn)
@@ -1493,7 +1495,7 @@ public class MuonTra extends javax.swing.JFrame {
          txtMaSinhVien.setEditable(true); // Riêng ô Mã SV cho phép nhập để tìm kiếm
          btnSua.setEnabled(false);
          btnXacNhanTraSach.setEnabled(false);
-         // btnXoa.setEnabled(false); // Nút Xóa
+          btnXoa.setEnabled(false); // Nút Xóa
          
     }//GEN-LAST:event_formWindowActivated
 
@@ -1697,7 +1699,7 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
         // Vô hiệu hóa các nút cập nhật/xóa vì không có dòng nào đang được chọn sau khi làm mới
         btnSua.setEnabled(false); // <<< Dùng tên biến nút Sửa của bạn
         btnXacNhanTraSach.setEnabled(false); // <<< Dùng tên biến nút Xác nhận trả sách của bạn
-        // btnXoa.setEnabled(false); // Nút Xóa nếu có (Dùng tên biến của bạn)
+         btnXoa.setEnabled(false); // Nút Xóa nếu có (Dùng tên biến của bạn)
 
         // Xóa lựa chọn dòng hiện tại trên bảng (nếu có)
          tb_qlMuonTraSach.clearSelection(); // <<< Dùng tên biến JTable của bạn
