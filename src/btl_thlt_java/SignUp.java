@@ -73,6 +73,7 @@ public class SignUp extends javax.swing.JFrame {
         signup_btn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         signup_btn.setForeground(new java.awt.Color(255, 255, 255));
         signup_btn.setText("Đăng kí");
+        signup_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         signup_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 signup_btnMouseEntered(evt);
@@ -89,6 +90,7 @@ public class SignUp extends javax.swing.JFrame {
 
         switchLogin.setForeground(new java.awt.Color(0, 0, 153));
         switchLogin.setText("Đăng nhập");
+        switchLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         switchLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 switchLoginMouseClicked(evt);
@@ -106,6 +108,7 @@ public class SignUp extends javax.swing.JFrame {
         jLabel2.setText("ĐĂNG KÍ");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        txt_mk.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txt_mk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_mkActionPerformed(evt);
@@ -116,8 +119,7 @@ public class SignUp extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Mật khẩu");
 
-        txt_tk.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txt_tk.setForeground(new java.awt.Color(102, 102, 102));
+        txt_tk.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txt_tk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_tkActionPerformed(evt);

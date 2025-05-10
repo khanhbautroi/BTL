@@ -36,9 +36,9 @@ public class HomePage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        displayUsername = new javax.swing.JLabel();
         close = new javax.swing.JLabel();
         displayUsername1 = new javax.swing.JLabel();
+        signout = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         search = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -110,12 +110,6 @@ public class HomePage extends javax.swing.JFrame {
         jLabel11.setText("Phần mềm quản lý thư viện");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, -1, 60));
 
-        displayUsername.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        displayUsername.setForeground(new java.awt.Color(255, 255, 255));
-        displayUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        displayUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/arrow.png"))); // NOI18N
-        jPanel2.add(displayUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 0, 60, 60));
-
         close.setBackground(new java.awt.Color(0, 51, 102));
         close.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         close.setForeground(new java.awt.Color(255, 255, 255));
@@ -141,6 +135,32 @@ public class HomePage extends javax.swing.JFrame {
         displayUsername1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
         displayUsername1.setText("Username");
         jPanel2.add(displayUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 0, -1, 60));
+
+        signout.setBackground(new java.awt.Color(0, 51, 102));
+        signout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        signout.setForeground(new java.awt.Color(255, 255, 255));
+        signout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        signout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/arrow.png"))); // NOI18N
+        signout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signout.setOpaque(true);
+        signout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signoutMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                signoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                signoutMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                signoutMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                signoutMouseReleased(evt);
+            }
+        });
+        jPanel2.add(signout, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 0, 60, 60));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
 
@@ -750,6 +770,27 @@ public class HomePage extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_manageUsersMouseClicked
 
+    private void signoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signoutMouseClicked
+        new Login() .setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_signoutMouseClicked
+
+    private void signoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signoutMouseEntered
+        signout.setBackground(new Color(51,51,51));
+    }//GEN-LAST:event_signoutMouseEntered
+
+    private void signoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signoutMouseExited
+        signout.setBackground(new Color(0,51,102));
+    }//GEN-LAST:event_signoutMouseExited
+
+    private void signoutMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signoutMousePressed
+        signout.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_signoutMousePressed
+
+    private void signoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signoutMouseReleased
+        signout.setBackground(new Color(0,51,102));
+    }//GEN-LAST:event_signoutMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -787,7 +828,6 @@ public class HomePage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel close;
-    private javax.swing.JLabel displayUsername;
     private javax.swing.JLabel displayUsername1;
     private javax.swing.JPanel home;
     private javax.swing.JPanel info;
@@ -818,5 +858,6 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JPanel search;
     private javax.swing.JLabel searchBook;
     private javax.swing.JLabel searchUser;
+    private javax.swing.JLabel signout;
     // End of variables declaration//GEN-END:variables
 }
