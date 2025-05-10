@@ -39,22 +39,22 @@ public class DangKyMuonSachForm extends javax.swing.JFrame {
         
         btnLuuMuon.setEnabled(false);
         
-        setupTableAppearance();
+        setupTableAppearance(tb_sachDangMuon);
     }
     
-    private void setupTableAppearance() {
-        if (tb_sachDangMuon == null) return; // Thoát nếu bảng chưa được khởi tạo
+    private void setupTableAppearance(JTable nameJTable) {
+        if (nameJTable == null) return; // Thoát nếu bảng chưa được khởi tạo
 
-        JTableHeader header = tb_sachDangMuon.getTableHeader();
+        JTableHeader header = nameJTable.getTableHeader();
         header.setBackground(new Color(70, 130, 180)); // Steel blue
         header.setForeground(Color.WHITE);
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        tb_sachDangMuon.setSelectionBackground(new Color(135, 206, 250)); // Light sky blue
-        tb_sachDangMuon.setSelectionForeground(Color.BLACK);
-        tb_sachDangMuon.setShowGrid(true);
-        tb_sachDangMuon.setGridColor(new Color(200, 200, 200));
-        tb_sachDangMuon.setShowHorizontalLines(true);
-        tb_sachDangMuon.setShowVerticalLines(true);
+        nameJTable.setSelectionBackground(new Color(135, 206, 250)); // Light sky blue
+        nameJTable.setSelectionForeground(Color.BLACK);
+        nameJTable.setShowGrid(true);
+        nameJTable.setGridColor(new Color(200, 200, 200));
+        nameJTable.setShowHorizontalLines(true);
+        nameJTable.setShowVerticalLines(true);
     }
     
     // --- Phương thức tra cứu Sinh Viên ---

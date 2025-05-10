@@ -38,6 +38,7 @@ public class HomePage extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         displayUsername = new javax.swing.JLabel();
         close = new javax.swing.JLabel();
+        displayUsername1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         search = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -111,9 +112,9 @@ public class HomePage extends javax.swing.JFrame {
 
         displayUsername.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         displayUsername.setForeground(new java.awt.Color(255, 255, 255));
-        displayUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
-        displayUsername.setText("Username");
-        jPanel2.add(displayUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 0, -1, 60));
+        displayUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        displayUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/arrow.png"))); // NOI18N
+        jPanel2.add(displayUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 0, 60, 60));
 
         close.setBackground(new java.awt.Color(0, 51, 102));
         close.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -134,6 +135,12 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
         jPanel2.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 0, 60, 60));
+
+        displayUsername1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayUsername1.setForeground(new java.awt.Color(255, 255, 255));
+        displayUsername1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
+        displayUsername1.setText("Username");
+        jPanel2.add(displayUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 0, -1, 60));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
 
@@ -280,7 +287,7 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(homeLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel1.add(home, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 60));
@@ -408,7 +415,7 @@ public class HomePage extends javax.swing.JFrame {
         manageStudents.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         manageStudents.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         manageStudents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/editUser.png"))); // NOI18N
-        manageStudents.setText("Đăng ký mượn sách");
+        manageStudents.setText("Quản lý sinh viên");
         manageStudents.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         manageStudents.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         manageStudents.setMaximumSize(new java.awt.Dimension(200, 125));
@@ -431,7 +438,7 @@ public class HomePage extends javax.swing.JFrame {
         manageUsers.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         manageUsers.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         manageUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/admin.png"))); // NOI18N
-        manageUsers.setText("Quản lý lịch sử mượn");
+        manageUsers.setText("Quản lý người dùng");
         manageUsers.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         manageUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         manageUsers.setMaximumSize(new java.awt.Dimension(200, 125));
@@ -561,7 +568,7 @@ public class HomePage extends javax.swing.JFrame {
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 1020, 680));
 
-        setSize(new java.awt.Dimension(1200, 703));
+        setSize(new java.awt.Dimension(1200, 700));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -724,7 +731,7 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_infoMouseExited
 
     private void manageLendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageLendMouseClicked
-        new Demo().setVisible(true);
+        new MuonTra().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_manageLendMouseClicked
 
@@ -781,6 +788,7 @@ public class HomePage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel close;
     private javax.swing.JLabel displayUsername;
+    private javax.swing.JLabel displayUsername1;
     private javax.swing.JPanel home;
     private javax.swing.JPanel info;
     private javax.swing.JButton jButton1;
