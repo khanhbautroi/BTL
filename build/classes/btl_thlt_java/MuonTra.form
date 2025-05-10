@@ -233,7 +233,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="132" max="32767" attributes="0"/>
+                      <EmptySpace pref="166" max="32767" attributes="0"/>
                       <Component id="DangKyMuon" min="-2" pref="400" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
                       <Component id="QLMuon" min="-2" pref="400" max="-2" attributes="0"/>
@@ -267,7 +267,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Icon/colorful-icons/manage.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; l&#x1ecb;ch s&#x1eed; m&#x1b0;&#x1ee3;n"/>
+                <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; l&#x1ecb;ch s&#x1eed; "/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                     <BevelBorder/>
