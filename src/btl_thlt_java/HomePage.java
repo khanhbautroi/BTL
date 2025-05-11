@@ -6,8 +6,13 @@ package btl_thlt_java;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JLabel;
 /**
  *
  * @author Admin
@@ -18,8 +23,11 @@ public class HomePage extends javax.swing.JFrame {
     /**
      * Creates new form HomePage
      */
+    
     public HomePage() {
         initComponents();
+        displayUsername.setText(UserInfo.loggedInUsername) ;
+        updateAllLabels();
     }
 
     /**
@@ -37,7 +45,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         close = new javax.swing.JLabel();
-        displayUsername1 = new javax.swing.JLabel();
+        displayUsername = new javax.swing.JLabel();
         signout = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         search = new javax.swing.JPanel();
@@ -51,9 +59,16 @@ public class HomePage extends javax.swing.JFrame {
         info = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel8 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        SoSachQuaHan = new javax.swing.JLabel();
+        SoSV = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        SoSach = new javax.swing.JLabel();
+        SoSachMuon = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         manageBook = new javax.swing.JLabel();
         manageLend = new javax.swing.JLabel();
@@ -130,11 +145,11 @@ public class HomePage extends javax.swing.JFrame {
         });
         jPanel2.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 0, 60, 60));
 
-        displayUsername1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        displayUsername1.setForeground(new java.awt.Color(255, 255, 255));
-        displayUsername1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
-        displayUsername1.setText("Username");
-        jPanel2.add(displayUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 0, -1, 60));
+        displayUsername.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayUsername.setForeground(new java.awt.Color(255, 255, 255));
+        displayUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
+        displayUsername.setText("Username");
+        jPanel2.add(displayUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 0, 200, 60));
 
         signout.setBackground(new java.awt.Color(0, 51, 102));
         signout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -300,7 +315,7 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(homeLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         homeLayout.setVerticalGroup(
             homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,27 +377,112 @@ public class HomePage extends javax.swing.JFrame {
 
         jPanel1.add(info, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 180, -1));
 
-        jButton1.setText("Đăng xuất");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 593, 90, 30));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 180, 640));
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel8.setBackground(new java.awt.Color(153, 204, 255));
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel16.setText("Sách đang được mượn ");
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel17.setText("Sách quá hạn trả");
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel15.setText("Sinh viên ");
+
+        SoSachQuaHan.setBackground(new java.awt.Color(255, 255, 255));
+        SoSachQuaHan.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
+        SoSachQuaHan.setForeground(new java.awt.Color(255, 0, 0));
+        SoSachQuaHan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SoSachQuaHan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/overdue.png"))); // NOI18N
+        SoSachQuaHan.setText("1");
+        SoSachQuaHan.setOpaque(true);
+
+        SoSV.setBackground(new java.awt.Color(255, 255, 255));
+        SoSV.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
+        SoSV.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SoSV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/group.png"))); // NOI18N
+        SoSV.setText("1");
+        SoSV.setOpaque(true);
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel14.setText("Sách");
+
+        SoSach.setBackground(new java.awt.Color(255, 255, 255));
+        SoSach.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
+        SoSach.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SoSach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/book-stack.png"))); // NOI18N
+        SoSach.setText("1");
+        SoSach.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        SoSach.setOpaque(true);
+
+        SoSachMuon.setBackground(new java.awt.Color(255, 255, 255));
+        SoSachMuon.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
+        SoSachMuon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SoSachMuon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/book (1).png"))); // NOI18N
+        SoSachMuon.setText("1");
+        SoSachMuon.setOpaque(true);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1020, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SoSach, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(170, 170, 170)
+                                .addComponent(jLabel14)))
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(130, 130, 130)
+                                .addComponent(jLabel15))
+                            .addComponent(SoSV, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SoSachMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabel16)))
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SoSachQuaHan, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(80, 80, 80)
+                                .addComponent(jLabel17))))))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 645, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SoSach, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SoSV, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel15))))
+                .addGap(50, 50, 50)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SoSachMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SoSachQuaHan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel17)))))
         );
 
         jTabbedPane1.addTab("tab1", jPanel8);
 
-        jPanel9.setBackground(new java.awt.Color(251, 249, 228));
+        jPanel9.setBackground(new java.awt.Color(153, 204, 255));
         jPanel9.setForeground(new java.awt.Color(255, 255, 255));
 
         manageBook.setBackground(new java.awt.Color(255, 255, 255));
@@ -508,7 +608,7 @@ public class HomePage extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab2", jPanel9);
 
-        jPanel10.setBackground(new java.awt.Color(251, 249, 228));
+        jPanel10.setBackground(new java.awt.Color(153, 204, 255));
 
         searchBook.setBackground(new java.awt.Color(255, 255, 255));
         searchBook.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -588,10 +688,39 @@ public class HomePage extends javax.swing.JFrame {
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 1020, 680));
 
-        setSize(new java.awt.Dimension(1200, 700));
+        setSize(new java.awt.Dimension(1198, 700));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    public void updateAllLabels() {
+    try (Connection connection = KN.KNDL();
+         PreparedStatement psSach = connection.prepareStatement("SELECT SUM(sl) FROM ql_sach");
+         PreparedStatement psSV = connection.prepareStatement("SELECT COUNT(*) FROM ql_sv");
+         PreparedStatement psMuon = connection.prepareStatement("SELECT COUNT(*) FROM muon_tra_sach WHERE tinhTrangMuon = 'Đang mượn'");
+         PreparedStatement psQuaHan = connection.prepareStatement("SELECT COUNT(*) FROM muon_tra_sach WHERE tinhTrangMuon = 'Quá hạn'")) {
+        
+        connection.setAutoCommit(false);
+        
+        // Execute each query once and store the result
+        ResultSet rsSach = psSach.executeQuery();
+        ResultSet rsSV = psSV.executeQuery();
+        ResultSet rsMuon = psMuon.executeQuery();
+        ResultSet rsQuaHan = psQuaHan.executeQuery();
+        
+        // Process each result set
+        SoSach.setText(rsSach.next() ? String.valueOf(rsSach.getInt(1)) : "0");
+        SoSV.setText(rsSV.next() ? String.valueOf(rsSV.getInt(1)) : "0");
+        SoSachMuon.setText(rsMuon.next() ? String.valueOf(rsMuon.getInt(1)) : "0");
+        SoSachQuaHan.setText(rsQuaHan.next() ? String.valueOf(rsQuaHan.getInt(1)) : "0");
+        
+        connection.commit();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        SoSach.setText("Lỗi");
+        SoSV.setText("Lỗi");
+        SoSachMuon.setText("Lỗi");
+        SoSachQuaHan.setText("Lỗi");
+    }
+}
     private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
         int confirm = JOptionPane.showConfirmDialog(this, 
                 "Bạn có chắc chắn muốn thoát ứng dụng?", 
@@ -761,7 +890,7 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_manageBookMouseClicked
 
     private void manageStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageStudentsMouseClicked
-        new DangKyMuonSachForm().setVisible(true);
+        new QuanLySinhVien().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_manageStudentsMouseClicked
 
@@ -827,14 +956,21 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel SoSV;
+    private javax.swing.JLabel SoSach;
+    private javax.swing.JLabel SoSachMuon;
+    private javax.swing.JLabel SoSachQuaHan;
     private javax.swing.JLabel close;
-    private javax.swing.JLabel displayUsername1;
+    private javax.swing.JLabel displayUsername;
     private javax.swing.JPanel home;
     private javax.swing.JPanel info;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

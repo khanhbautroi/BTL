@@ -38,6 +38,7 @@ public class MuonTra extends javax.swing.JFrame {
     public MuonTra() {
         initComponents();
         setLocationRelativeTo(null);
+        displayUsername.setText(UserInfo.loggedInUsername);
         btnLuuMuon.setEnabled(false);
         setupTableAppearance(tb_sachDangMuon);
         // Ví dụ: Thiết lập dữ liệu ban đầu cho ComboBox Tình trạng mượn
@@ -327,7 +328,7 @@ public class MuonTra extends javax.swing.JFrame {
         }
     }}
      
-        private void setupTableAppearance(JTable nameJTable) {
+        public static void setupTableAppearance(JTable nameJTable) {
         if (nameJTable == null) return; // Thoát nếu bảng chưa được khởi tạo
 
         JTableHeader header = nameJTable.getTableHeader();
@@ -606,9 +607,9 @@ public class MuonTra extends javax.swing.JFrame {
         btnReturn = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        displayUsername = new javax.swing.JLabel();
         close = new javax.swing.JLabel();
         signout = new javax.swing.JLabel();
+        displayUsername = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
         QLMuon = new javax.swing.JLabel();
@@ -649,10 +650,6 @@ public class MuonTra extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tb_qlMuonTraSach = new javax.swing.JTable();
         cbTinhTrangMuon = new javax.swing.JComboBox<>();
-        btn_dau1 = new javax.swing.JButton();
-        btn_truoc1 = new javax.swing.JButton();
-        btn_sau1 = new javax.swing.JButton();
-        btn_cuoi1 = new javax.swing.JButton();
         txtMaSinhVien = new javax.swing.JTextField();
         txtMaSach = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
@@ -739,12 +736,6 @@ public class MuonTra extends javax.swing.JFrame {
         jLabel11.setText("Quản lý mượn trả sách");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, -1, 60));
 
-        displayUsername.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        displayUsername.setForeground(new java.awt.Color(255, 255, 255));
-        displayUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
-        displayUsername.setText("Username");
-        jPanel2.add(displayUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 0, -1, 60));
-
         close.setBackground(new java.awt.Color(0, 51, 102));
         close.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         close.setForeground(new java.awt.Color(255, 255, 255));
@@ -791,11 +782,17 @@ public class MuonTra extends javax.swing.JFrame {
         });
         jPanel2.add(signout, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 0, 60, 60));
 
+        displayUsername.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayUsername.setForeground(new java.awt.Color(255, 255, 255));
+        displayUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
+        displayUsername.setText("Username");
+        jPanel2.add(displayUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 0, 200, 60));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
 
         jTabbedPane1.setBackground(new java.awt.Color(251, 249, 228));
 
-        jPanel5.setBackground(new java.awt.Color(251, 249, 228));
+        jPanel5.setBackground(new java.awt.Color(153, 204, 255));
 
         QLMuon.setBackground(new java.awt.Color(255, 255, 255));
         QLMuon.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1052,7 +1049,7 @@ public class MuonTra extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(62, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
@@ -1097,7 +1094,7 @@ public class MuonTra extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNewPhiMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -1156,38 +1153,6 @@ public class MuonTra extends javax.swing.JFrame {
         cbTinhTrangMuon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTinhTrangMuonActionPerformed(evt);
-            }
-        });
-
-        btn_dau1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btn_dau1.setText("|<");
-        btn_dau1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_dau1ActionPerformed(evt);
-            }
-        });
-
-        btn_truoc1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btn_truoc1.setText("<<");
-        btn_truoc1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_truoc1ActionPerformed(evt);
-            }
-        });
-
-        btn_sau1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btn_sau1.setText(">>");
-        btn_sau1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_sau1ActionPerformed(evt);
-            }
-        });
-
-        btn_cuoi1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btn_cuoi1.setText(">|");
-        btn_cuoi1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cuoi1ActionPerformed(evt);
             }
         });
 
@@ -1354,16 +1319,6 @@ public class MuonTra extends javax.swing.JFrame {
                                         .addGap(70, 70, 70)
                                         .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(25, 25, 25))))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(473, 473, 473)
-                .addComponent(btn_dau1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_truoc1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_sau1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_cuoi1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel4Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtMaSach, txtMaSinhVien, txtNgayMuon, txtNgayTraDuKien, txtNgayTraThucTe, txtPhiMuon, txtTenSach, txtTenSinhVien});
@@ -1391,7 +1346,7 @@ public class MuonTra extends javax.swing.JFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtPhiMuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel22))
-                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addGap(18, 19, Short.MAX_VALUE)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel20)
                                     .addComponent(txtTinhTrangSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1428,13 +1383,7 @@ public class MuonTra extends javax.swing.JFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNgayTraThucTe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel21))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_truoc1)
-                            .addComponent(btn_sau1)
-                            .addComponent(btn_cuoi1)
-                            .addComponent(btn_dau1))
-                        .addGap(12, 12, 12)))
+                        .addGap(12, 82, Short.MAX_VALUE)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -1540,22 +1489,6 @@ public class MuonTra extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_cbTinhTrangMuonActionPerformed
-
-    private void btn_dau1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dau1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_dau1ActionPerformed
-
-    private void btn_truoc1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_truoc1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_truoc1ActionPerformed
-
-    private void btn_sau1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sau1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_sau1ActionPerformed
-
-    private void btn_cuoi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cuoi1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_cuoi1ActionPerformed
 
     private void txtMaSinhVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaSinhVienActionPerformed
         String maSV = txtMaSinhVien.getText().trim();
@@ -2007,10 +1940,6 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnXacNhanTraSach;
     private javax.swing.JButton btnXoa;
-    private javax.swing.JButton btn_cuoi1;
-    private javax.swing.JButton btn_dau1;
-    private javax.swing.JButton btn_sau1;
-    private javax.swing.JButton btn_truoc1;
     private javax.swing.JComboBox<String> cbTinhTrangMuon;
     private javax.swing.JLabel close;
     private javax.swing.JLabel displayUsername;

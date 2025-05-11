@@ -258,9 +258,10 @@ public class Login extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(this, "Đăng nhập thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
             // Mở form Trang chủ (HomePage)
+            UserInfo.loggedInUsername = username;
             HomePage homePage = new HomePage(); // Chỉ tạo MỘT instance
             homePage.setVisible(true); // Hiển thị form Trang chủ
-
+            
             // Đóng form Đăng nhập hiện tại
             this.dispose();
 
@@ -355,7 +356,6 @@ public class Login extends javax.swing.JFrame {
             new Login().setVisible(true);
         });
 }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Left;
     private javax.swing.JButton Login_btn;
