@@ -37,9 +37,9 @@ public class Demo extends javax.swing.JFrame {
         btnReturn = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        displayUsername = new javax.swing.JLabel();
         close = new javax.swing.JLabel();
         signout = new javax.swing.JLabel();
+        displayUsername = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_mts = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -132,12 +132,6 @@ public class Demo extends javax.swing.JFrame {
         jLabel11.setText("Quản lý mượn trả sách");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, -1, 60));
 
-        displayUsername.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        displayUsername.setForeground(new java.awt.Color(255, 255, 255));
-        displayUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
-        displayUsername.setText("Username");
-        jPanel2.add(displayUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 0, -1, 60));
-
         close.setBackground(new java.awt.Color(0, 51, 102));
         close.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         close.setForeground(new java.awt.Color(255, 255, 255));
@@ -183,6 +177,12 @@ public class Demo extends javax.swing.JFrame {
             }
         });
         jPanel2.add(signout, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 0, 60, 60));
+
+        displayUsername.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayUsername.setForeground(new java.awt.Color(255, 255, 255));
+        displayUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/adminIcons/male_user_50px.png"))); // NOI18N
+        displayUsername.setText("Username");
+        jPanel2.add(displayUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 0, 200, 60));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
 
