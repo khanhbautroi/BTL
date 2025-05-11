@@ -63,10 +63,10 @@ public class HomePage extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         SoSachQuaHan = new javax.swing.JLabel();
         SoSV = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         SoSach = new javax.swing.JLabel();
         SoSachMuon = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
@@ -382,15 +382,23 @@ public class HomePage extends javax.swing.JFrame {
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel8.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel16.setText("Sách đang được mượn ");
+        jPanel8.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel17.setText("Sách quá hạn trả");
+        jPanel8.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 550, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel14.setText("Sách");
+        jPanel8.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel15.setText("Sinh viên ");
+        jPanel8.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 250, -1, -1));
 
         SoSachQuaHan.setBackground(new java.awt.Color(255, 255, 255));
         SoSachQuaHan.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
@@ -399,6 +407,7 @@ public class HomePage extends javax.swing.JFrame {
         SoSachQuaHan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/overdue.png"))); // NOI18N
         SoSachQuaHan.setText("1");
         SoSachQuaHan.setOpaque(true);
+        jPanel8.add(SoSachQuaHan, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 360, 450, 250));
 
         SoSV.setBackground(new java.awt.Color(255, 255, 255));
         SoSV.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
@@ -406,9 +415,7 @@ public class HomePage extends javax.swing.JFrame {
         SoSV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/group.png"))); // NOI18N
         SoSV.setText("1");
         SoSV.setOpaque(true);
-
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel14.setText("Sách");
+        jPanel8.add(SoSV, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, 450, 250));
 
         SoSach.setBackground(new java.awt.Color(255, 255, 255));
         SoSach.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
@@ -417,6 +424,7 @@ public class HomePage extends javax.swing.JFrame {
         SoSach.setText("1");
         SoSach.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         SoSach.setOpaque(true);
+        jPanel8.add(SoSach, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 450, 250));
 
         SoSachMuon.setBackground(new java.awt.Color(255, 255, 255));
         SoSachMuon.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
@@ -424,61 +432,7 @@ public class HomePage extends javax.swing.JFrame {
         SoSachMuon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/colorful-icons/book (1).png"))); // NOI18N
         SoSachMuon.setText("1");
         SoSachMuon.setOpaque(true);
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(SoSach, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(170, 170, 170)
-                                .addComponent(jLabel14)))
-                        .addGap(50, 50, 50)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(130, 130, 130)
-                                .addComponent(jLabel15))
-                            .addComponent(SoSV, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(SoSachMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(jLabel16)))
-                        .addGap(50, 50, 50)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(SoSachQuaHan, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGap(80, 80, 80)
-                                .addComponent(jLabel17))))))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SoSach, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SoSV, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel15))))
-                .addGap(50, 50, 50)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SoSachMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SoSachQuaHan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel17)))))
-        );
+        jPanel8.add(SoSachMuon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 450, 250));
 
         jTabbedPane1.addTab("tab1", jPanel8);
 
