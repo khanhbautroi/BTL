@@ -649,7 +649,7 @@ public class HomePage extends javax.swing.JFrame {
     try (Connection connection = KN.KNDL();
          PreparedStatement psSach = connection.prepareStatement("SELECT SUM(sl) FROM ql_sach");
          PreparedStatement psSV = connection.prepareStatement("SELECT COUNT(*) FROM ql_sv");
-         PreparedStatement psMuon = connection.prepareStatement("SELECT COUNT(*) FROM muon_tra_sach WHERE tinhTrangMuon = 'Đang mượn'");
+         PreparedStatement psMuon = connection.prepareStatement("SELECT COUNT(*) FROM muon_tra_sach WHERE tinhTrangMuon IN ('Đang mượn', 'Quá hạn')");
          PreparedStatement psQuaHan = connection.prepareStatement("SELECT COUNT(*) FROM muon_tra_sach WHERE tinhTrangMuon = 'Quá hạn'")) {
         
         connection.setAutoCommit(false);
