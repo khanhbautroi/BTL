@@ -244,30 +244,26 @@ public class Login extends javax.swing.JFrame {
 
     private void Login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_btnActionPerformed
         String username = txt_tk.getText();
-        String password = new String(txt_mk.getPassword());
+        String password = new String(txt_mk.getPassword()); // Mật khẩu thô người dùng nhập
 
         // Kiểm tra rỗng
         if (username.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ tài khoản và mật khẩu", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
-            return; // Dừng xử lý
+            return;
         }
 
-        // Gọi phương thức kiểm tra đăng nhập
+        // Gọi phương thức kiểm tra đăng nhập (giờ so sánh mật khẩu thô)
         if (checkLogin(username, password)) {
             // Đăng nhập thành công
-            //JOptionPane.showMessageDialog(this, "Đăng nhập thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            UserInfo.loggedInUsername = username; // Lưu username nếu cần cho các form khác
+            HomePage homePage = new HomePage();
+            homePage.setVisible(true);
 
-            // Mở form Trang chủ (HomePage)
-            UserInfo.loggedInUsername = username;
-            HomePage homePage = new HomePage(); // Chỉ tạo MỘT instance
-            homePage.setVisible(true); // Hiển thị form Trang chủ
-            
-            // Đóng form Đăng nhập hiện tại
             this.dispose();
 
         } else {
-            // Đăng nhập thất bại (phương thức checkLogin đã xử lý thông báo lỗi CSDL nếu có)
-            // Nếu checkLogin trả về false mà không phải do lỗi CSDL, thì là sai TK/MK
+            // Đăng nhập thất bại
+            // checkLogin trả về false nếu không tìm thấy username HOẶC mật khẩu không khớp
             // Thông báo lỗi sai tài khoản/mật khẩu
             JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không đúng", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
         }
@@ -318,7 +314,7 @@ public class Login extends javax.swing.JFrame {
         // Câu lệnh SQL để lấy MẬT KHẨU ĐÃ BĂM từ CSDL dựa vào username
         String sql = "SELECT password FROM accounts WHERE username = ?";
 
-        try (Connection con = KN.KNDL(); // Lấy kết nối từ class KN
+        try (Connection con = KN.KNDL();
              PreparedStatement pst = con.prepareStatement(sql)) {
 
             pst.setString(1, username);
@@ -326,13 +322,12 @@ public class Login extends javax.swing.JFrame {
             try (ResultSet rs = pst.executeQuery()) {
                 // Kiểm tra xem có dòng kết quả nào không (tức là username có tồn tại không)
                 if (rs.next()) {
-                    // Lấy mật khẩu đã băm từ cột 'password' trong CSDL
-                    String hashedPasswordFromDB = rs.getString("password");
+                    // Lấy mật khẩu đã lưu (văn bản thuần) từ cột 'password' trong CSDL
+                    String storedPassword = rs.getString("password"); // <<< Lấy mật khẩu thô đã lưu
 
-                    // --- BƯỚC XÁC MINH MẬT KHẨU ---
-                    // So sánh mật khẩu plaintext người dùng nhập với mật khẩu đã băm từ DB
-                    // BCrypt.checkpw() trả về true nếu khớp, false nếu không khớp
-                    return BCrypt.checkpw(password, hashedPasswordFromDB);
+                    // --- BƯỚC XÁC MINH MẬT KHẨU (So sánh văn bản thuần) ---
+                    // So sánh trực tiếp mật khẩu người dùng nhập với mật khẩu thô đã lưu từ DB
+                    return password.equals(storedPassword); // <<< So sánh chuỗi văn bản thuần
                     // --- HẾT BƯỚC XÁC MINH ---
 
                 } else {

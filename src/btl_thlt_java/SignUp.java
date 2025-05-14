@@ -246,55 +246,47 @@ public class SignUp extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signup_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signup_btnActionPerformed
-        String username = txt_tk.getText(); // Lấy dữ liệu từ trường tên đăng nhập (tên biến của bạn)
-        String password = new String(txt_mk.getPassword()); // Lấy dữ liệu từ trường mật khẩu (tên biến của bạn)
+        String username = txt_tk.getText();
+        String password = new String(txt_mk.getPassword()); // Mật khẩu thô
 
-        // --- BƯỚC 1: KIỂM TRA TÊN ĐĂNG NHẬP CÓ CHỨA KÝ TỰ KHÔNG HỢP LỆ (VD: TIẾNG VIỆT CÓ DẤU) ---
-        // Sử dụng biểu thức chính quy. Ví dụ này chỉ cho phép chữ cái không dấu (a-z, A-Z), số (0-9) và gạch dưới (_).
+        // --- BƯỚC 1: KIỂM TRA TÊN ĐĂNG NHẬP CÓ CHỨA KÝ TỰ KHÔNG HỢP LỆ (GIỮ LẠI NẾU CẦN) ---
         String allowedUsernamePattern = "^[a-zA-Z0-9_]+$";
-
         if (!username.matches(allowedUsernamePattern)) {
             JOptionPane.showMessageDialog(this,
                     "Tên đăng nhập chỉ được chứa chữ cái không dấu (a-z, A-Z), số (0-9) và gạch dưới (_).",
                     "Lỗi", JOptionPane.ERROR_MESSAGE);
-            // Tùy chọn: Xóa nội dung trường username
             txt_tk.setText("");
-            return; // Dừng xử lý nếu tên đăng nhập không hợp lệ
+            return;
         }
         // --- HẾT BƯỚC 1 ---
 
-        // --- BƯỚC 2: KIỂM TRA RỖNG (Sau khi đã kiểm tra pattern) ---
+        // --- BƯỚC 2: KIỂM TRA RỖNG ---
         if (username.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ tài khoản và mật khẩu", "Lỗi đăng kí", JOptionPane.ERROR_MESSAGE);
-            return; // Dừng xử lý nếu rỗng
+            return;
         }
         // --- HẾT BƯỚC 2 ---
 
 
-        // --- BƯỚC 3: GỌI PHƯƠNG THỨC ĐĂNG KÝ VÀ XỬ LÝ KẾT QUẢ ---
-        if (registerUser(username, password)) {
+        // --- BƯỚC 3: GỌI PHƯƠNG THỨC ĐĂNG KÝ VÀ XỬ LÝ KẾT QUẢ (Lưu mật khẩu thô) ---
+        if (registerUser(username, password)) { // Truyền mật khẩu thô
             // --- ĐĂNG KÝ THÀNH CÔNG ---
-            // BƯỚC 4: Hiển thị pop-up thông báo thành công
             JOptionPane.showMessageDialog(this, "Đăng kí thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-
-            // Tùy chọn: Xóa nội dung các trường sau khi đăng ký thành công (trước khi chuyển form)
             txt_tk.setText("");
             txt_mk.setText("");
 
             // BƯỚC 5: Tự động nhảy về trang Đăng nhập
-            Login LoginFrame = new Login(); // Tạo instance form Đăng nhập
-            LoginFrame.setVisible(true); // Hiển thị form Đăng nhập
-            LoginFrame.pack(); // Điều chỉnh kích thước form
-            LoginFrame.setLocationRelativeTo(null); // Đặt form Đăng nhập ở giữa màn hình
+            Login LoginFrame = new Login();
+            LoginFrame.setVisible(true);
+            LoginFrame.pack();
+            LoginFrame.setLocationRelativeTo(null);
 
-            this.dispose(); // Đóng form Đăng ký hiện tại
+            this.dispose();
 
         } else {
             // --- ĐĂNG KÝ THẤT BẠI ---
-            // Phương thức registerUser đã hiển thị lỗi CSDL nếu có.
-            // Thông báo dưới đây sẽ hiển thị nếu registerUser trả về false do tài khoản đã tồn tại
-            // hoặc nếu có lỗi CSDL (trong trường hợp đó sẽ có 2 thông báo lỗi hiện ra, bạn có thể cải tiến sau).
-             JOptionPane.showMessageDialog(this, "Đăng kí thất bại. Tài khoản có thể đã tồn tại hoặc có lỗi CSDL.", "Lỗi đăng kí", JOptionPane.ERROR_MESSAGE);
+             // registerUser trả về false nếu tài khoản đã tồn tại hoặc lỗi CSDL
+            JOptionPane.showMessageDialog(this, "Đăng kí thất bại. Tài khoản có thể đã tồn tại hoặc có lỗi CSDL.", "Lỗi đăng kí", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_signup_btnActionPerformed
 
@@ -340,44 +332,31 @@ public class SignUp extends javax.swing.JFrame {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_signup_btnMouseExited
 private boolean registerUser(String username, String password) {
-        // --- BƯỚC BĂM MẬT KHẨU ---
-    // Tạo salt mới mỗi lần đăng ký
-    String salt = BCrypt.gensalt();
-    // Băm mật khẩu bằng salt vừa tạo
-    String hashedPassword = BCrypt.hashpw(password, salt);
-    // --- HẾT BƯỚC BĂM ---
+       // Lưu mật khẩu thô vào CSDL
+        String insertSql = "INSERT INTO accounts (username, password) VALUES (?, ?)";
 
+        try (Connection con = KN.KNDL()) {
+            try (PreparedStatement insertStmt = con.prepareStatement(insertSql)) {
+                insertStmt.setString(1, username);
+                // LƯU MẬT KHẨU THÔ VÀO CSDL (CỰC KỲ KHÔNG AN TOÀN)
+                insertStmt.setString(2, password); // <-- LƯU MẬT KHẨU THÔ
 
-    // Cách bạn lưu vào CSDL (dựa vào UNIQUE constraint):
-    String insertSql = "INSERT INTO accounts (username, password) VALUES (?, ?)";
+                int rowsAffected = insertStmt.executeUpdate();
+                return rowsAffected > 0;
 
-    try (Connection con = KN.KNDL()) { // Lấy kết nối từ class KN
-
-        try (PreparedStatement insertStmt = con.prepareStatement(insertSql)) {
-            insertStmt.setString(1, username);
-            // LƯU MẬT KHẨU ĐÃ BĂM VÀO CSDL
-            insertStmt.setString(2, hashedPassword); // <-- Sử dụng kết quả băm ở đây
-
-            int rowsAffected = insertStmt.executeUpdate();
-            return rowsAffected > 0; // Trả về true nếu INSERT thành công
-
+            }
+        } catch (SQLException e) {
+            if (e.getSQLState().startsWith("23")) {
+                System.err.println("Lỗi SQL State 23xxx (tài khoản đã tồn tại): " + e.getMessage());
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Lỗi CSDL khi đăng ký: " + e.getMessage(),
+                        "Lỗi Database",
+                        JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+            return false;
         }
-
-    } catch (SQLException e) {
-        // Xử lý lỗi CSDL (bao gồm lỗi UNIQUE constraint nếu tài khoản đã tồn tại)
-        if (e.getSQLState().startsWith("23")) {
-            System.err.println("Lỗi SQL State 23xxx (tài khoản đã tồn tại): " + e.getMessage());
-            // Không hiển thị JOptionPane ở đây, để signup_btnActionPerformed xử lý thông báo "Tài khoản đã tồn tại"
-        } else {
-            // Xử lý các lỗi CSDL khác
-            JOptionPane.showMessageDialog(null, // Sử dụng null nếu gọi từ phương thức không phải GUI
-                                         "Lỗi CSDL khi đăng ký: " + e.getMessage(),
-                                         "Lỗi Database",
-                                         JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-        return false; // Đăng ký thất bại
-    }
 }
     /**
      * @param args the command line arguments
