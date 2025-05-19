@@ -5,7 +5,6 @@
 package btl_thlt_java;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,8 +17,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -58,67 +55,7 @@ public class MuonTra extends javax.swing.JFrame {
           clearDetailFields();
     }
     
-    Đúng vậy, chính xác là thế! Hàm centerText cần được đặt bên ngoài phương thức btnLuuMuonActionPerformed (hoặc tên mới của nó) và các phương thức khác.
-
-Trong cấu trúc của một class Java, các biến thành viên và các phương thức đều nằm trực tiếp bên trong dấu ngoặc nhọn {} của khai báo class, ngang hàng với nhau. Một phương thức không thể chứa định nghĩa của một phương thức khác.
-
-Đây là ví dụ về cách cấu trúc class MuonTra, cho thấy vị trí đặt hàm centerText:
-
-Java
-
-package btl_thlt_java;
-
-// ... (Các import cần thiết khác) ...
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-
-public class MuonTra extends javax.swing.JFrame {
-
-    // --- KHAI BÁO BIẾN THÀNH VIÊN ---
-    private boolean isBookAvailable = false;
-    private int mouseX, mouseY;
-    private int selectedRecordId = -1;
-
-    // Khai báo các Components của form (JTextField, JButton, JTable, ...)
-    // Ví dụ:
-    private javax.swing.JTextField txtNewMaSV;
-    // ... (Khai báo tất cả các components khác của form MuonTra) ...
-    private javax.swing.JTable tb_qlMuonTraSach; // Nếu vẫn còn dùng trong form này
-    private javax.swing.JTable tb_sachDangMuon; // Bảng lịch sử mượn của SV
-
-    // --- PHƯƠNG THỨC HELPER CẦN ĐẶT Ở ĐÂY (Ngang hàng với các phương thức khác) ---
-
     
-    private String centerText(String text, int width) {
-        if (text.length() >= width) {
-            return text;
-        }
-        int padding = (width - text.length()) / 2;
-        // Phiên bản dùng String.repeat() cho Java 11+
-        return " ".repeat(padding) + text + " ".repeat(width - text.length() - padding);
-
-    }
     private void saveUpdatedBorrowRecord() {
          int selectedRow = tb_qlMuonTraSach.getSelectedRow();
           if (selectedRow == -1) {
@@ -1872,99 +1809,67 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
                  JOptionPane.showMessageDialog(this, "Đăng ký mượn sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
                  
-                // --- BẮT ĐẦU XUẤT FILE TXT (Phần tạo nội dung phiếu) ---
-                // Đoạn mã này tạo nội dung phiếu và lưu file
-                // Nó GỌI hàm centerText() đã được định nghĩa ở CẤP CLASS
+               // --- BẮT ĐẦU XUẤT FILE TXT ---
+                // Tạo nội dung cho file TXT
                 StringBuilder sb = new StringBuilder();
-                int docWidth = 70; // Chiều rộng cố định cho phiếu (số ký tự), điều chỉnh nếu cần
+                sb.append("----- PHIEU MUON KIEM HOA DON -----").append("\n\n");
+                sb.append("THONG TIN SINH VIEN:\n");
+                sb.append("  Ma SV: ").append(maSV).append("\n");
+                sb.append("  Ten SV: ").append(tenSV).append("\n\n");
 
+                sb.append("THONG TIN SACH:\n");
+                sb.append("  Ma Sach: ").append(maSach).append("\n");
+                sb.append("  Ten Sach: ").append(tenSach).append("\n");
+                sb.append("  Gia Sach: ").append(giaSach).append("\n"); // Lấy giá sách từ trường nhập liệu
+                sb.append("  Tinh Trang Sach: ").append(tinhTrangSach).append("\n\n"); // Lấy TT sách từ trường nhập liệu
 
-                // Viền trên của khung phiếu
-                sb.append("+").append("-".repeat(docWidth - 2)).append("+").append("\n");
-                // Tiêu đề phiếu (được căn giữa - GỌI HÀM centerText)
-                sb.append("|").append(centerText("PHIẾU MƯỢN KIÊM HÓA ĐƠN", docWidth - 2)).append("|").append("\n"); // Sử dụng centerText
-                // Viền dưới tiêu đề
-                sb.append("+").append("-".repeat(docWidth - 2)).append("+").append("\n\n");
+                sb.append("THONG TIN MUON:\n");
+                sb.append("  Ngay Muon: ").append(ngayMuon).append("\n");
+                sb.append("  Ngay Tra Du Kien: ").append(ngayTraDuKienStr).append("\n");
+                sb.append("  Phi Muon Ban Dau: ").append(String.format("%.2f", phiMuon)).append("\n"); // Định dạng số phí mượn
+                sb.append("  Tinh Trang: Dang muon").append("\n\n"); // Trạng thái mặc định
 
-                // Thông tin Sinh viên
-                sb.append("THÔNG TIN SINH VIÊN:\n");
-                // Sử dụng String.format để căn lề các nhãn
-                sb.append(String.format("  %-20s: %s\n", "Mã SV", maSV)); // Nhãn rộng 20 ký tự, căn lề trái
-                sb.append(String.format("  %-20s: %s\n", "Tên SV", tenSV)).append("\n"); // Nhãn rộng 20 ký tự, căn lề trái
-
-                // Thông tin Sách
-                sb.append("THÔNG TIN SÁCH:\n");
-                sb.append(String.format("  %-20s: %s\n", "Mã Sách", maSach));
-                sb.append(String.format("  %-20s: %s\n", "Tên Sách", tenSach));
-                sb.append(String.format("  %-20s: %s\n", "Giá Sách", giaSach)); // Giá sách
-                sb.append(String.format("  %-20s: %s\n", "Tình Trạng Sách", tinhTrangSach)).append("\n"); // Tình trạng sách
-
-                // Thông tin Mượn
-                sb.append("THÔNG TIN MƯỢN:\n");
-                sb.append(String.format("  %-20s: %s\n", "Ngày Mượn", ngayMuon));
-                sb.append(String.format("  %-20s: %s\n", "Ngày Trả Dự Kiến", ngayTraDuKienStr));
-                 // Định dạng số phí mượn với 2 chữ số thập phân
-                sb.append(String.format("  %-20s: %.2f\n", "Phí Mượn Ban Đầu", phiMuon)).append("\n"); // Sử dụng giá trị phiMuon đã parse Double
-
-                sb.append(String.format("  %-20s: %s\n", "Tình Trạng", "Đang mượn")).append("\n"); // Trạng thái mặc định khi mượn
-
-
-                // Viền cuối phiếu
-                sb.append("+").append("-".repeat(docWidth - 2)).append("+").append("\n");
-                // Dòng ngày in phiếu (căn lề trái và lấp đầy khoảng trắng)
+                sb.append("-------------------------------------").append("\n");
                  SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                 String ngayInLine = " Ngày In Phiếu: " + dateTimeFormat.format(new Date());
-                sb.append("|").append(ngayInLine).append(" ".repeat(Math.max(0, docWidth - 2 - ngayInLine.length()))).append("|").append("\n");
-                sb.append("+").append("-".repeat(docWidth - 2)).append("+").append("\n\n");
-
-                // Phần chữ ký
-                sb.append(String.format("  %-30s%s\n", "Chữ ký người cho mượn:", "Chữ ký người mượn:"));
-                sb.append(String.format("  %-30s%s\n", "(Ký, ghi rõ họ tên)", "(Ký, ghi rõ họ tên)")).append("\n\n"); // Gợi ý vị trí ký và yêu cầu ghi rõ họ tên
-                // Hiển thị tên người cho mượn (ví dụ: username đang đăng nhập) và tên sinh viên
-                sb.append(String.format("  %-30s%s\n", "(" + tenGVQL + ")", "(" + tenSV + ")")).append("\n"); // Giả định có biến tenGVQL
+                sb.append("Ngay In Phieu: ").append(dateTimeFormat.format(new Date())).append("\n");
+                sb.append("Chu ky nguoi cho muon:").append("\n\n");
+                sb.append("Chu ky nguoi muon:").append("\n");
 
 
                 String phieuContent = sb.toString();
 
-                // --- Kết thúc phần tạo nội dung phiếu ---
-
-
-                // --- BẮT ĐẦU PHẦN LƯU FILE (Đoạn này nối tiếp sau phần trên) ---
                 // Hiển thị cửa sổ chọn nơi lưu file
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Lưu Phiếu Mượn");
+                fileChooser.setDialogTitle("Luu Phieu Muon");
                 // Đặt tên file mặc định (ví dụ: PhieuMuon_MaSV_MaSach_NgayMuon.txt)
-                // Đảm bảo tên file không chứa ký tự đặc biệt không hợp lệ
-                String safeMaSV = maSV.replaceAll("[^a-zA-Z0-9_.-]", "");
-                String safeMaSach = maSach.replaceAll("[^a-zA-Z0-9_.-]", "");
-                String safeNgayMuon = ngayMuon.replaceAll("[^0-9]", ""); // Chỉ giữ lại số ngày mượn cho tên file
-                String defaultFileName = "PhieuMuon_" + safeMaSV + "_" + safeMaSach + "_" + safeNgayMuon + ".txt";
-
+                String defaultFileName = "PhieuMuon_" + maSV + "_" + maSach + "_" + ngayMuon.replace("-", "") + ".txt";
                 fileChooser.setSelectedFile(new File(defaultFileName));
                  // Chỉ cho phép lưu file .txt
                  FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files (*.txt)", "txt");
                  fileChooser.setFileFilter(filter);
+
 
                 int userSelection = fileChooser.showSaveDialog(this);
 
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
                     File fileToSave = fileChooser.getSelectedFile();
 
-                    // Đảm bảo đuôi .txt nếu người dùng không gõ
+                     // Đảm bảo đuôi .txt nếu người dùng không gõ
                     String filePath = fileToSave.getAbsolutePath();
                     if (!filePath.toLowerCase().endsWith(".txt")) {
                         fileToSave = new File(filePath + ".txt");
                     }
 
+
                     try (PrintWriter writer = new PrintWriter(new FileWriter(fileToSave))) {
-                        writer.print(phieuContent); // Ghi nội dung phiếu vào file
-                        JOptionPane.showMessageDialog(this, "Lưu phiếu mượn thành công vào: " + fileToSave.getAbsolutePath(), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        writer.print(phieuContent);
+                        JOptionPane.showMessageDialog(this, "Luu phieu muon thanh cong vao: " + fileToSave.getAbsolutePath(), "Thong bao", JOptionPane.INFORMATION_MESSAGE);
                     } catch (IOException ioException) {
-                        Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi khi ghi file phiếu mượn", ioException);
-                        JOptionPane.showMessageDialog(this, "Lỗi khi lưu file phiếu mượn: " + ioException.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Loi khi ghi file phieu muon", ioException);
+                        JOptionPane.showMessageDialog(this, "Loi khi luu file phieu muon: " + ioException.getMessage(), "Loi", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-                // --- KẾT THÚC PHẦN LƯU FILE ---
+                // --- KẾT THÚC XUẤT FILE TXT ---
                 
                 
                 
