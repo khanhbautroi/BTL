@@ -20,8 +20,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -39,7 +45,7 @@ public class MuonTra extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         displayUsername.setText(UserInfo.loggedInUsername);
-        btnLuuMuon.setEnabled(false);
+        btnXuatPhieu.setEnabled(false);
         setupTableAppearance(tb_sachDangMuon);
         // Ví dụ: Thiết lập dữ liệu ban đầu cho ComboBox Tình trạng mượn
          setupTinhTrangMuonComboBox();
@@ -50,6 +56,68 @@ public class MuonTra extends javax.swing.JFrame {
          // Làm cho các trường hiển thị chi tiết KHÔNG cho phép nhập trực tiếp
           setDetailFieldsEditable(false);
           clearDetailFields();
+    }
+    
+    Đúng vậy, chính xác là thế! Hàm centerText cần được đặt bên ngoài phương thức btnLuuMuonActionPerformed (hoặc tên mới của nó) và các phương thức khác.
+
+Trong cấu trúc của một class Java, các biến thành viên và các phương thức đều nằm trực tiếp bên trong dấu ngoặc nhọn {} của khai báo class, ngang hàng với nhau. Một phương thức không thể chứa định nghĩa của một phương thức khác.
+
+Đây là ví dụ về cách cấu trúc class MuonTra, cho thấy vị trí đặt hàm centerText:
+
+Java
+
+package btl_thlt_java;
+
+// ... (Các import cần thiết khác) ...
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+
+public class MuonTra extends javax.swing.JFrame {
+
+    // --- KHAI BÁO BIẾN THÀNH VIÊN ---
+    private boolean isBookAvailable = false;
+    private int mouseX, mouseY;
+    private int selectedRecordId = -1;
+
+    // Khai báo các Components của form (JTextField, JButton, JTable, ...)
+    // Ví dụ:
+    private javax.swing.JTextField txtNewMaSV;
+    // ... (Khai báo tất cả các components khác của form MuonTra) ...
+    private javax.swing.JTable tb_qlMuonTraSach; // Nếu vẫn còn dùng trong form này
+    private javax.swing.JTable tb_sachDangMuon; // Bảng lịch sử mượn của SV
+
+    // --- PHƯƠNG THỨC HELPER CẦN ĐẶT Ở ĐÂY (Ngang hàng với các phương thức khác) ---
+
+    
+    private String centerText(String text, int width) {
+        if (text.length() >= width) {
+            return text;
+        }
+        int padding = (width - text.length()) / 2;
+        // Phiên bản dùng String.repeat() cho Java 11+
+        return " ".repeat(padding) + text + " ".repeat(width - text.length() - padding);
+
     }
     private void saveUpdatedBorrowRecord() {
          int selectedRow = tb_qlMuonTraSach.getSelectedRow();
@@ -352,7 +420,7 @@ public class MuonTra extends javax.swing.JFrame {
 
         if (maSV.isEmpty()) {
             // Nếu mã SV rỗng
-            btnLuuMuon.setEnabled(false); // Vô hiệu hóa nút Lưu
+            btnXuatPhieu.setEnabled(false); // Vô hiệu hóa nút Lưu
             isBookAvailable = false; // Reset trạng thái sách
             updateLuuButtonState(); // Cập nhật trạng thái nút Lưu
             return;
@@ -376,7 +444,7 @@ public class MuonTra extends javax.swing.JFrame {
                     txtNewMaSV.setText("");
                     txtNewTenSV.setText("");
                      // Xóa dữ liệu bảng lịch sử mượn nếu không tìm thấy SV (đã làm ở đầu phương thức)
-                     btnLuuMuon.setEnabled(false); // Vô hiệu hóa nút Lưu
+                     btnXuatPhieu.setEnabled(false); // Vô hiệu hóa nút Lưu
                 }
             }
 
@@ -384,7 +452,7 @@ public class MuonTra extends javax.swing.JFrame {
             Logger.getLogger(DangKyMuonSachForm.class.getName()).log(Level.SEVERE, "Lỗi tra cứu Sinh Viên", ex);
             JOptionPane.showMessageDialog(this, "Lỗi CSDL khi tra cứu Sinh Viên: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
              // Xóa dữ liệu bảng lịch sử mượn và vô hiệu hóa nút Lưu nếu có lỗi CSDL (đã làm ở đầu)
-             btnLuuMuon.setEnabled(false);
+             btnXuatPhieu.setEnabled(false);
         } finally {
              // Luôn cập nhật trạng thái nút Lưu sau khi tra cứu SV hoàn tất
              updateLuuButtonState();
@@ -399,7 +467,7 @@ public class MuonTra extends javax.swing.JFrame {
         isBookAvailable = false; // Reset trạng thái sách có sẵn
 
         if (maSach.isEmpty()) {
-             btnLuuMuon.setEnabled(false);
+             btnXuatPhieu.setEnabled(false);
              updateLuuButtonState();
             return;
         }
@@ -437,7 +505,7 @@ public class MuonTra extends javax.swing.JFrame {
                     txtNewGiaSach.setText("");
                     txtNewTinhTrangSach.setText("");
                     isBookAvailable = false; // Không tìm thấy sách
-                    btnLuuMuon.setEnabled(false); // Vô hiệu hóa nút Lưu
+                    btnXuatPhieu.setEnabled(false); // Vô hiệu hóa nút Lưu
                 }
             }
 
@@ -445,7 +513,7 @@ public class MuonTra extends javax.swing.JFrame {
             Logger.getLogger(DangKyMuonSachForm.class.getName()).log(Level.SEVERE, "Lỗi tra cứu Sách", ex);
             JOptionPane.showMessageDialog(this, "Lỗi CSDL khi tra cứu Sách: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
              isBookAvailable = false; // Lỗi CSDL
-             btnLuuMuon.setEnabled(false); // Vô hiệu hóa nút Lưu
+             btnXuatPhieu.setEnabled(false); // Vô hiệu hóa nút Lưu
         } finally {
              // Luôn cập nhật trạng thái nút Lưu sau khi tra cứu Sách hoàn tất
              updateLuuButtonState();
@@ -471,7 +539,7 @@ public class MuonTra extends javax.swing.JFrame {
 
          boolean canEnableLuu = studentValid && bookValidAndAvailable && returnDateEntered && phiMuonEntered;
 
-         btnLuuMuon.setEnabled(canEnableLuu);
+         btnXuatPhieu.setEnabled(canEnableLuu);
 
      }
 
@@ -636,7 +704,7 @@ public class MuonTra extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtNewPhiMuon = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        btnLuuMuon = new javax.swing.JButton();
+        btnXuatPhieu = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -975,23 +1043,23 @@ public class MuonTra extends javax.swing.JFrame {
 
         jLabel12.setText("(tra sinh viên mượn bằng mã)");
 
-        btnLuuMuon.setBackground(new java.awt.Color(51, 102, 255));
-        btnLuuMuon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnLuuMuon.setForeground(new java.awt.Color(255, 255, 255));
-        btnLuuMuon.setText("Thêm");
-        btnLuuMuon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnLuuMuon.setPreferredSize(new java.awt.Dimension(100, 27));
-        btnLuuMuon.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnXuatPhieu.setBackground(new java.awt.Color(51, 102, 255));
+        btnXuatPhieu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnXuatPhieu.setForeground(new java.awt.Color(255, 255, 255));
+        btnXuatPhieu.setText("Xuất phiếu");
+        btnXuatPhieu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnXuatPhieu.setPreferredSize(new java.awt.Dimension(100, 27));
+        btnXuatPhieu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnLuuMuonMouseEntered(evt);
+                btnXuatPhieuMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnLuuMuonMouseExited(evt);
+                btnXuatPhieuMouseExited(evt);
             }
         });
-        btnLuuMuon.addActionListener(new java.awt.event.ActionListener() {
+        btnXuatPhieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLuuMuonActionPerformed(evt);
+                btnXuatPhieuActionPerformed(evt);
             }
         });
 
@@ -1023,7 +1091,7 @@ public class MuonTra extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtNewNgayMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(75, 75, 75)
-                                .addComponent(btnLuuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnXuatPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1150, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1081,7 +1149,7 @@ public class MuonTra extends javax.swing.JFrame {
                                 .addComponent(txtNewNgayMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(btnLuuMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnXuatPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1680,22 +1748,82 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTinhTrangSachActionPerformed
 
-    private void btnLuuMuonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLuuMuonMouseEntered
+    private void btnXuatPhieuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatPhieuMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnLuuMuonMouseEntered
+    }//GEN-LAST:event_btnXuatPhieuMouseEntered
 
-    private void btnLuuMuonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLuuMuonMouseExited
+    private void btnXuatPhieuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatPhieuMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnLuuMuonMouseExited
+    }//GEN-LAST:event_btnXuatPhieuMouseExited
 
-    private void btnLuuMuonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuMuonActionPerformed
+    private void btnXuatPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatPhieuActionPerformed
         // TODO: Lấy dữ liệu từ form (đã làm ở đầu phương thức)
-          String maSV = txtNewMaSV.getText().trim();
-          String maSach = txtNewMaSach.getText().trim();
-          String tenSach = txtNewTenSach.getText().trim();
-          String ngayMuon = txtNewNgayMuon.getText().trim();
-          String ngayTraDuKienStr = txtNewNgayTraDuKien.getText().trim();
-          String phiMuonStr = txtNewPhiMuon.getText().trim();
+//          String maSV = txtNewMaSV.getText().trim();
+//          String maSach = txtNewMaSach.getText().trim();
+//          String tenSach = txtNewTenSach.getText().trim();
+//          String ngayMuon = txtNewNgayMuon.getText().trim();
+//          String ngayTraDuKienStr = txtNewNgayTraDuKien.getText().trim();
+//          String phiMuonStr = txtNewPhiMuon.getText().trim();
+
+
+
+
+            String maSV = txtNewMaSV.getText().trim();
+            String tenSV = txtNewTenSV.getText().trim(); // Cần đảm bảo bạn lấy tên SV sau khi lookupStudent
+            String maSach = txtNewMaSach.getText().trim();
+            String tenSach = txtNewTenSach.getText().trim(); // Cần đảm bảo bạn lấy tên Sách sau khi lookupBook
+            String giaSach = txtNewGiaSach.getText().trim(); // Cần đảm bảo bạn lấy giá Sách sau khi lookupBook
+            String tinhTrangSach = txtNewTinhTrangSach.getText().trim(); // Cần đảm bảo bạn lấy TT Sách sau khi lookupBook
+            String ngayMuon = txtNewNgayMuon.getText().trim(); // Lấy ngày mượn từ ô nhập liệu
+            String ngayTraDuKienStr = txtNewNgayTraDuKien.getText().trim();
+            String phiMuonStr = txtNewPhiMuon.getText().trim(); // Phí mượn ban đầu (có thể là 0)
+
+
+            // TODO: Kiểm tra dữ liệu nhập (Nên gọi lại các hàm kiểm tra định dạng ngày/số ở đây nếu bạn chưa làm ở updateLuuButtonState)
+            // Ví dụ kiểm tra Ngày trả dự kiến:
+             Date ngayTraDuKienDate = null;
+             if (!ngayTraDuKienStr.isEmpty()) {
+                 try {
+                     SimpleDateFormat dateFormatCheck = new SimpleDateFormat("yyyy-MM-dd");
+                     dateFormatCheck.setLenient(false);
+                     ngayTraDuKienDate = dateFormatCheck.parse(ngayTraDuKienStr);
+                 } catch (ParseException e) {
+                     JOptionPane.showMessageDialog(this, "Ngày trả dự kiến không đúng định dạng (YYYY-MM-DD).", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+                     return;
+                 }
+             } else {
+                 JOptionPane.showMessageDialog(this, "Vui lòng nhập Ngày trả dự kiến.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+                 return;
+             }
+             // Ví dụ kiểm tra Phí mượn
+             double phiMuon = 0;
+             if (!phiMuonStr.isEmpty()) {
+                 try {
+                     phiMuon = Double.parseDouble(phiMuonStr);
+                     if (phiMuon < 0) {
+                         JOptionPane.showMessageDialog(this, "Phí mượn không thể âm.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+                         return;
+                     }
+                 } catch (NumberFormatException e) {
+                     JOptionPane.showMessageDialog(this, "Phí mượn không đúng định dạng số.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+                     return;
+                 }
+             } else {
+                  // Nếu phí mượn rỗng, có thể gán mặc định là 0
+                  phiMuon = 0;
+             }
+
+
+            // TODO: Kiểm tra lại Mã SV và Mã sách có tồn tại và sách còn hàng (Nên gọi lại lookupStudent và lookupBook hoặc đảm bảo chúng đã chạy thành công trước đó)
+            // Bạn có thể gọi lại lookupStudent(maSV) và lookupBook(maSach) ở đây và kiểm tra kết quả
+            // Hoặc dựa vào biến isBookAvailable và việc txtNewTenSV, txtNewTenSach có dữ liệu sau khi tra cứu.
+            if (tenSV.isEmpty() || tenSach.isEmpty() || !isBookAvailable) {
+                 JOptionPane.showMessageDialog(this, "Vui lòng tra cứu và đảm bảo Sinh viên tồn tại và Sách còn hàng.", "Lỗi", JOptionPane.WARNING_MESSAGE);
+                 return;
+            }
+            
+            
+            
 
          // TODO: Kiểm tra dữ liệu nhập (đã làm ở trên)
 
@@ -1714,14 +1842,16 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
               PreparedStatement pstInsert = con.prepareStatement(sqlInsert);
               SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
               dateFormat.setLenient(false);
+              
               pstInsert.setString(1, maSV);
               pstInsert.setString(2, maSach);
               pstInsert.setString(3, tenSach);
+              
               Date ngayMuonDate = dateFormat.parse(ngayMuon);
               pstInsert.setDate(4, new java.sql.Date(ngayMuonDate.getTime()));
               // Chuyển String ngày trả dự kiến sang java.sql.Date
                
-               Date ngayTraDuKienDate = dateFormat.parse(ngayTraDuKienStr); // Chuyển String sang Date
+              // Date ngayTraDuKienDate = dateFormat.parse(ngayTraDuKienStr); // Chuyển String sang Date
                pstInsert.setDate(5, new java.sql.Date(ngayTraDuKienDate.getTime())); // Chuyển java.util.Date sang java.sql.Date
 
               pstInsert.setDouble(6, Double.parseDouble(phiMuonStr)); // Chuyển String sang Double
@@ -1741,6 +1871,103 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
                  con.commit();
                  JOptionPane.showMessageDialog(this, "Đăng ký mượn sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
+                 
+                // --- BẮT ĐẦU XUẤT FILE TXT (Phần tạo nội dung phiếu) ---
+                // Đoạn mã này tạo nội dung phiếu và lưu file
+                // Nó GỌI hàm centerText() đã được định nghĩa ở CẤP CLASS
+                StringBuilder sb = new StringBuilder();
+                int docWidth = 70; // Chiều rộng cố định cho phiếu (số ký tự), điều chỉnh nếu cần
+
+
+                // Viền trên của khung phiếu
+                sb.append("+").append("-".repeat(docWidth - 2)).append("+").append("\n");
+                // Tiêu đề phiếu (được căn giữa - GỌI HÀM centerText)
+                sb.append("|").append(centerText("PHIẾU MƯỢN KIÊM HÓA ĐƠN", docWidth - 2)).append("|").append("\n"); // Sử dụng centerText
+                // Viền dưới tiêu đề
+                sb.append("+").append("-".repeat(docWidth - 2)).append("+").append("\n\n");
+
+                // Thông tin Sinh viên
+                sb.append("THÔNG TIN SINH VIÊN:\n");
+                // Sử dụng String.format để căn lề các nhãn
+                sb.append(String.format("  %-20s: %s\n", "Mã SV", maSV)); // Nhãn rộng 20 ký tự, căn lề trái
+                sb.append(String.format("  %-20s: %s\n", "Tên SV", tenSV)).append("\n"); // Nhãn rộng 20 ký tự, căn lề trái
+
+                // Thông tin Sách
+                sb.append("THÔNG TIN SÁCH:\n");
+                sb.append(String.format("  %-20s: %s\n", "Mã Sách", maSach));
+                sb.append(String.format("  %-20s: %s\n", "Tên Sách", tenSach));
+                sb.append(String.format("  %-20s: %s\n", "Giá Sách", giaSach)); // Giá sách
+                sb.append(String.format("  %-20s: %s\n", "Tình Trạng Sách", tinhTrangSach)).append("\n"); // Tình trạng sách
+
+                // Thông tin Mượn
+                sb.append("THÔNG TIN MƯỢN:\n");
+                sb.append(String.format("  %-20s: %s\n", "Ngày Mượn", ngayMuon));
+                sb.append(String.format("  %-20s: %s\n", "Ngày Trả Dự Kiến", ngayTraDuKienStr));
+                 // Định dạng số phí mượn với 2 chữ số thập phân
+                sb.append(String.format("  %-20s: %.2f\n", "Phí Mượn Ban Đầu", phiMuon)).append("\n"); // Sử dụng giá trị phiMuon đã parse Double
+
+                sb.append(String.format("  %-20s: %s\n", "Tình Trạng", "Đang mượn")).append("\n"); // Trạng thái mặc định khi mượn
+
+
+                // Viền cuối phiếu
+                sb.append("+").append("-".repeat(docWidth - 2)).append("+").append("\n");
+                // Dòng ngày in phiếu (căn lề trái và lấp đầy khoảng trắng)
+                 SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                 String ngayInLine = " Ngày In Phiếu: " + dateTimeFormat.format(new Date());
+                sb.append("|").append(ngayInLine).append(" ".repeat(Math.max(0, docWidth - 2 - ngayInLine.length()))).append("|").append("\n");
+                sb.append("+").append("-".repeat(docWidth - 2)).append("+").append("\n\n");
+
+                // Phần chữ ký
+                sb.append(String.format("  %-30s%s\n", "Chữ ký người cho mượn:", "Chữ ký người mượn:"));
+                sb.append(String.format("  %-30s%s\n", "(Ký, ghi rõ họ tên)", "(Ký, ghi rõ họ tên)")).append("\n\n"); // Gợi ý vị trí ký và yêu cầu ghi rõ họ tên
+                // Hiển thị tên người cho mượn (ví dụ: username đang đăng nhập) và tên sinh viên
+                sb.append(String.format("  %-30s%s\n", "(" + tenGVQL + ")", "(" + tenSV + ")")).append("\n"); // Giả định có biến tenGVQL
+
+
+                String phieuContent = sb.toString();
+
+                // --- Kết thúc phần tạo nội dung phiếu ---
+
+
+                // --- BẮT ĐẦU PHẦN LƯU FILE (Đoạn này nối tiếp sau phần trên) ---
+                // Hiển thị cửa sổ chọn nơi lưu file
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Lưu Phiếu Mượn");
+                // Đặt tên file mặc định (ví dụ: PhieuMuon_MaSV_MaSach_NgayMuon.txt)
+                // Đảm bảo tên file không chứa ký tự đặc biệt không hợp lệ
+                String safeMaSV = maSV.replaceAll("[^a-zA-Z0-9_.-]", "");
+                String safeMaSach = maSach.replaceAll("[^a-zA-Z0-9_.-]", "");
+                String safeNgayMuon = ngayMuon.replaceAll("[^0-9]", ""); // Chỉ giữ lại số ngày mượn cho tên file
+                String defaultFileName = "PhieuMuon_" + safeMaSV + "_" + safeMaSach + "_" + safeNgayMuon + ".txt";
+
+                fileChooser.setSelectedFile(new File(defaultFileName));
+                 // Chỉ cho phép lưu file .txt
+                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files (*.txt)", "txt");
+                 fileChooser.setFileFilter(filter);
+
+                int userSelection = fileChooser.showSaveDialog(this);
+
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    File fileToSave = fileChooser.getSelectedFile();
+
+                    // Đảm bảo đuôi .txt nếu người dùng không gõ
+                    String filePath = fileToSave.getAbsolutePath();
+                    if (!filePath.toLowerCase().endsWith(".txt")) {
+                        fileToSave = new File(filePath + ".txt");
+                    }
+
+                    try (PrintWriter writer = new PrintWriter(new FileWriter(fileToSave))) {
+                        writer.print(phieuContent); // Ghi nội dung phiếu vào file
+                        JOptionPane.showMessageDialog(this, "Lưu phiếu mượn thành công vào: " + fileToSave.getAbsolutePath(), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (IOException ioException) {
+                        Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi khi ghi file phiếu mượn", ioException);
+                        JOptionPane.showMessageDialog(this, "Lỗi khi lưu file phiếu mượn: " + ioException.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                // --- KẾT THÚC PHẦN LƯU FILE ---
+                
+                
+                
                  // Làm sạch form sau khi lưu thành công
                  clearInputFields();
                  // Tải lại bảng lịch sử mượn cho sinh viên đó sau khi lưu thành công
@@ -1777,7 +2004,7 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
               }
           }
          // --- KẾT THÚC TRANSACTION ---
-    }//GEN-LAST:event_btnLuuMuonActionPerformed
+    }//GEN-LAST:event_btnXuatPhieuActionPerformed
 
     private void QLMuonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_QLMuonMouseClicked
         jTabbedPane1.setSelectedIndex(2);
@@ -1935,11 +2162,11 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
     private javax.swing.JLabel DangKyMuon;
     private javax.swing.JLabel QLMuon;
     private javax.swing.JButton btnLamMoi;
-    private javax.swing.JButton btnLuuMuon;
     private javax.swing.JLabel btnReturn;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnXacNhanTraSach;
     private javax.swing.JButton btnXoa;
+    private javax.swing.JButton btnXuatPhieu;
     private javax.swing.JComboBox<String> cbTinhTrangMuon;
     private javax.swing.JLabel close;
     private javax.swing.JLabel displayUsername;

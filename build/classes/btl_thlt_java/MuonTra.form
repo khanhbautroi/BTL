@@ -391,7 +391,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="txtNewNgayMuon" min="-2" pref="200" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                                      <Component id="btnLuuMuon" min="-2" pref="120" max="-2" attributes="0"/>
+                                      <Component id="btnXuatPhieu" min="-2" pref="120" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -472,7 +472,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                              <Component id="btnLuuMuon" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnXuatPhieu" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -735,7 +735,7 @@
                 <Property name="text" type="java.lang.String" value="(tra sinh vi&#xea;n m&#x1b0;&#x1ee3;n b&#x1eb1;ng m&#xe3;)"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnLuuMuon">
+            <Component class="javax.swing.JButton" name="btnXuatPhieu">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="66" red="33" type="rgb"/>
@@ -746,7 +746,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
+                <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t phi&#x1ebf;u"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
@@ -755,9 +755,9 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnLuuMuonMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnLuuMuonMouseExited"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLuuMuonActionPerformed"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXuatPhieuMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXuatPhieuMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXuatPhieuActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
