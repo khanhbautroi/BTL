@@ -333,7 +333,7 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_signup_btnMouseExited
 private boolean registerUser(String username, String password) {
        // Lưu mật khẩu thô vào CSDL
-        String insertSql = "INSERT INTO accounts (username, password) VALUES (?, ?)";
+        String insertSql = "INSERT INTO nguoi_dung (username, password) VALUES (?, ?)";
 
         try (Connection con = KN.KNDL()) {
             try (PreparedStatement insertStmt = con.prepareStatement(insertSql)) {

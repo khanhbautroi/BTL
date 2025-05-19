@@ -312,7 +312,7 @@ public class Login extends javax.swing.JFrame {
      */
         private boolean checkLogin(String username, String password) {
         // Câu lệnh SQL để lấy MẬT KHẨU ĐÃ BĂM từ CSDL dựa vào username
-        String sql = "SELECT password FROM accounts WHERE username = ?";
+        String sql = "SELECT password FROM nguoi_dung WHERE username = ?";
 
         try (Connection con = KN.KNDL();
              PreparedStatement pst = con.prepareStatement(sql)) {
