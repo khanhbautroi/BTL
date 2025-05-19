@@ -849,7 +849,7 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_manageStudentsMouseClicked
 
     private void manageUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageUsersMouseClicked
-        new QuanLyMuonTraSachForm().setVisible(true);
+        new QuanLyNguoiDung().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_manageUsersMouseClicked
 
