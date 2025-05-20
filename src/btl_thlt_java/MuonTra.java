@@ -22,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -58,96 +59,65 @@ public class MuonTra extends javax.swing.JFrame {
     
     private void saveUpdatedBorrowRecord() {
          int selectedRow = tb_qlMuonTraSach.getSelectedRow();
-          if (selectedRow == -1) {
-              // Nên kiểm tra lại ở các nút gọi phương thức này
-              return;
-          }
+    if (selectedRow == -1) return;
 
-          // Lấy ID bản ghi mượn từ dòng được chọn (GIẢ ĐỊNH BẠN ĐÃ LẤY ID TRONG CÂU TRUY VẤN SELECT VÀ LƯU ĐÂU ĐÓ KHÔNG HIỂN THỊ)
-          // Nếu không lấy ID, bạn cần sử dụng các cột kết hợp (maSV, maS, ngayMuon) làm điều kiện WHERE.
-          // Lấy giá trị ID (ví dụ từ cột ẩn đầu tiên nếu bạn đã thêm ID vào SELECT)
-          // Cách tốt nhất là thêm cột ID (PRIMARY KEY) vào câu SELECT của loadTableData
-          // và lưu nó vào Object[] ở cột đầu tiên (chỉ số 0), và ẩn cột này trong Designer
-          // Giả định bạn cần lấy ID từ CSDL dựa vào maSV, maS, ngayMuon
-//          String maSV_selected = tb_qlMuonTraSach.getValueAt(selectedRow, 0).toString();
-//          String maS_selected = tb_qlMuonTraSach.getValueAt(selectedRow, 2).toString();
-//          String ngayMuon_selected_str = tb_qlMuonTraSach.getValueAt(selectedRow, 6).toString(); // Ngày mượn từ bảng (định dạng yyyy-MM-dd HH:mm:ss)
+    String newNgayTraThucTeStr = txtNgayTraThucTe.getText().trim();
+    String newPhiMuonStr = txtPhiMuon.getText().trim();
 
-
-          // Lấy thông tin MỚI từ các trường chi tiết trên form
-          String newTinhTrangMuon = cbTinhTrangMuon.getSelectedItem().toString();
-          String newNgayTraThucTeStr = txtNgayTraThucTe.getText().trim();
-          String newPhiMuonStr = txtPhiMuon.getText().trim();
-
-
-          // TODO: Kiểm tra dữ liệu mới nhập (định dạng ngày trả thực tế, định dạng số phí mượn)
-           Date newNgayTraThucTeDate = null;
-         if (!newNgayTraThucTeStr.isEmpty()) {
-             try {
-                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                 dateFormat.setLenient(false);
-                 newNgayTraThucTeDate = dateFormat.parse(newNgayTraThucTeStr);
-             } catch (java.text.ParseException e) {
-                  JOptionPane.showMessageDialog(this, "Ngày trả thực tế không đúng định dạng (YYYY-MM-DD).", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-                  return;
-             }
-         }
-         double newPhiMuon;
-         try {
-             newPhiMuon = Double.parseDouble(newPhiMuonStr);
-             if (newPhiMuon < 0) {
-                 JOptionPane.showMessageDialog(this, "Phí mượn không thể âm.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-                 return;
-             }
-         } catch (NumberFormatException e) {
-              JOptionPane.showMessageDialog(this, "Phí mượn không đúng định dạng số.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-              return;
-         }
-
-
-        // --- CÂU LỆNH SQL UPDATE - SỬ DỤNG ID TRONG WHERE ---
-        String sqlUpdate = "UPDATE muon_tra_sach SET tinhTrangMuon = ?, ngayTraThucTe = ?, phiMuon = ? " +
-                           "WHERE id = ?"; // <<< Sửa điều kiện WHERE // Sử dụng các cột kết hợp làm điều kiện WHERE
-
-          // TODO: NẾU BẢNG muon_tra_sach CÓ CỘT ID VÀ BẠN LẤY ID TRONG SELECT CỦA loadTableData (Ở CỘT 0, ẨN), HÃY DÙNG ID LÀM ĐIỀU KIỆN WHERE để chắc chắn cập nhật đúng bản ghi duy nhất:
-          // String sqlUpdate = "UPDATE muon_tra_sach SET tinhTrangMuon = ?, ngayTraThucTe = ?, phimMuon = ? WHERE id = ?";
-          // int id_selected = Integer.parseInt(tb_mts.getValueAt(selectedRow, 0).toString()); // Lấy ID từ bảng (thay 0 bằng chỉ số cột của ID)
-
-
-          Connection con = null;
+    Date newNgayTraThucTeDate = null;
+    if (!newNgayTraThucTeStr.isEmpty()) {
         try {
-            con = KN.KNDL();
-            PreparedStatement pstUpdate = con.prepareStatement(sqlUpdate);
-
-            pstUpdate.setString(1, newTinhTrangMuon);
-            if (newNgayTraThucTeDate == null) {
-                pstUpdate.setNull(2, java.sql.Types.DATE);
-            } else {
-                pstUpdate.setDate(2, new java.sql.Date(newNgayTraThucTeDate.getTime()));
-            }
-            pstUpdate.setDouble(3, newPhiMuon);
-
-            // Set tham số cho điều kiện WHERE (ID bản ghi được chọn)
-            pstUpdate.setInt(4, selectedRecordId); // <<< Set ID vào tham số thứ 4
-
-            int rowsAffected = pstUpdate.executeUpdate();
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Cập nhật bản ghi thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                // Tải lại dữ liệu sau khi cập nhật
-                loadTableData(txtMaSinhVien.getText().trim()); // Tải lại với bộ lọc hiện tại
-                // Các ô chi tiết vẫn giữ nguyên, hoặc làm sạch tùy ý
-            } else {
-                 // Trường hợp này ít xảy ra khi dùng ID, trừ khi bản ghi đã bị xóa
-                 JOptionPane.showMessageDialog(this, "Không có bản ghi nào được cập nhật. Có thể bản ghi đã bị xóa?", "Thông báo", JOptionPane.WARNING_MESSAGE);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLyMuonTraSachForm.class.getName()).log(Level.SEVERE, "Lỗi CSDL khi cập nhật bản ghi", ex);
-            JOptionPane.showMessageDialog(this, "Lỗi CSDL khi cập nhật bản ghi: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            // Đóng kết nối (nếu cần quản lý thủ công)
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            newNgayTraThucTeDate = dateFormat.parse(newNgayTraThucTeStr);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Ngày trả thực tế không đúng định dạng (yyyy-MM-dd).", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+    }
+
+    double newPhiMuon;
+    try {
+        newPhiMuon = Double.parseDouble(newPhiMuonStr);
+        if (newPhiMuon < 0) {
+            JOptionPane.showMessageDialog(this, "Phí mượn không thể âm.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Phí mượn không đúng định dạng số.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Xác định tình trạng mới
+    String newTinhTrang = (newNgayTraThucTeDate != null) ? "Đã trả" : "Đang mượn";
+
+    String sql = "UPDATE phieu_muon SET ngay_tra_thuc_te = ?, phi_muon = ?, tinh_trang_muon = ? WHERE id = ?";
+
+    try (Connection con = KN.KNDL();
+         PreparedStatement pst = con.prepareStatement(sql)) {
+
+        if (newNgayTraThucTeDate != null) {
+            pst.setDate(1, new java.sql.Date(newNgayTraThucTeDate.getTime()));
+        } else {
+            pst.setNull(1, java.sql.Types.DATE);
+        }
+        pst.setDouble(2, newPhiMuon);
+        pst.setString(3, newTinhTrang);
+
+        int id = Integer.parseInt(tb_qlMuonTraSach.getValueAt(selectedRow, 0).toString());
+        pst.setInt(4, id);
+
+        int rows = pst.executeUpdate();
+        if (rows > 0) {
+            JOptionPane.showMessageDialog(this, "Cập nhật thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            loadTableData(txtMaSinhVien.getText().trim());
+        } else {
+            JOptionPane.showMessageDialog(this, "Không có bản ghi nào được cập nhật.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi CSDL khi cập nhật bản ghi", ex);
+        JOptionPane.showMessageDialog(this, "Lỗi CSDL khi cập nhật bản ghi: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
      }
     // Phương thức cho phép/không cho phép chỉnh sửa các trường chi tiết
     
@@ -192,64 +162,54 @@ public class MuonTra extends javax.swing.JFrame {
     // Nhận tham số maSVFilter để lọc (null nếu muốn tải tất cả)
     public void loadTableData(String maSVFilter) {
         DefaultTableModel dtm = (DefaultTableModel) tb_qlMuonTraSach.getModel();
-        dtm.setRowCount(0); // Xóa tất cả các dòng dữ liệu cũ
+    dtm.setRowCount(0); // Xóa dữ liệu cũ
 
-        // --- CÂU LỆNH SQL TỔNG HỢP (có JOIN) ---
-        // Lấy 11 cột dữ liệu đầy đủ từ 3 bảng (hoặc VIEW nếu bạn đã tạo VIEW)
-        String sql = "SELECT " +
-                     "mts.id, " +
-                     "mts.maSV, sv.ten AS tenSinhVien, " +
-                     "mts.maS, qls.tenS AS tenSachValue, qls.tinhtrang AS tinhTrangSachSach, " +
-                     "mts.ngayMuon, mts.ngayTraDuKien, mts.ngayTraThucTe, mts.phiMuon, mts.tinhTrangMuon " + // Đã sửa phiMuon
-                     "FROM muon_tra_sach mts " +
-                     "JOIN ql_sv sv ON mts.maSV = sv.ma " + // JOIN với bảng sinh viên
-                     "JOIN ql_sach qls ON mts.maS = qls.maS "; // JOIN với bảng sách
+    String sql = "SELECT " +
+                 "pm.id, " +
+                 "pm.ma_sv, sv.ho_ten AS tenSinhVien, " +
+                 "pm.ma_sach, s.tua_de AS tenSach, s.tinh_trang AS tinhTrangSach, " +
+                 "pm.ngay_muon, pm.ngay_tra_du_kien, pm.ngay_tra_thuc_te, " +
+                 "pm.phi_muon, pm.tinh_trang_muon " +
+                 "FROM phieu_muon pm " +
+                 "JOIN sinh_vien sv ON pm.ma_sv = sv.ma_sv " +
+                 "JOIN sach s ON pm.ma_sach = s.ma_sach";
 
-        // Hoặc, nếu bạn đã tạo VIEW tên là vw_lich_su_muon_tra_tong_hop
-        // String sql = "SELECT * FROM vw_lich_su_muon_tra_tong_hop";
+    if (maSVFilter != null && !maSVFilter.trim().isEmpty()) {
+        sql += " WHERE pm.ma_sv = ?";
+    }
 
+    sql += " ORDER BY pm.ngay_muon DESC";
 
-        // Thêm điều kiện WHERE nếu có Mã SV để tìm kiếm
+    try (Connection con = KN.KNDL();
+         PreparedStatement pst = con.prepareStatement(sql)) {
+
         if (maSVFilter != null && !maSVFilter.trim().isEmpty()) {
-            sql += " WHERE mts.maSV = ?"; // Hoặc " WHERE maSV = ?" nếu dùng VIEW
+            pst.setString(1, maSVFilter.trim());
         }
 
-        sql += " ORDER BY mts.ngayMuon DESC"; // Sắp xếp
-
-
-        try (Connection con = KN.KNDL();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            // Set tham số cho WHERE clause nếu có
-            if (maSVFilter != null && !maSVFilter.trim().isEmpty()) {
-                pst.setString(1, maSVFilter.trim());
+        try (ResultSet rs = pst.executeQuery()) {
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("id"),
+                    rs.getString("ma_sv"),
+                    rs.getString("tenSinhVien"),
+                    rs.getString("ma_sach"),
+                    rs.getString("tenSach"),
+                    rs.getString("tinhTrangSach"),
+                    rs.getDate("ngay_muon") != null ? rs.getDate("ngay_muon").toString() : "N/A",
+                    rs.getDate("ngay_tra_du_kien") != null ? rs.getDate("ngay_tra_du_kien").toString() : "N/A",
+                    rs.getDate("ngay_tra_thuc_te") != null ? rs.getDate("ngay_tra_thuc_te").toString() : "",
+                    rs.getString("phi_muon"),
+                    rs.getString("tinh_trang_muon") // Dùng trực tiếp từ DB
+                };
+                dtm.addRow(row);
             }
-
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    // Lấy dữ liệu từ ResultSet theo tên cột/alias trong câu SELECT
-                    // Đảm bảo thứ tự các giá trị trong mảng này khớp với thứ tự cột trong JTable Model
-                    Object object[] = {
-                        rs.getObject("id"),
-                        rs.getString("maSV"),           // Cột 1: Mã SV
-                        rs.getString("tenSinhVien"),    // Cột 2: Tên SV (alias)
-                        rs.getString("maS"),            // Cột 3: Mã Sách
-                        rs.getString("tenSachValue"),   // Cột 4: Tên Sách (alias)
-                        rs.getString("tinhTrangSachSach"), // Cột 6: TT Sách (alias)
-                        rs.getTimestamp("ngayMuon") != null ? new SimpleDateFormat("yyyy-MM-dd").format(rs.getTimestamp("ngayMuon")) : "N/A", // Cột 7: Ngày mượn
-                        rs.getDate("ngayTraDuKien") != null ? rs.getDate("ngayTraDuKien").toString() : "N/A", // Cột 8: Ngày trả DK
-                        rs.getDate("ngayTraThucTe") != null ? rs.getDate("ngayTraThucTe").toString() : "", // Cột 9: Ngày trả TT (Để trống nếu NULL)
-                        rs.getString("phiMuon"),        // Cột 10: Phí mượn (Đảm bảo kiểu dữ liệu từ DB)
-                        rs.getString("tinhTrangMuon")   // Cột 11: TT mượn
-                    };
-                    dtm.addRow(object);
-                }
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLyMuonTraSachForm.class.getName()).log(Level.SEVERE, "Lỗi khi tải dữ liệu lịch sử mượn", ex);
-            JOptionPane.showMessageDialog(this, "Lỗi CSDL khi tải dữ liệu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi khi tải dữ liệu lịch sử mượn", ex);
+        JOptionPane.showMessageDialog(this, "Lỗi CSDL khi tải dữ liệu: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
     }
     
     // Phương thức làm sạch các trường hiển thị chi tiết
@@ -350,111 +310,97 @@ public class MuonTra extends javax.swing.JFrame {
     
     // --- Phương thức tra cứu Sinh Viên ---
     private void lookupStudent(String maSV) {
-        txtNewTenSV.setText(""); // Xóa tên SV cũ
-        // Xóa dữ liệu bảng lịch sử mượn khi tra cứu SV mới
-        DefaultTableModel dtm = (DefaultTableModel) tb_sachDangMuon.getModel();
-        dtm.setRowCount(0);
+        txtNewTenSV.setText("");
+    DefaultTableModel dtm = (DefaultTableModel) tb_sachDangMuon.getModel();
+    dtm.setRowCount(0);
 
-        if (maSV.isEmpty()) {
-            // Nếu mã SV rỗng
-            btnXuatPhieu.setEnabled(false); // Vô hiệu hóa nút Lưu
-            isBookAvailable = false; // Reset trạng thái sách
-            updateLuuButtonState(); // Cập nhật trạng thái nút Lưu
-            return;
-        }
+    if (maSV.isEmpty()) {
+        btnXuatPhieu.setEnabled(false);
+        isBookAvailable = false;
+        updateLuuButtonState();
+        return;
+    }
 
-        String sql = "SELECT ten FROM ql_sv WHERE ma = ?";
+    String sql = "SELECT ho_ten FROM sinh_vien WHERE ma_sv = ?";
 
-        try (Connection con = KN.KNDL();
-             PreparedStatement pst = con.prepareStatement(sql)) {
+    try (Connection con = KN.KNDL();
+         PreparedStatement pst = con.prepareStatement(sql)) {
 
-            pst.setString(1, maSV);
+        pst.setString(1, maSV);
 
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    txtNewTenSV.setText(rs.getString("ten"));
-                    // --- GỌI HÀM TẢI LỊCH SỬ MƯỢN SAU KHI TRA CỨU SINH VIÊN THÀNH CÔNG ---
-                    loadBorrowHistoryForStudent(maSV);
-                    // isBookAvailable không đổi trạng thái ở đây, chỉ liên quan đến sách
-                } else {
-                    JOptionPane.showMessageDialog(this, "Không tìm thấy Sinh Viên có Mã: " + maSV, "Lỗi Tra cứu", JOptionPane.WARNING_MESSAGE);
-                    txtNewMaSV.setText("");
-                    txtNewTenSV.setText("");
-                     // Xóa dữ liệu bảng lịch sử mượn nếu không tìm thấy SV (đã làm ở đầu phương thức)
-                     btnXuatPhieu.setEnabled(false); // Vô hiệu hóa nút Lưu
-                }
+        try (ResultSet rs = pst.executeQuery()) {
+            if (rs.next()) {
+                txtNewTenSV.setText(rs.getString("ho_ten"));
+                loadBorrowHistoryForStudent(maSV);
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy Sinh Viên có Mã: " + maSV, "Lỗi Tra cứu", JOptionPane.WARNING_MESSAGE);
+                txtNewMaSV.setText("");
+                txtNewTenSV.setText("");
+                btnXuatPhieu.setEnabled(false);
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DangKyMuonSachForm.class.getName()).log(Level.SEVERE, "Lỗi tra cứu Sinh Viên", ex);
-            JOptionPane.showMessageDialog(this, "Lỗi CSDL khi tra cứu Sinh Viên: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
-             // Xóa dữ liệu bảng lịch sử mượn và vô hiệu hóa nút Lưu nếu có lỗi CSDL (đã làm ở đầu)
-             btnXuatPhieu.setEnabled(false);
-        } finally {
-             // Luôn cập nhật trạng thái nút Lưu sau khi tra cứu SV hoàn tất
-             updateLuuButtonState();
         }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi tra cứu Sinh Viên", ex);
+        JOptionPane.showMessageDialog(this, "Lỗi CSDL khi tra cứu Sinh Viên: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+        btnXuatPhieu.setEnabled(false);
+    } finally {
+        updateLuuButtonState();
+    }
     }
     
     // --- Phương thức tra cứu Sách ---
     private void lookupBook(String maSach) {
-        txtNewTenSach.setText("");
-        txtNewGiaSach.setText("");
-        txtNewTinhTrangSach.setText("");
-        isBookAvailable = false; // Reset trạng thái sách có sẵn
+         txtNewTenSach.setText("");
+    txtNewGiaSach.setText("");
+    txtNewTinhTrangSach.setText("");
+    isBookAvailable = false;
 
-        if (maSach.isEmpty()) {
-             btnXuatPhieu.setEnabled(false);
-             updateLuuButtonState();
-            return;
-        }
+    if (maSach.isEmpty()) {
+        btnXuatPhieu.setEnabled(false);
+        updateLuuButtonState();
+        return;
+    }
 
-        String sql = "SELECT tenS, tg, gia, tinhtrang, sl FROM ql_sach WHERE maS = ?";
+    String sql = "SELECT tua_de, gia, tinh_trang, so_luong FROM sach WHERE ma_sach = ?";
 
-        try (Connection con = KN.KNDL();
-             PreparedStatement pst = con.prepareStatement(sql)) {
+    try (Connection con = KN.KNDL();
+         PreparedStatement pst = con.prepareStatement(sql)) {
 
-            pst.setString(1, maSach);
+        pst.setString(1, maSach);
 
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    txtNewTenSach.setText(rs.getString("tenS"));               
-                    txtNewGiaSach.setText(String.valueOf(rs.getInt("gia"))); // Giả định 'gia' là số
-                    txtNewTinhTrangSach.setText(rs.getString("tinhtrang"));
+        try (ResultSet rs = pst.executeQuery()) {
+            if (rs.next()) {
+                txtNewTenSach.setText(rs.getString("tua_de"));
+                txtNewGiaSach.setText(String.valueOf(rs.getDouble("gia")));
+                txtNewTinhTrangSach.setText(rs.getString("tinh_trang"));
 
-                    // --- KIỂM TRA SỐ LƯỢNG CÒN (Sử dụng rs.getInt() vì cột đã là INT) ---
-                    int soLuongCon = rs.getInt("sl"); // Lấy giá trị trực tiếp dưới dạng INT
-
-                    if (soLuongCon > 0) {
-                        isBookAvailable = true; // Sách còn hàng nếu số lượng > 0
-                    } else {
-                        // Nếu số lượng <= 0, thông báo sách hết và đặt isBookAvailable = false
-                        JOptionPane.showMessageDialog(this, "Sách này hiện đã hết (Số lượng: " + soLuongCon + ").", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                        isBookAvailable = false;
-                    }
-                    // --- KẾT THÚC KIỂM TRA SL ---
-
+                int soLuongCon = rs.getInt("so_luong");
+                if (soLuongCon > 0) {
+                    isBookAvailable = true;
                 } else {
-                    // Không tìm thấy sách
-                    JOptionPane.showMessageDialog(this, "Không tìm thấy Sách có Mã: " + maSach, "Lỗi Tra cứu", JOptionPane.WARNING_MESSAGE);
-                    txtNewMaSach.setText("");
-                    txtNewTenSach.setText("");
-                    txtNewGiaSach.setText("");
-                    txtNewTinhTrangSach.setText("");
-                    isBookAvailable = false; // Không tìm thấy sách
-                    btnXuatPhieu.setEnabled(false); // Vô hiệu hóa nút Lưu
+                    JOptionPane.showMessageDialog(this, "Sách này hiện đã hết (Số lượng: " + soLuongCon + ").", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    isBookAvailable = false;
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy Sách có Mã: " + maSach, "Lỗi Tra cứu", JOptionPane.WARNING_MESSAGE);
+                txtNewMaSach.setText("");
+                txtNewTenSach.setText("");
+                txtNewGiaSach.setText("");
+                txtNewTinhTrangSach.setText("");
+                isBookAvailable = false;
+                btnXuatPhieu.setEnabled(false);
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DangKyMuonSachForm.class.getName()).log(Level.SEVERE, "Lỗi tra cứu Sách", ex);
-            JOptionPane.showMessageDialog(this, "Lỗi CSDL khi tra cứu Sách: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
-             isBookAvailable = false; // Lỗi CSDL
-             btnXuatPhieu.setEnabled(false); // Vô hiệu hóa nút Lưu
-        } finally {
-             // Luôn cập nhật trạng thái nút Lưu sau khi tra cứu Sách hoàn tất
-             updateLuuButtonState();
         }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi tra cứu Sách", ex);
+        JOptionPane.showMessageDialog(this, "Lỗi CSDL khi tra cứu Sách: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+        isBookAvailable = false;
+        btnXuatPhieu.setEnabled(false);
+    } finally {
+        updateLuuButtonState();
+    }
     }
     
     // --- Phương thức helper để cập nhật trạng thái nút Lưu Mượn ---
@@ -519,84 +465,172 @@ public class MuonTra extends javax.swing.JFrame {
     // --- Phương thức tải lịch sử mượn cho sinh viên vào JTable ---
     // Phương thức này được gọi sau khi tra cứu sinh viên thành công
     private  void updateQuaHan() {
-    try {
-        Connection con = KN.KNDL();
-        
-        String sqlUpdateQuaHan = "UPDATE muon_tra_sach SET tinhTrangMuon = 'Quá hạn' WHERE tinhTrangMuon = 'Đang mượn' AND ngayTraDuKien < CURDATE()";
-        PreparedStatement statement = con.prepareStatement(sqlUpdateQuaHan);
-        int rowsAffected = statement.executeUpdate();
-        
-        // Optional: Log or display the number of updated rows
-        System.out.println("Đã cập nhật" + rowsAffected + " tình trạng");
-        
-        // Close resources
-        statement.close();
-        con.close();
-        
+    String sql = "UPDATE phieu_muon " +
+                 "SET tinh_trang_muon = 'Quá hạn' " +
+                 "WHERE tinh_trang_muon = 'Đang mượn' " +
+                 "AND ngay_tra_thuc_te IS NULL " +
+                 "AND ngay_tra_du_kien < CURDATE()";
+
+    try (Connection con = KN.KNDL();
+         PreparedStatement pst = con.prepareStatement(sql)) {
+        int rows = pst.executeUpdate();
+        System.out.println("Đã cập nhật " + rows + " bản ghi quá hạn.");
     } catch (SQLException e) {
         e.printStackTrace();
-        // Handle exception appropriately
+        JOptionPane.showMessageDialog(null, "Lỗi khi cập nhật tình trạng quá hạn: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
     }
-    
 }
      private void loadBorrowHistoryForStudent(String maSV) {
           DefaultTableModel dtm = (DefaultTableModel) tb_sachDangMuon.getModel();
-          dtm.setRowCount(0); // Xóa tất cả các dòng dữ liệu cũ
-          
-          if (maSV.isEmpty()) {
-              return; // Không tải nếu mã SV rỗng
-          }
+    dtm.setRowCount(0);
 
-          String sql = "SELECT mts.maSV, mts.maS, qls.tenS, mts.ngayMuon, mts.ngayTraDuKien, mts.phiMuon, mts.tinhTrangMuon " +
-                       "FROM muon_tra_sach mts " +
-                       "JOIN ql_sach qls ON mts.maS = qls.maS " + // JOIN để lấy Tên sách (tenS)
-                       "WHERE mts.maSV = ? " +
-                       "ORDER BY mts.ngayMuon DESC";
-          // --- KẾT THÚC CẬP NHẬT SQL ---
+    if (maSV.isEmpty()) return;
 
+    String sql = "SELECT pm.ma_sv, pm.ma_sach, s.tua_de, pm.ngay_muon, pm.ngay_tra_du_kien, pm.phi_muon, pm.tinh_trang_muon " +
+                 "FROM phieu_muon pm " +
+                 "JOIN sach s ON pm.ma_sach = s.ma_sach " +
+                 "WHERE pm.ma_sv = ? " +
+                 "ORDER BY pm.ngay_muon DESC";
 
-          try (Connection con = KN.KNDL();
-               PreparedStatement pst = con.prepareStatement(sql)) {
+    try (Connection con = KN.KNDL();
+         PreparedStatement pst = con.prepareStatement(sql)) {
 
-              pst.setString(1, maSV);
+        pst.setString(1, maSV);
 
-              try (ResultSet rs = pst.executeQuery()) {
-                  while (rs.next()) {
-                      // --- LẤY DỮ LIỆU TỪ ResultSet (Khớp với các cột trong SELECT) ---
-                      String maSinhVien = rs.getString("maSV"); // Lấy Mã SV
-                      String maSach = rs.getString("maS");     // Lấy Mã Sách (từ mts.maS)
-                      String tenSach = rs.getString("tenS");    // Lấy Tên Sách (từ qls.tenS)
-                      String ngayMuon = rs.getTimestamp("ngayMuon") != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(rs.getTimestamp("ngayMuon")) : "N/A";
-                      String ngayTraDuKien = rs.getDate("ngayTraDuKien") != null ? rs.getDate("ngayTraDuKien").toString() : "N/A";
-                      // Lấy phí mượn. Nếu cột phimMuon trong DB là DECIMAL, nên dùng getDouble hoặc getBigDecimal.
-                      // Nếu là VARCHAR, vẫn dùng getString.
-                      String phiMuon = rs.getString("phiMuon"); // Lấy Phí mượn
-                      String tinhTrang = rs.getString("tinhTrangMuon");
-                      // --- KẾT THÚC LẤY DỮ LIỆU ---
+        try (ResultSet rs = pst.executeQuery()) {
+            while (rs.next()) {
+                Object[] rowData = {
+                    rs.getString("ma_sv"),
+                    rs.getString("ma_sach"),
+                    rs.getString("tua_de"),
+                    rs.getDate("ngay_muon"),
+                    rs.getDate("ngay_tra_du_kien"),
+                    rs.getString("phi_muon"),
+                    rs.getString("tinh_trang_muon")
+                };
+                dtm.addRow(rowData);
+            }
+        }
 
+    } catch (SQLException ex) {
+        Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi tải lịch sử mượn", ex);
+        JOptionPane.showMessageDialog(this, "Lỗi CSDL khi tải lịch sử mượn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
+ }
+     private boolean handleMuonSach(String maSV, String maSach, String ngayMuon, String ngayTraDuKienStr, String phiMuonStr) {
+    Connection con = null;
 
-                      // --- TẠO MẢNG DỮ LIỆU CHO DÒNG (7 phần tử, khớp với 7 cột SELECT và Design) ---
-                      // Đảm bảo thứ tự các phần tử trong mảng này khớp với thứ tự cột trong Designer
-                      Object[] rowData = {
-                          maSinhVien,    // Cột 1: Mã sinh viên
-                          maSach,        // Cột 2: Mã sách
-                          tenSach,       // Cột 3: Tên sách
-                          ngayMuon,      // Cột 4: Ngày mượn
-                          ngayTraDuKien, // Cột 5: Ngày trả dự kiến
-                          phiMuon,       // Cột 6: Phí mượn
-                          tinhTrang      // Cột 7: Tình trạng
-                      };
-                      // --- KẾT THÚC TẠO MẢNG DỮ LIỆU ---
+    try {
+        con = KN.KNDL();
+        con.setAutoCommit(false);
 
-                      dtm.addRow(rowData); // Thêm dòng vào model
-                  }
-              }
+        String sqlInsert = "INSERT INTO phieu_muon (ma_sv, ma_sach, ngay_muon, ngay_tra_du_kien, phi_muon, tinh_trang_muon) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstInsert = con.prepareStatement(sqlInsert);
 
-          } catch (SQLException ex) {
-              Logger.getLogger(DangKyMuonSachForm.class.getName()).log(Level.SEVERE, "Lỗi tải lịch sử mượn", ex);
-              JOptionPane.showMessageDialog(this, "Lỗi CSDL khi tải lịch sử mượn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-          }
-      }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+
+        Date ngayMuonDate = dateFormat.parse(ngayMuon);
+        Date ngayTraDuKienDate = dateFormat.parse(ngayTraDuKienStr);
+        double phiMuon = Double.parseDouble(phiMuonStr);
+
+        pstInsert.setString(1, maSV);
+        pstInsert.setString(2, maSach);
+        pstInsert.setDate(3, new java.sql.Date(ngayMuonDate.getTime()));
+        pstInsert.setDate(4, new java.sql.Date(ngayTraDuKienDate.getTime()));
+        pstInsert.setDouble(5, phiMuon);
+        pstInsert.setString(6, "Đang mượn");
+        pstInsert.executeUpdate();
+        pstInsert.close();
+
+        String sqlUpdate = "UPDATE sach SET so_luong = so_luong - 1 WHERE ma_sach = ? AND so_luong > 0";
+        PreparedStatement pstUpdate = con.prepareStatement(sqlUpdate);
+        pstUpdate.setString(1, maSach);
+        int rowsUpdated = pstUpdate.executeUpdate();
+        pstUpdate.close();
+
+        if (rowsUpdated > 0) {
+            con.commit();
+            JOptionPane.showMessageDialog(this, "Đăng ký mượn sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            con.rollback();
+            JOptionPane.showMessageDialog(this, "Sách đã hết hoặc không cập nhật được số lượng.", "Thất bại", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+    } catch (ParseException e) {
+        JOptionPane.showMessageDialog(this, "Định dạng ngày không hợp lệ (yyyy-MM-dd).", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Phí mượn không hợp lệ.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+    } catch (SQLException ex) {
+        Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi Transaction", ex);
+        try {
+            if (con != null) con.rollback();
+        } catch (SQLException rollbackEx) {
+            Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi khi rollback", rollbackEx);
+        }
+        JOptionPane.showMessageDialog(this, "Lỗi CSDL: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (con != null) {
+                con.setAutoCommit(true);
+                con.close();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi khi đóng kết nối", e);
+        }
+    }
+
+    return false;
+}
+private void xuatPhieuMuon(String maSV, String tenSV, String maSach, String tenSach, String giaSach, String tinhTrangSach, String ngayMuon, String ngayTraDuKienStr, String phiMuonStr) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("----- PHIEU MUON KIEM HOA DON -----\n\n");
+    sb.append("THONG TIN SINH VIEN:\n");
+    sb.append("  Ma SV: ").append(maSV).append("\n");
+    sb.append("  Ten SV: ").append(tenSV).append("\n\n");
+
+    sb.append("THONG TIN SACH:\n");
+    sb.append("  Ma Sach: ").append(maSach).append("\n");
+    sb.append("  Ten Sach: ").append(tenSach).append("\n");
+    sb.append("  Gia Sach: ").append(giaSach).append("\n");
+    sb.append("  Tinh Trang Sach: ").append(tinhTrangSach).append("\n\n");
+
+    sb.append("THONG TIN MUON:\n");
+    sb.append("  Ngay Muon: ").append(ngayMuon).append("\n");
+    sb.append("  Ngay Tra Du Kien: ").append(ngayTraDuKienStr).append("\n");
+    sb.append("  Phi Muon Ban Dau: ").append(phiMuonStr).append("\n");
+    sb.append("  Tinh Trang: Dang muon\n\n");
+
+    sb.append("-------------------------------------\n");
+    sb.append("Ngay In Phieu: ").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())).append("\n");
+    sb.append("Chu ky nguoi cho muon:\n\n");
+    sb.append("Chu ky nguoi muon:\n");
+
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Lưu phiếu mượn");
+    String defaultFileName = "PhieuMuon_" + maSV + "_" + maSach + "_" + ngayMuon.replace("-", "") + ".txt";
+    fileChooser.setSelectedFile(new File(defaultFileName));
+    fileChooser.setFileFilter(new FileNameExtensionFilter("Text Files (*.txt)", "txt"));
+
+    int userSelection = fileChooser.showSaveDialog(this);
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToSave = fileChooser.getSelectedFile();
+        if (!fileToSave.getName().toLowerCase().endsWith(".txt")) {
+            fileToSave = new File(fileToSave.getAbsolutePath() + ".txt");
+        }
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileToSave))) {
+            writer.print(sb.toString());
+            JOptionPane.showMessageDialog(this, "Lưu phiếu thành công: " + fileToSave.getAbsolutePath(), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Lỗi khi ghi file phiếu mượn", ex);
+            JOptionPane.showMessageDialog(this, "Không thể lưu file: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -674,6 +708,7 @@ public class MuonTra extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(251, 249, 228));
+        setIconImage(new ImageIcon(getClass().getResource("/Icon/Title.png")).getImage());
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -983,7 +1018,7 @@ public class MuonTra extends javax.swing.JFrame {
         btnXuatPhieu.setBackground(new java.awt.Color(51, 102, 255));
         btnXuatPhieu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXuatPhieu.setForeground(new java.awt.Color(255, 255, 255));
-        btnXuatPhieu.setText("Xuất phiếu");
+        btnXuatPhieu.setText("Thêm");
         btnXuatPhieu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnXuatPhieu.setPreferredSize(new java.awt.Dimension(100, 27));
         btnXuatPhieu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1601,7 +1636,7 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
             "Xác nhận xóa", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
     if (confirm == JOptionPane.YES_OPTION) {
-        String sql = "DELETE FROM muon_tra_sach WHERE id = ?";
+        String sql = "DELETE FROM phieu_muon WHERE id = ?";
 
         try (Connection con = KN.KNDL();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -1694,221 +1729,42 @@ int selectedRow = tb_qlMuonTraSach.getSelectedRow();
     }//GEN-LAST:event_btnXuatPhieuMouseExited
 
     private void btnXuatPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatPhieuActionPerformed
-        // TODO: Lấy dữ liệu từ form (đã làm ở đầu phương thức)
-//          String maSV = txtNewMaSV.getText().trim();
-//          String maSach = txtNewMaSach.getText().trim();
-//          String tenSach = txtNewTenSach.getText().trim();
-//          String ngayMuon = txtNewNgayMuon.getText().trim();
-//          String ngayTraDuKienStr = txtNewNgayTraDuKien.getText().trim();
-//          String phiMuonStr = txtNewPhiMuon.getText().trim();
+      String maSV = txtNewMaSV.getText().trim();
+    String tenSV = txtNewTenSV.getText().trim();
+    String maSach = txtNewMaSach.getText().trim();
+    String tenSach = txtNewTenSach.getText().trim();
+    String giaSach = txtNewGiaSach.getText().trim();
+    String tinhTrangSach = txtNewTinhTrangSach.getText().trim();
+    String ngayMuon = txtNewNgayMuon.getText().trim();
+    String ngayTraDuKienStr = txtNewNgayTraDuKien.getText().trim();
+    String phiMuonStr = txtNewPhiMuon.getText().trim();
 
+    if (tenSV.isEmpty() || tenSach.isEmpty() || !isBookAvailable) {
+        JOptionPane.showMessageDialog(this, "Vui lòng tra cứu và đảm bảo sinh viên/sách hợp lệ.", "Lỗi", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
+    // ✅ Hỏi người dùng có muốn xuất phiếu không
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Bạn có muốn xuất phiếu mượn không?",
+        "Xác nhận",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
 
+    if (confirm != JOptionPane.YES_OPTION) {
+        // Người dùng chọn "Không"
+        return;
+    }
 
-            String maSV = txtNewMaSV.getText().trim();
-            String tenSV = txtNewTenSV.getText().trim(); // Cần đảm bảo bạn lấy tên SV sau khi lookupStudent
-            String maSach = txtNewMaSach.getText().trim();
-            String tenSach = txtNewTenSach.getText().trim(); // Cần đảm bảo bạn lấy tên Sách sau khi lookupBook
-            String giaSach = txtNewGiaSach.getText().trim(); // Cần đảm bảo bạn lấy giá Sách sau khi lookupBook
-            String tinhTrangSach = txtNewTinhTrangSach.getText().trim(); // Cần đảm bảo bạn lấy TT Sách sau khi lookupBook
-            String ngayMuon = txtNewNgayMuon.getText().trim(); // Lấy ngày mượn từ ô nhập liệu
-            String ngayTraDuKienStr = txtNewNgayTraDuKien.getText().trim();
-            String phiMuonStr = txtNewPhiMuon.getText().trim(); // Phí mượn ban đầu (có thể là 0)
+    // Thực hiện mượn sách nếu người dùng xác nhận
+    boolean success = handleMuonSach(maSV, maSach, ngayMuon, ngayTraDuKienStr, phiMuonStr);
 
-
-            // TODO: Kiểm tra dữ liệu nhập (Nên gọi lại các hàm kiểm tra định dạng ngày/số ở đây nếu bạn chưa làm ở updateLuuButtonState)
-            // Ví dụ kiểm tra Ngày trả dự kiến:
-             Date ngayTraDuKienDate = null;
-             if (!ngayTraDuKienStr.isEmpty()) {
-                 try {
-                     SimpleDateFormat dateFormatCheck = new SimpleDateFormat("yyyy-MM-dd");
-                     dateFormatCheck.setLenient(false);
-                     ngayTraDuKienDate = dateFormatCheck.parse(ngayTraDuKienStr);
-                 } catch (ParseException e) {
-                     JOptionPane.showMessageDialog(this, "Ngày trả dự kiến không đúng định dạng (YYYY-MM-DD).", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-                     return;
-                 }
-             } else {
-                 JOptionPane.showMessageDialog(this, "Vui lòng nhập Ngày trả dự kiến.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-                 return;
-             }
-             // Ví dụ kiểm tra Phí mượn
-             double phiMuon = 0;
-             if (!phiMuonStr.isEmpty()) {
-                 try {
-                     phiMuon = Double.parseDouble(phiMuonStr);
-                     if (phiMuon < 0) {
-                         JOptionPane.showMessageDialog(this, "Phí mượn không thể âm.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-                         return;
-                     }
-                 } catch (NumberFormatException e) {
-                     JOptionPane.showMessageDialog(this, "Phí mượn không đúng định dạng số.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-                     return;
-                 }
-             } else {
-                  // Nếu phí mượn rỗng, có thể gán mặc định là 0
-                  phiMuon = 0;
-             }
-
-
-            // TODO: Kiểm tra lại Mã SV và Mã sách có tồn tại và sách còn hàng (Nên gọi lại lookupStudent và lookupBook hoặc đảm bảo chúng đã chạy thành công trước đó)
-            // Bạn có thể gọi lại lookupStudent(maSV) và lookupBook(maSach) ở đây và kiểm tra kết quả
-            // Hoặc dựa vào biến isBookAvailable và việc txtNewTenSV, txtNewTenSach có dữ liệu sau khi tra cứu.
-            if (tenSV.isEmpty() || tenSach.isEmpty() || !isBookAvailable) {
-                 JOptionPane.showMessageDialog(this, "Vui lòng tra cứu và đảm bảo Sinh viên tồn tại và Sách còn hàng.", "Lỗi", JOptionPane.WARNING_MESSAGE);
-                 return;
-            }
-            
-            
-            
-
-         // TODO: Kiểm tra dữ liệu nhập (đã làm ở trên)
-
-         // TODO: Kiểm tra lại Mã SV và Mã sách có tồn tại và sách còn hàng (đã làm ở trên)
-
-         // --- THỰC HIỆN TRANSACTION: INSERT vào muon_tra_sach VÀ UPDATE giảm số lượng sách ---
-          Connection con = null;
-          try {
-              con = KN.KNDL();
-
-              // Bắt đầu Transaction
-              con.setAutoCommit(false);
-
-              // 1. INSERT bản ghi mượn vào bảng muon_tra_sach
-              String sqlInsert = "INSERT INTO muon_tra_sach (maSV, maS, tenSach , ngayMuon, ngayTraDuKien, phiMuon, tinhTrangMuon) VALUES (?, ?, ?, ?, ?, ?,?)";
-              PreparedStatement pstInsert = con.prepareStatement(sqlInsert);
-              SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-              dateFormat.setLenient(false);
-              
-              pstInsert.setString(1, maSV);
-              pstInsert.setString(2, maSach);
-              pstInsert.setString(3, tenSach);
-              
-              Date ngayMuonDate = dateFormat.parse(ngayMuon);
-              pstInsert.setDate(4, new java.sql.Date(ngayMuonDate.getTime()));
-              // Chuyển String ngày trả dự kiến sang java.sql.Date
-               
-              // Date ngayTraDuKienDate = dateFormat.parse(ngayTraDuKienStr); // Chuyển String sang Date
-               pstInsert.setDate(5, new java.sql.Date(ngayTraDuKienDate.getTime())); // Chuyển java.util.Date sang java.sql.Date
-
-              pstInsert.setDouble(6, Double.parseDouble(phiMuonStr)); // Chuyển String sang Double
-              pstInsert.setString(7, "Đang mượn");
-
-              pstInsert.executeUpdate();
-              pstInsert.close();
-
-              // 2. UPDATE giảm số lượng sách trong bảng ql_sach
-              String sqlUpdate = "UPDATE ql_sach SET sl = sl - 1 WHERE maS = ?";
-              PreparedStatement pstUpdate = con.prepareStatement(sqlUpdate);
-              pstUpdate.setString(1, maSach);
-              int rowsUpdated = pstUpdate.executeUpdate();
-              pstUpdate.close();
-
-              if (rowsUpdated > 0) {
-                 con.commit();
-                 JOptionPane.showMessageDialog(this, "Đăng ký mượn sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-
-                 
-               // --- BẮT ĐẦU XUẤT FILE TXT ---
-                // Tạo nội dung cho file TXT
-                StringBuilder sb = new StringBuilder();
-                sb.append("----- PHIEU MUON KIEM HOA DON -----").append("\n\n");
-                sb.append("THONG TIN SINH VIEN:\n");
-                sb.append("  Ma SV: ").append(maSV).append("\n");
-                sb.append("  Ten SV: ").append(tenSV).append("\n\n");
-
-                sb.append("THONG TIN SACH:\n");
-                sb.append("  Ma Sach: ").append(maSach).append("\n");
-                sb.append("  Ten Sach: ").append(tenSach).append("\n");
-                sb.append("  Gia Sach: ").append(giaSach).append("\n"); // Lấy giá sách từ trường nhập liệu
-                sb.append("  Tinh Trang Sach: ").append(tinhTrangSach).append("\n\n"); // Lấy TT sách từ trường nhập liệu
-
-                sb.append("THONG TIN MUON:\n");
-                sb.append("  Ngay Muon: ").append(ngayMuon).append("\n");
-                sb.append("  Ngay Tra Du Kien: ").append(ngayTraDuKienStr).append("\n");
-                sb.append("  Phi Muon Ban Dau: ").append(String.format("%.2f", phiMuon)).append("\n"); // Định dạng số phí mượn
-                sb.append("  Tinh Trang: Dang muon").append("\n\n"); // Trạng thái mặc định
-
-                sb.append("-------------------------------------").append("\n");
-                 SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                sb.append("Ngay In Phieu: ").append(dateTimeFormat.format(new Date())).append("\n");
-                sb.append("Chu ky nguoi cho muon:").append("\n\n");
-                sb.append("Chu ky nguoi muon:").append("\n");
-
-
-                String phieuContent = sb.toString();
-
-                // Hiển thị cửa sổ chọn nơi lưu file
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Luu Phieu Muon");
-                // Đặt tên file mặc định (ví dụ: PhieuMuon_MaSV_MaSach_NgayMuon.txt)
-                String defaultFileName = "PhieuMuon_" + maSV + "_" + maSach + "_" + ngayMuon.replace("-", "") + ".txt";
-                fileChooser.setSelectedFile(new File(defaultFileName));
-                 // Chỉ cho phép lưu file .txt
-                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files (*.txt)", "txt");
-                 fileChooser.setFileFilter(filter);
-
-
-                int userSelection = fileChooser.showSaveDialog(this);
-
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File fileToSave = fileChooser.getSelectedFile();
-
-                     // Đảm bảo đuôi .txt nếu người dùng không gõ
-                    String filePath = fileToSave.getAbsolutePath();
-                    if (!filePath.toLowerCase().endsWith(".txt")) {
-                        fileToSave = new File(filePath + ".txt");
-                    }
-
-
-                    try (PrintWriter writer = new PrintWriter(new FileWriter(fileToSave))) {
-                        writer.print(phieuContent);
-                        JOptionPane.showMessageDialog(this, "Luu phieu muon thanh cong vao: " + fileToSave.getAbsolutePath(), "Thong bao", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (IOException ioException) {
-                        Logger.getLogger(MuonTra.class.getName()).log(Level.SEVERE, "Loi khi ghi file phieu muon", ioException);
-                        JOptionPane.showMessageDialog(this, "Loi khi luu file phieu muon: " + ioException.getMessage(), "Loi", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-                // --- KẾT THÚC XUẤT FILE TXT ---
-                
-                
-                
-                 // Làm sạch form sau khi lưu thành công
-                 clearInputFields();
-                 // Tải lại bảng lịch sử mượn cho sinh viên đó sau khi lưu thành công
-                 // loadBorrowHistoryForStudent(maSV); // Được gọi trong clearInputFields -> lookupStudent
-              } else {
-                 con.rollback();
-                 JOptionPane.showMessageDialog(this, "Cập nhật số lượng sách thất bại. Đã hoàn tác giao dịch mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-              }
-
-          } catch (java.text.ParseException e) { // Bắt lỗi định dạng ngày trả
-              JOptionPane.showMessageDialog(this, "Ngày trả dự kiến không đúng định dạng (ví dụ:YYYY-MM-DD).", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-          } catch (NumberFormatException e) { // Bắt lỗi định dạng số phí mượn
-               JOptionPane.showMessageDialog(this, "Phí mượn không đúng định dạng số.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-          }
-          catch (SQLException ex) {
-              Logger.getLogger(DangKyMuonSachForm.class.getName()).log(Level.SEVERE, "Lỗi Transaction Mượn Sách", ex);
-              if (con != null) {
-                  try {
-                      con.rollback();
-                  } catch (SQLException rollbackEx) {
-                      Logger.getLogger(DangKyMuonSachForm.class.getName()).log(Level.SEVERE, "Lỗi khi rollback transaction", rollbackEx);
-                  }
-              }
-              JOptionPane.showMessageDialog(this, "Lỗi CSDL khi thực hiện giao dịch mượn sách: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-
-          } finally {
-              if (con != null) {
-                  try {
-                      con.setAutoCommit(true);
-                      con.close();
-                  } catch (SQLException closeEx) {
-                      Logger.getLogger(DangKyMuonSachForm.class.getName()).log(Level.SEVERE, "Lỗi khi đóng kết nối", closeEx);
-                  }
-              }
-          }
-         // --- KẾT THÚC TRANSACTION ---
+    if (success) {
+        xuatPhieuMuon(maSV, tenSV, maSach, tenSach, giaSach, tinhTrangSach, ngayMuon, ngayTraDuKienStr, phiMuonStr);
+        clearInputFields();
+    }
     }//GEN-LAST:event_btnXuatPhieuActionPerformed
 
     private void QLMuonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_QLMuonMouseClicked

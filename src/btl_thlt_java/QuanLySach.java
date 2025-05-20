@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -35,236 +36,226 @@ public class QuanLySach extends javax.swing.JFrame {
     }
     
     public void loadTableData() { // Bỏ throws SQLException, xử lý lỗi bên trong
-        // Câu lệnh SQL lấy tất cả dữ liệu sách
-        String sql = "SELECT maS, tenS, tg, namXB, gia, sl, maNXB, ngonngu, tinhtrang FROM ql_sach"; // Chọn cột tường minh
+         String sql = "SELECT ma_sach, tua_de, tac_gia, nam_xb, gia, so_luong, ma_nxb, ngon_ngu, tinh_trang FROM sach";
 
-        // Sử dụng try-with-resources để đảm bảo kết nối, statement, result set được đóng an toàn
-        try (Connection con = KN.KNDL(); // Lấy kết nối từ class KN
-             // Statement stm = con.createStatement(); // Dùng Statement vì không có tham số
-             PreparedStatement pst = con.prepareStatement(sql); // Có thể dùng PreparedStatement cũng được
-             ResultSet rs = pst.executeQuery()) { // Thực thi truy vấn và lấy kết quả
+    try (Connection con = KN.KNDL();
+         PreparedStatement pst = con.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
 
-            // Lấy DefaultTableModel hiện tại của bảng
-            DefaultTableModel dtm = (DefaultTableModel) tb_qlsach.getModel();
-            dtm.setRowCount(0); // Xóa tất cả các dòng dữ liệu cũ
+        DefaultTableModel dtm = (DefaultTableModel) tb_qlsach.getModel();
+        dtm.setRowCount(0); // Xóa dữ liệu cũ
 
-            // Duyệt qua các dòng kết quả từ CSDL và thêm vào model
-            while (rs.next()) {
-                Object object[] = {
-                    rs.getString("maS"),
-                    rs.getString("tenS"),
-                    rs.getString("tg"),
-                    rs.getString("namXB"),
-                    rs.getInt("gia"),      // Lấy giá trị kiểu INT từ cột 'gia'
-                    rs.getInt("sl"),       // Lấy giá trị kiểu INT từ cột 'sl' (giả định là INT)
-                    rs.getString("maNXB"),
-                    rs.getString("ngonngu"),
-                    rs.getString("tinhtrang")
-                };
-                dtm.addRow(object); // Thêm dòng mới vào model
-            }
-
-            // Gán model đã cập nhật lại cho bảng (chỉ cần 1 lần sau khi thêm tất cả dòng)
-            // tb_qlsach.setModel(dtm); // Dòng này không cần thiết nếu đã getModel() và thao tác trực tiếp trên dtm
-
-        } catch (SQLException ex) {
-            // Bắt và xử lý lỗi CSDL
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex); // Ghi log chi tiết lỗi
-            JOptionPane.showMessageDialog(this,
-                    "Lỗi khi tải dữ liệu sách: " + ex.getMessage(),
-                    "Lỗi CSDL",
-                    JOptionPane.ERROR_MESSAGE); // Hiển thị thông báo lỗi cho người dùng
+        while (rs.next()) {
+            Object[] row = {
+                rs.getString("ma_sach"),      // Mã sách
+                rs.getString("tua_de"),       // Tên sách
+                rs.getString("tac_gia"),      // Tác giả
+                rs.getInt("nam_xb"),         // Năm xuất bản (hiển thị dạng java.sql.Date)
+                rs.getDouble("gia"),          // Giá
+                rs.getInt("so_luong"),        // Số lượng
+                rs.getString("ma_nxb"),       // Mã NXB
+                rs.getString("ngon_ngu"),     // Ngôn ngữ
+                rs.getString("tinh_trang")    // Tình trạng
+            };
+            dtm.addRow(row);
         }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this,
+                "Lỗi khi tải dữ liệu sách: " + ex.getMessage(),
+                "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+    }
     }
     
     public void them() {
-        // Lấy dữ liệu từ các trường nhập liệu
-        String ma = txt_maS.getText().trim(); // Dùng trim() để loại bỏ khoảng trắng thừa
-        String ten = txt_tenS.getText().trim();
-        String tg = txt_tg.getText().trim();
-        String namXB = txt_namXB.getText().trim();
-        String giaStr = txt_gia.getText().trim(); // Lấy dưới dạng String để kiểm tra
-        String slStr = txt_sl.getText().trim();   // Lấy dưới dạng String để kiểm tra
-        String maNXB = txt_maNXB.getText().trim();
-        String ngonngu = txt_nn.getText().trim();
-        String tinhtrang = txt_tt.getText().trim();
+      String ma = txt_maS.getText().toUpperCase().trim();
+    String tuaDe = txt_tenS.getText().trim();
+    String tacGia = txt_tg.getText().trim();
+    String namXBStr = txt_namXB.getText().trim();
+    String giaStr = txt_gia.getText().trim();
+    String slStr = txt_sl.getText().trim();
+    String ngonNgu = txt_nn.getText().trim();
+    String tinhTrang = txt_tt.getText().trim();
+    String maNXB = txt_maNXB.getText().toUpperCase().trim();
 
-        // TODO: Thêm kiểm tra dữ liệu nhập (rỗng, định dạng số cho giá/số lượng...)
-        if (ma.isEmpty() || ten.isEmpty() || tg.isEmpty() || namXB.isEmpty() || giaStr.isEmpty() || slStr.isEmpty() || maNXB.isEmpty() || ngonngu.isEmpty() || tinhtrang.isEmpty()) {
-             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin sách.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-             return;
+    if (ma.isEmpty() || tuaDe.isEmpty() || tacGia.isEmpty() || namXBStr.isEmpty() || giaStr.isEmpty() || slStr.isEmpty() || ngonNgu.isEmpty() || tinhTrang.isEmpty() || maNXB.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin sách.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    int namXB, sl;
+    double gia;
+    try {
+        if (!namXBStr.matches("\\d{4}")) {
+            throw new NumberFormatException("Năm không đúng định dạng 4 chữ số.");
         }
-         int gia, sl;
-         try {
-             gia = Integer.parseInt(giaStr);
-             sl = Integer.parseInt(slStr);
-         } catch (NumberFormatException e) {
-             JOptionPane.showMessageDialog(this, "Giá và Số lượng phải là số nguyên hợp lệ.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-             return;
-         }
+        namXB = Integer.parseInt(namXBStr);
+        gia = Double.parseDouble(giaStr);
+        sl = Integer.parseInt(slStr);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập năm (YYYY), giá và số lượng đúng định dạng.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+try (Connection con = KN.KNDL();
+     PreparedStatement checkNXB = con.prepareStatement("SELECT 1 FROM nha_xuat_ban WHERE ma_nxb = ?")) {
+    checkNXB.setString(1, maNXB);
+    ResultSet rs = checkNXB.executeQuery();
+    if (!rs.next()) {
+        JOptionPane.showMessageDialog(this, "Mã NXB không tồn tại trong hệ thống.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+} catch (SQLException e) {
+    JOptionPane.showMessageDialog(this, "Lỗi khi kiểm tra mã NXB: " + e.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+    String sql = "INSERT INTO sach (ma_sach, tua_de, tac_gia, nam_xb, gia, so_luong, ngon_ngu, tinh_trang, ma_nxb) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        // Câu lệnh SQL INSERT sử dụng PreparedStatement để chống SQL Injection
-        String sqlthem = "INSERT INTO ql_sach (maS, tenS, tg, namXB, gia, sl, maNXB, ngonngu, tinhtrang) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    try (Connection con = KN.KNDL();
+         PreparedStatement pst = con.prepareStatement(sql)) {
 
-        try (Connection con = KN.KNDL(); // Lấy kết nối từ KN
-             PreparedStatement pst = con.prepareStatement(sqlthem)) { // Tạo PreparedStatement
+        pst.setString(1, ma);
+        pst.setString(2, tuaDe);
+        pst.setString(3, tacGia);
+        pst.setInt(4, namXB);  // Gán đúng kiểu INT cho cột YEAR
+        pst.setDouble(5, gia);
+        pst.setInt(6, sl);
+        pst.setString(7, ngonNgu);
+        pst.setString(8, tinhTrang);
+        pst.setString(9, maNXB);
 
-            // Gán giá trị cho các tham số (?)
-            pst.setString(1, ma);
-            pst.setString(2, ten);
-            pst.setString(3, tg);
-            pst.setString(4, namXB);
-            pst.setInt(5, gia); // Gán kiểu INT
-            pst.setInt(6, sl);   // Gán kiểu INT
-            pst.setString(7, maNXB);
-            pst.setString(8, ngonngu);
-            pst.setString(9, tinhtrang);
+        int rowsAffected = pst.executeUpdate();
 
-            int rowsAffected = pst.executeUpdate(); // Thực thi lệnh INSERT
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                // Sau khi thêm thành công, tải lại dữ liệu vào bảng
-                loadTableData();
-                // Xóa nội dung các trường nhập liệu
-                clearInputFields(); // Gọi phương thức làm mới
-            } else {
-                // Trường hợp này ít xảy ra nếu không có lỗi CSDL ngoại trừ lỗi ràng buộc
-                 JOptionPane.showMessageDialog(this, "Thêm sách thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-            // Xử lý các lỗi CSDL (ví dụ: trùng mã sách nếu maS là khóa chính)
-            if (ex.getSQLState().startsWith("23")) { // Lỗi vi phạm ràng buộc
-                 JOptionPane.showMessageDialog(this, "Lỗi: Mã sách đã tồn tại.", "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
-            } else {
-                 JOptionPane.showMessageDialog(this, "Lỗi CSDL khi thêm sách: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
-            }
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Thêm sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            loadTableData();
+            clearInputFields();
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm sách thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
+        if (ex.getSQLState().startsWith("23")) {
+            JOptionPane.showMessageDialog(this, "Mã sách hoặc mã NXB không hợp lệ (trùng hoặc không tồn tại).", "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Lỗi CSDL khi thêm sách: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     }
     
     public void sua() {
-        // Lấy dữ liệu từ các trường nhập liệu
-        String ma = txt_maS.getText().trim(); // Mã sách dùng trong điều kiện WHERE
-        String ten = txt_tenS.getText().trim();
-        String tg = txt_tg.getText().trim();
-        String namXB = txt_namXB.getText().trim();
-        String giaStr = txt_gia.getText().trim();
-        String slStr = txt_sl.getText().trim();
-        String maNXB = txt_maNXB.getText().trim();
-        String ngonngu = txt_nn.getText().trim();
-        String tinhtrang = txt_tt.getText().trim();
+     String ma = txt_maS.getText().toUpperCase().trim();
+    String tuaDe = txt_tenS.getText().trim();
+    String tacGia = txt_tg.getText().trim();
+    String namXBStr = txt_namXB.getText().trim();
+    String giaStr = txt_gia.getText().trim();
+    String slStr = txt_sl.getText().trim();
+    String ngonNgu = txt_nn.getText().trim();
+    String tinhTrang = txt_tt.getText().trim();
+    String maNXB = txt_maNXB.getText().toUpperCase().trim();
 
-        // TODO: Thêm kiểm tra dữ liệu nhập (rỗng, định dạng số...)
-         if (ma.isEmpty() || ten.isEmpty() || tg.isEmpty() || namXB.isEmpty() || giaStr.isEmpty() || slStr.isEmpty() || maNXB.isEmpty() || ngonngu.isEmpty() || tinhtrang.isEmpty()) {
-             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin sách để sửa.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-             return;
-         }
-         int gia, sl;
-         try {
-             gia = Integer.parseInt(giaStr);
-             sl = Integer.parseInt(slStr);
-         } catch (NumberFormatException e) {
-             JOptionPane.showMessageDialog(this, "Giá và Số lượng phải là số nguyên hợp lệ.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
-             return;
-         }
+    if (ma.isEmpty() || tuaDe.isEmpty() || tacGia.isEmpty() || namXBStr.isEmpty() || giaStr.isEmpty() || slStr.isEmpty() || ngonNgu.isEmpty() || tinhTrang.isEmpty() || maNXB.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin sách để sửa.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-
-        // Câu lệnh SQL UPDATE sử dụng PreparedStatement để chống SQL Injection
-        // Cập nhật tất cả các cột TRỪ cột khóa chính (maS)
-        String sqlsua = "UPDATE ql_sach SET tenS = ?, tg = ?, NamXB = ?, gia = ?, sl = ?, maNXB = ?, ngonngu = ?, tinhtrang = ? WHERE maS = ?";
-
-        try (Connection con = KN.KNDL(); // Lấy kết nối từ KN
-             PreparedStatement pst = con.prepareStatement(sqlsua)) { // Tạo PreparedStatement
-
-            // Gán giá trị cho các tham số (?) theo đúng thứ tự
-            pst.setString(1, ten);
-            pst.setString(2, tg);
-            pst.setString(3, namXB);
-            pst.setInt(4, gia); // Gán kiểu INT
-            pst.setInt(5, sl);   // Gán kiểu INT
-            pst.setString(6, maNXB);
-            pst.setString(7, ngonngu);
-            pst.setString(8, tinhtrang);
-            pst.setString(9, ma); // Gán giá trị cho điều kiện WHERE (maS)
-
-            int rowsAffected = pst.executeUpdate(); // Thực thi lệnh UPDATE
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                // Sau khi sửa thành công, tải lại dữ liệu vào bảng
-                loadTableData();
-                // Xóa nội dung các trường nhập liệu
-                clearInputFields(); // Gọi phương thức làm mới
-            } else {
-                // rowsAffected = 0 có nghĩa là không có dòng nào khớp với điều kiện WHERE
-                // Thường xảy ra nếu mã sách trong txt_maS không tồn tại trong DB
-                 JOptionPane.showMessageDialog(this, "Không tìm thấy Mã sách để cập nhật hoặc có lỗi.", "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Lỗi CSDL khi sửa sách: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+    int namXB, sl;
+    double gia;
+    try {
+        if (!namXBStr.matches("\\d{4}")) {
+            throw new NumberFormatException("Năm không đúng định dạng 4 chữ số.");
         }
+        namXB = Integer.parseInt(namXBStr);
+        gia = Double.parseDouble(giaStr);
+        sl = Integer.parseInt(slStr);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập năm (YYYY), giá và số lượng đúng định dạng.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    try (Connection con = KN.KNDL();
+     PreparedStatement checkNXB = con.prepareStatement("SELECT 1 FROM nha_xuat_ban WHERE ma_nxb = ?")) {
+    checkNXB.setString(1, maNXB);
+    ResultSet rs = checkNXB.executeQuery();
+    if (!rs.next()) {
+        JOptionPane.showMessageDialog(this, "Mã NXB không tồn tại trong hệ thống.", "Lỗi Nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+} catch (SQLException e) {
+    JOptionPane.showMessageDialog(this, "Lỗi khi kiểm tra mã NXB: " + e.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+    return;
+} 
+    String sql = "UPDATE sach SET tua_de = ?, tac_gia = ?, nam_xb = ?, gia = ?, so_luong = ?, ngon_ngu = ?, tinh_trang = ?, ma_nxb = ? WHERE ma_sach = ?";
+
+    try (Connection con = KN.KNDL();
+         PreparedStatement pst = con.prepareStatement(sql)) {
+
+        pst.setString(1, tuaDe);
+        pst.setString(2, tacGia);
+        pst.setInt(3, namXB);  // Gán INT cho YEAR
+        pst.setDouble(4, gia);
+        pst.setInt(5, sl);
+        pst.setString(6, ngonNgu);
+        pst.setString(7, tinhTrang);
+        pst.setString(8, maNXB);
+        pst.setString(9, ma);  // WHERE ma_sach = ?
+
+        int rowsAffected = pst.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Cập nhật sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            loadTableData();
+            clearInputFields();
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy Mã sách để cập nhật.", "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, "Lỗi CSDL khi sửa sách: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+    }
     }
     
     public void xoa() {
-            // Lấy mã sách cần xóa từ trường nhập Mã sách
-            String macanxoa = txt_maS.getText().trim();
+            int selectedRow = tb_qlsach.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng trong bảng để xóa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-             // TODO: Thêm kiểm tra rỗng hoặc kiểm tra xem có dòng nào đang được chọn trong bảng không
-             // Cách lấy mã từ dòng chọn trong bảng thường dùng hơn là lấy từ JTextField
-             int selectedRow = tb_qlsach.getSelectedRow();
-             if (selectedRow == -1) {
-                 JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng trong bảng để xóa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
-                 return;
-             }
-             // Lấy mã sách từ dòng được chọn trong bảng
-             macanxoa = tb_qlsach.getValueAt(selectedRow, 0).toString(); // Cột đầu tiên (0) là Mã sách
+    String maCanXoa = tb_qlsach.getValueAt(selectedRow, 0).toString();
 
-             // Hỏi xác nhận trước khi xóa (rất quan trọng!)
-             int confirm = JOptionPane.showConfirmDialog(this,
-                     "Bạn có chắc chắn muốn xóa sách có Mã sách là '" + macanxoa + "'?",
-                     "Xác nhận Xóa",
-                     JOptionPane.YES_NO_OPTION);
+    int confirm = JOptionPane.showConfirmDialog(this,
+            "Bạn có chắc chắn muốn xóa sách có mã '" + maCanXoa + "'?",
+            "Xác nhận Xóa",
+            JOptionPane.YES_NO_OPTION);
 
-             if (confirm != JOptionPane.YES_OPTION) {
-                 return; // Dừng nếu người dùng không xác nhận
-             }
+    if (confirm != JOptionPane.YES_OPTION) return;
 
+    String sql = "DELETE FROM sach WHERE ma_sach = ?";
 
-            // Câu lệnh SQL DELETE sử dụng PreparedStatement để chống SQL Injection
-            String sql = "DELETE FROM ql_sach WHERE maS = ?";
+    try (Connection con = KN.KNDL();
+         PreparedStatement pst = con.prepareStatement(sql)) {
 
-            try (Connection con = KN.KNDL(); // Lấy kết nối từ KN
-                 PreparedStatement pst = con.prepareStatement(sql)) { // Tạo PreparedStatement
+        pst.setString(1, maCanXoa);
+        int rowsAffected = pst.executeUpdate();
 
-                pst.setString(1, macanxoa); // Gán mã sách cần xóa vào tham số (?)
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Xóa sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            loadTableData();
+            clearInputFields();
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy Mã sách để xóa.", "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+        }
 
-                int rowsAffected = pst.executeUpdate(); // Thực thi lệnh DELETE
-
-                if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(this, "Xóa sách thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    // Sau khi xóa thành công, tải lại dữ liệu vào bảng để cập nhật hiển thị
-                    loadTableData();
-                    // Xóa nội dung các trường nhập liệu sau khi xóa
-                    clearInputFields(); // Gọi phương thức làm mới
-                } else {
-                    // rowsAffected = 0 có nghĩa là không có dòng nào bị xóa
-                    // Thường xảy ra nếu mã sách trong JTextField không tồn tại (nhưng đã check chọn dòng)
-                     JOptionPane.showMessageDialog(this, "Không tìm thấy Mã sách để xóa hoặc có lỗi.", "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
-                // Xử lý các lỗi CSDL (ví dụ: lỗi khóa ngoại nếu sách đang được mượn)
-                 if (ex.getSQLState().startsWith("23")) { // Lỗi vi phạm ràng buộc (khóa ngoại)
-                     JOptionPane.showMessageDialog(this, "Lỗi: Không thể xóa sách này vì nó đang được tham chiếu ở bảng khác (ví dụ: đang có trong danh sách mượn).", "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
-                 } else {
-                     JOptionPane.showMessageDialog(this, "Lỗi CSDL khi xóa sách: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
-                 }
-            }
+    } catch (SQLException ex) {
+        Logger.getLogger(QuanLySach.class.getName()).log(Level.SEVERE, null, ex);
+        if (ex.getSQLState().startsWith("23")) {
+            JOptionPane.showMessageDialog(this, "Lỗi: Không thể xóa sách vì đang được tham chiếu (ví dụ: đang có trong phiếu mượn).", "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Lỗi CSDL khi xóa sách: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+        }
+    }
         }
     
     // --- Phương thức xử lý click vào dòng trong bảng (cải tiến tbmouseClick()) ---
@@ -357,6 +348,7 @@ public class QuanLySach extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý sách");
+        setIconImage(new ImageIcon(getClass().getResource("/Icon/Title.png")).getImage());
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

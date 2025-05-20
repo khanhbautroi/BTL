@@ -16,7 +16,7 @@ public class KN {
     // Khai báo các hằng số cho thông tin kết nối (vẫn hardcoded như yêu cầu)
     // Sử dụng 'static final' giúp code rõ ràng hơn là các hằng số
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3307/qlthuvien";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/quanlythuvien";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
 

@@ -646,26 +646,29 @@ public class HomePage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     public void updateAllLabels() {
-    try (Connection connection = KN.KNDL();
-         PreparedStatement psSach = connection.prepareStatement("SELECT SUM(sl) FROM ql_sach");
-         PreparedStatement psSV = connection.prepareStatement("SELECT COUNT(*) FROM ql_sv");
-         PreparedStatement psMuon = connection.prepareStatement("SELECT COUNT(*) FROM muon_tra_sach WHERE tinhTrangMuon IN ('Đang mượn', 'Quá hạn')");
-         PreparedStatement psQuaHan = connection.prepareStatement("SELECT COUNT(*) FROM muon_tra_sach WHERE tinhTrangMuon = 'Quá hạn'")) {
-        
+        try (Connection connection = KN.KNDL();
+         PreparedStatement psSach = connection.prepareStatement("SELECT SUM(so_luong) FROM sach");
+         PreparedStatement psSV = connection.prepareStatement("SELECT COUNT(*) FROM sinh_vien");
+         PreparedStatement psMuon = connection.prepareStatement(
+             "SELECT COUNT(*) FROM phieu_muon WHERE ngay_tra_thuc_te IS NULL"
+         );
+         PreparedStatement psQuaHan = connection.prepareStatement(
+             "SELECT COUNT(*) FROM phieu_muon " +
+             "WHERE ngay_tra_thuc_te IS NULL AND ngay_tra_du_kien < CURDATE()"
+         )) {
+
         connection.setAutoCommit(false);
-        
-        // Execute each query once and store the result
+
         ResultSet rsSach = psSach.executeQuery();
         ResultSet rsSV = psSV.executeQuery();
         ResultSet rsMuon = psMuon.executeQuery();
         ResultSet rsQuaHan = psQuaHan.executeQuery();
-        
-        // Process each result set
+
         SoSach.setText(rsSach.next() ? String.valueOf(rsSach.getInt(1)) : "0");
         SoSV.setText(rsSV.next() ? String.valueOf(rsSV.getInt(1)) : "0");
         SoSachMuon.setText(rsMuon.next() ? String.valueOf(rsMuon.getInt(1)) : "0");
         SoSachQuaHan.setText(rsQuaHan.next() ? String.valueOf(rsQuaHan.getInt(1)) : "0");
-        
+
         connection.commit();
     } catch (SQLException e) {
         e.printStackTrace();
@@ -849,7 +852,7 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_manageStudentsMouseClicked
 
     private void manageUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageUsersMouseClicked
-        new QuanLyMuonTraSachForm().setVisible(true);
+        new QuanLyNguoiDung().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_manageUsersMouseClicked
 

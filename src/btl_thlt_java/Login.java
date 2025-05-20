@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Image;
-import org.mindrot.bcrypt.BCrypt;
 
 
 
@@ -39,6 +38,7 @@ public class Login extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         Left = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -70,6 +70,10 @@ public class Login extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Logo-DH-Kinh-te-Ky-thuat-Cong-nghiep-UNETI (1).png"))); // NOI18N
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Thư viện");
+
         javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
@@ -84,7 +88,9 @@ public class Login extends javax.swing.JFrame {
                         .addGap(59, 59, 59)
                         .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel5)))
+                            .addComponent(jLabel5))
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel10))
                     .addGroup(RightLayout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel9)))
@@ -97,11 +103,16 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5))
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jPanel1.add(Right);
@@ -312,7 +323,7 @@ public class Login extends javax.swing.JFrame {
      */
         private boolean checkLogin(String username, String password) {
         // Câu lệnh SQL để lấy MẬT KHẨU ĐÃ BĂM từ CSDL dựa vào username
-        String sql = "SELECT password FROM accounts WHERE username = ?";
+        String sql = "SELECT password FROM nguoi_dung WHERE username = ?";
 
         try (Connection con = KN.KNDL();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -356,6 +367,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton Login_btn;
     private javax.swing.JPanel Right;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

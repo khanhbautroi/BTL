@@ -7,11 +7,11 @@ package btl_thlt_java;
 import static btl_thlt_java.MuonTra.setupTableAppearance;
 import java.sql.Statement;
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -35,117 +35,156 @@ public class QuanLySinhVien extends javax.swing.JFrame {
     }
     public void ht() throws SQLException{
         try {
-            Connection kn = KN.KNDL();
-            Statement stm = kn.createStatement();
-            String sql = "select * from ql_sv";
-            ResultSet rs = stm.executeQuery(sql);
-            DefaultTableModel dtm = (DefaultTableModel) tb_qlsv.getModel();
-            dtm.setRowCount(0);
-            
-            while(rs.next()){
-                Object object[]={
-                    rs.getString("ma"),
-                    rs.getString("ten"),
-                    rs.getString("gt"),
-                    rs.getString("tuoi"),
-                    rs.getString("dc"),
-                    rs.getString("sdt"),
-                    rs.getString("email")
+        Connection kn = KN.KNDL();
+        Statement stm = kn.createStatement();
+        String sql = "SELECT * FROM sinh_vien";
+        ResultSet rs = stm.executeQuery(sql);
+        DefaultTableModel dtm = (DefaultTableModel) tb_qlsv.getModel();
+        dtm.setRowCount(0);
+
+        while (rs.next()) {
+            Object[] object = {
+                rs.getString("ma_sv"),
+                rs.getString("ho_ten"),
+                rs.getString("gioi_tinh"),
+                rs.getInt("tuoi"),
+                rs.getString("dia_chi"),
+                rs.getString("sdt"),
+                rs.getString("email")
             };
-                dtm.addRow(object);
-                tb_qlsv.setModel(dtm);
-            }
-        }catch (SQLException ex) {
-            Logger.getLogger(QuanLySinhVien.class.getName()).log(Level.SEVERE, null, ex);
+            dtm.addRow(object);
         }
+    } catch (SQLException ex) {
+        Logger.getLogger(QuanLySinhVien.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
     
     public void them() throws SQLException{
-        String ma = txt_ma.getText();
-        String ten = txt_ht.getText();
-        String dc = txt_dc.getText();
-        String sdt = txt_sdt.getText();
-        String gt = cbb_gt.getSelectedItem().toString();
-        String tuoi = txt_tuoi.getText();
-        String email = txt_email.getText();
-        try{
-            Connection kn = KN.KNDL();
-            String sqlthem = "insert into ql_sv values('"+ma+"', '"+ten+"', '"+gt+"', '"+tuoi+"', '"+dc+"', '"+sdt+"', '"+email+"')";
-            Statement stm = kn.createStatement();
-            stm.executeUpdate(sqlthem);
-            String sql = "select * from ql_sv";
-            ResultSet rs = stm.executeQuery(sql);
-            DefaultTableModel dtm = (DefaultTableModel) tb_qlsv.getModel();
-            dtm.setRowCount(0);
-            
-            while(rs.next()){
-                Object object[]={
-                    rs.getString("ma"),
-                    rs.getString("ten"),
-                    rs.getString("gt"),
-                    rs.getString("tuoi"),
-                    rs.getString("dc"),
-                    rs.getString("sdt"),
-                    rs.getString("email")
-                };
-                dtm.addRow(object);
-                tb_qlsv.setModel(dtm);
-            }
-            
-        }catch (SQLException ex) {
-            Logger.getLogger(QuanLySinhVien.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    String ma = txt_ma.getText().toUpperCase().trim();
+    String ten = txt_ht.getText().trim();
+    String dc = txt_dc.getText().trim();
+    String sdt = txt_sdt.getText().trim();
+    String gt = cbb_gt.getSelectedItem().toString();
+    String tuoiStr = txt_tuoi.getText().trim();
+    String email = txt_email.getText().trim();
+
+    if (ma.isEmpty() || ten.isEmpty() || dc.isEmpty() || sdt.isEmpty() || tuoiStr.isEmpty() || email.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.", "Lỗi nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    int tuoi;
+    try {
+        tuoi = Integer.parseInt(tuoiStr);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Tuổi phải là số.", "Lỗi nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try (Connection kn = KN.KNDL()) {
+        String sql = "INSERT INTO sinh_vien (ma_sv, ho_ten, gioi_tinh, tuoi, dia_chi, sdt, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement pst = kn.prepareStatement(sql);
+        pst.setString(1, ma);
+        pst.setString(2, ten);
+        pst.setString(3, gt);
+        pst.setInt(4, tuoi);
+        pst.setString(5, dc);
+        pst.setString(6, sdt);
+        pst.setString(7, email);
+
+        pst.executeUpdate();
+        JOptionPane.showMessageDialog(this, "Thêm sinh viên thành công.");
+        ht();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Lỗi thêm sinh viên: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+        Logger.getLogger(QuanLySinhVien.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
     
     public void xoa(){
-            int row = tb_qlsv.getSelectedRow();
-            String macanxoa = txt_ma.getText();
-            try{
-                Connection kn = KN.KNDL();
-                String sql = "delete from ql_sv where ma ='"+macanxoa+"' ";
-                Statement stm = kn.createStatement();
-                int rowsUpdate = stm.executeUpdate(sql);
-                DefaultTableModel dtm = (DefaultTableModel) tb_qlsv.getModel();
-                dtm.removeRow(row);
-            } catch (SQLException ex) {
-                Logger.getLogger(QuanLySinhVien.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        int row = tb_qlsv.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần xóa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String ma = txt_ma.getText().trim();
+    try (Connection kn = KN.KNDL()) {
+        // Kiểm tra xem sinh viên có mượn sách không
+        String checkSql = "SELECT COUNT(*) FROM phieu_muon WHERE ma_sv = ?";
+        PreparedStatement checkStmt = kn.prepareStatement(checkSql);
+        checkStmt.setString(1, ma);
+        ResultSet rs = checkStmt.executeQuery();
+        rs.next();
+        if (rs.getInt(1) > 0) {
+            JOptionPane.showMessageDialog(this, "Không thể xóa. Sinh viên đang có phiếu mượn!", "Lỗi", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Nếu không có ràng buộc thì xóa
+        String sql = "DELETE FROM sinh_vien WHERE ma_sv = ?";
+        PreparedStatement pst = kn.prepareStatement(sql);
+        pst.setString(1, ma);
+        int rowsAffected = pst.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Xóa sinh viên thành công.");
+            ht();
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy sinh viên để xóa.");
+        }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(QuanLySinhVien.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, "Lỗi CSDL: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
         }
     
     public void sua() throws SQLException{
-        String ma = txt_ma.getText();
-        String ten = txt_ht.getText();
-        String dc = txt_dc.getText();
-        String sdt = txt_sdt.getText();
-        String gt = cbb_gt.getSelectedItem().toString();
-        String tuoi = txt_tuoi.getText();
-        String email = txt_email.getText();
-            try{
-                Connection kn = KN.KNDL();
-                String sqlsua = "update ql_sv set ten ='"+ten+"',dc ='"+dc+"',sdt ='"+sdt+"', gt ='"+gt+"', tuoi ='"+tuoi+"', email ='"+email+"'where ma ='"+ma+"'";
-                Statement stm = kn.createStatement();
-                stm.executeUpdate(sqlsua);
-                String sql = "select * from ql_sv";
-                ResultSet rs = stm.executeQuery(sql);
-                DefaultTableModel dtm = (DefaultTableModel) tb_qlsv.getModel();
-                dtm.setRowCount(0);
-                while(rs.next()){
-                    Object object[]={
-                        rs.getString("ma"),
-                        rs.getString("ten"),
-                        rs.getString("gt"),
-                        rs.getString("tuoi"),
-                        rs.getString("dc"),
-                        rs.getString("sdt"),
-                        rs.getString("email")
-                    };
-                dtm.addRow(object);
-                tb_qlsv.setModel(dtm);
-                }
-            
-            }catch (SQLException ex) {
-            Logger.getLogger(QuanLySinhVien.class.getName()).log(Level.SEVERE, null, ex);
+    String ma = txt_ma.getText().toUpperCase().trim();
+    String ten = txt_ht.getText().trim();
+    String dc = txt_dc.getText().trim();
+    String sdt = txt_sdt.getText().trim();
+    String gt = cbb_gt.getSelectedItem().toString();
+    String tuoiStr = txt_tuoi.getText().trim();
+    String email = txt_email.getText().trim();
+
+    if (ma.isEmpty() || ten.isEmpty() || dc.isEmpty() || sdt.isEmpty() || tuoiStr.isEmpty() || email.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.", "Lỗi nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    int tuoi;
+    try {
+        tuoi = Integer.parseInt(tuoiStr);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Tuổi phải là số.", "Lỗi nhập liệu", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try (Connection kn = KN.KNDL()) {
+        String sql = "UPDATE sinh_vien SET ho_ten = ?, gioi_tinh = ?, tuoi = ?, dia_chi = ?, sdt = ?, email = ? WHERE ma_sv = ?";
+        PreparedStatement pst = kn.prepareStatement(sql);
+        pst.setString(1, ten);
+        pst.setString(2, gt);
+        pst.setInt(3, tuoi);
+        pst.setString(4, dc);
+        pst.setString(5, sdt);
+        pst.setString(6, email);
+        pst.setString(7, ma);
+
+        int rowsAffected = pst.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Cập nhật sinh viên thành công.");
+            ht();
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy sinh viên để cập nhật.");
         }
+    } catch (SQLException ex) {
+        Logger.getLogger(QuanLySinhVien.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, "Lỗi khi sửa: " + ex.getMessage(), "Lỗi CSDL", JOptionPane.ERROR_MESSAGE);
+    }
     }
     
     public void tbmouseClick() throws SQLException{
@@ -209,6 +248,7 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý sinh viên");
         setFocusable(false);
+        setIconImage(new ImageIcon(getClass().getResource("/Icon/Title.png")).getImage());
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

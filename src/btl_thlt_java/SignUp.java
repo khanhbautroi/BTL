@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Image;
-import org.mindrot.bcrypt.BCrypt;
 
 
 
@@ -53,6 +52,8 @@ public class SignUp extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -190,6 +191,10 @@ public class SignUp extends javax.swing.JFrame {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/Logo-DH-Kinh-te-Ky-thuat-Cong-nghiep-UNETI (1).png"))); // NOI18N
 
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Thư viện");
+
         javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
@@ -204,7 +209,9 @@ public class SignUp extends javax.swing.JFrame {
                         .addGap(59, 59, 59)
                         .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel11)
-                            .addComponent(jLabel9)))
+                            .addComponent(jLabel9))
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel14))
                     .addGroup(RightLayout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel12)))
@@ -217,15 +224,24 @@ public class SignUp extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9))
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jPanel1.add(Right);
         Right.setBounds(0, 0, 400, 500);
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Thư viện");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,12 +250,22 @@ public class SignUp extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(326, 326, 326)
+                    .addComponent(jLabel13)
+                    .addContainerGap(326, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(226, 226, 226)
+                    .addComponent(jLabel13)
+                    .addContainerGap(226, Short.MAX_VALUE)))
         );
 
         pack();
@@ -332,31 +358,33 @@ public class SignUp extends javax.swing.JFrame {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_signup_btnMouseExited
 private boolean registerUser(String username, String password) {
-       // Lưu mật khẩu thô vào CSDL
-        String insertSql = "INSERT INTO accounts (username, password) VALUES (?, ?)";
+        String insertSql = "INSERT INTO nguoi_dung (username, password) VALUES (?, ?)";
 
-        try (Connection con = KN.KNDL()) {
-            try (PreparedStatement insertStmt = con.prepareStatement(insertSql)) {
-                insertStmt.setString(1, username);
-                // LƯU MẬT KHẨU THÔ VÀO CSDL (CỰC KỲ KHÔNG AN TOÀN)
-                insertStmt.setString(2, password); // <-- LƯU MẬT KHẨU THÔ
+    try (Connection con = KN.KNDL();
+         PreparedStatement insertStmt = con.prepareStatement(insertSql)) {
 
-                int rowsAffected = insertStmt.executeUpdate();
-                return rowsAffected > 0;
+        insertStmt.setString(1, username);
+        insertStmt.setString(2, password); // LƯU MẬT KHẨU THÔ
 
-            }
-        } catch (SQLException e) {
-            if (e.getSQLState().startsWith("23")) {
-                System.err.println("Lỗi SQL State 23xxx (tài khoản đã tồn tại): " + e.getMessage());
-            } else {
-                JOptionPane.showMessageDialog(null,
-                        "Lỗi CSDL khi đăng ký: " + e.getMessage(),
-                        "Lỗi Database",
-                        JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
-            }
-            return false;
+        int rowsAffected = insertStmt.executeUpdate();
+        return rowsAffected > 0;
+
+    } catch (SQLException e) {
+        // Lỗi trùng username (khóa UNIQUE)
+        if (e.getSQLState() != null && e.getSQLState().startsWith("23")) {
+            JOptionPane.showMessageDialog(null,
+                    "Tài khoản đã tồn tại. Vui lòng chọn tên khác.",
+                    "Đăng ký thất bại",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Lỗi CSDL khi đăng ký: " + e.getMessage(),
+                    "Lỗi Database",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
+        return false;
+    }
 }
     /**
      * @param args the command line arguments
@@ -368,6 +396,8 @@ private boolean registerUser(String username, String password) {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -10,5 +10,6 @@ package btl_thlt_java;
  */
 public class UserInfo {
     public static String loggedInUsername;
+    public static String loggedInRole;
 
 }
